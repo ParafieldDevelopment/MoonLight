@@ -21,14 +21,16 @@ function getSplashScreen() {
 }
 
 async function registerAppProtocol(basePath = __dirname) {
-    console.log("Started content protocal");
+    console.log("Started content protocol");
     await protocol.handle('app', async (request) => {
         const urlPath = request.url.replace('app://', '');
         const filePath = path.join(basePath, urlPath);
 
         try {
             const data = await fs.readFile(filePath);
-            const mimeType = mime.contentType(path.basename(filePath)) || 'text/plain';
+            let mimeType = mime.contentType(path.basename(filePath)) || 'text/plain';
+
+            if (filePath.endsWith('.ttf')) mimeType = 'font/ttf';
 
             console.log("["+request.url+"] "+filePath+ " ["+mimeType+"]");
 

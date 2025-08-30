@@ -19,13 +19,18 @@ const fs = require("fs");
 const rendering = require("./rendering");
 const utils = require("./utils");
 const open = require('open').default;
-const { spawn } = require('child_process');
-const {UrlRegistery, urlregistery} = require("./urlregistery");
+const {spawn} = require('child_process');
+const {UrlRegistery} = require("./urlregistery");
+const {Windowmanager} = require("./windowmanager");
+const windowmanager = require("./windowmanager");
+const {getOperatingSystem} = require("./utils");
 
 let loadingwindow = null;
 
 console.log("Starting MoonLight...");
 console.log(__dirname);
+
+global.srcpath = __dirname;
 
 let robloxstudio_location = null;
 
@@ -134,7 +139,8 @@ async function main() {
                 defaultId: 0,
                 cancelId: 1,
                 title: "MoonLight - Could not find Roblox Studio",
-                // WHAT IS THIS INTENTIONAL TYPO LMFAO :sob:
+                // WHAT IS THIS INTENTIONAL TYPO LMFAO :sob: - batista
+                // yes - mas6y6
                 message: "Oops!\n\nMoonLight cannot find Roblox Studio!\nWould you like to automagically install Roblox Studio?",
                 icon: rendering.getIcon()
             });
@@ -211,16 +217,21 @@ async function main() {
 
     console.log("Starting Asset Handler");
 
-    rendering.registerAppProtocol(__dirname);
+    await rendering.registerAppProtocol(__dirname);
 
     console.log("Starting URL Handler");
 
+    global.platform = utils.getOperatingSystem();
     global.urlregistery = new UrlRegistery();
-    await electron.protocol.handle("launcher",request => urlregistery.request);
+    electron.protocol.handle("moonlight", (request) => global.urlregistery.request(request));
 
-    global.urlregistery.registerUrl("projectselection",function() {
-
+    global.urlregistery.registerUrl("projectselection", async function () {
+        return await rendering.renderTemplate(path.join(__dirname, "templates", "projectselection.html"))
     });
+
+    windowmanager.windowmanagerins = new Windowmanager();
+
+    await require("./windows/projectselection").openprojectselection();
 
     loadingwindow.hide();
     loadingwindow.destroy();

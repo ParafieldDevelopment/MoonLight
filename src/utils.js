@@ -4,7 +4,7 @@ const mime = require('mime-types');
 const path = require('path');
 const fs = require('fs').promises;
 const os = require('os')
-const { protocol } = require('electron');
+const { protocol, ipcMain} = require('electron');
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -28,6 +28,17 @@ function getAppDataPath() {
     throw new Error('Unsupported platform: Roblox Studio does not support Linux.');
 }
 
+function getAppDataPathRoaming() {
+    const platform = process.platform;
+
+    if (platform === 'win32') {
+        return process.env.APPDATA || path.join(os.homedir(), 'AppData');
+    }
+    if (platform === 'darwin') {
+        return path.join(os.homedir(), 'Library', 'Application Support');
+    }
+    throw new Error('Unsupported platform: Roblox Studio does not support Linux.');
+}
 
 async function downloadToTemp(url, filename) {
     const tempDir = os.tmpdir();

@@ -1,0 +1,42 @@
+nav.topnav {
+    -webkit-app-region: drag;
+    height: 40px;
+    display: flex;
+    background-color: rgb(37, 37, 37);
+    align-items: center;
+    padding-left: 10px;
+    flex: 1;
+}
+
+.window-controls {
+    display: flex;
+}
+
+.window-controls button {
+    width: 35px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+    transition: 0.3s all;
+}
+
+.window-controls button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#close-btn:hover {
+    background-color: #e81123;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 0px) {
+    nav.topbar {
+        padding-left: 80px;
+    }
+}
