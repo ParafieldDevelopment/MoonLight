@@ -1,3 +1,19 @@
+//     /$$      /$$  /$$$$$$   /$$$$$$  /$$   /$$ /$$       /$$$$$$  /$$$$$$  /$$   /$$ /$$$$$$$$        /$$$$$$   /$$$$$$  /$$       /$$   /$$ /$$$$$$$$ /$$$$$$  /$$$$$$  /$$   /$$  /$$$$$$
+//    | $$$    /$$$ /$$__  $$ /$$__  $$| $$$ | $$| $$      |_  $$_/ /$$__  $$| $$  | $$|__  $$__/       /$$__  $$ /$$__  $$| $$      | $$  | $$|__  $$__/|_  $$_/ /$$__  $$| $$$ | $$ /$$__  $$
+//    | $$$$  /$$$$| $$  \ $$| $$  \ $$| $$$$| $$| $$        | $$  | $$  \__/| $$  | $$   | $$         | $$  \__/| $$  \ $$| $$      | $$  | $$   | $$     | $$  | $$  \ $$| $$$$| $$| $$  \__/
+//    | $$ $$/$$ $$| $$  | $$| $$  | $$| $$ $$ $$| $$        | $$  | $$ /$$$$| $$$$$$$$   | $$         |  $$$$$$ | $$  | $$| $$      | $$  | $$   | $$     | $$  | $$  | $$| $$ $$ $$|  $$$$$$
+//    | $$  $$$| $$| $$  | $$| $$  | $$| $$  $$$$| $$        | $$  | $$|_  $$| $$__  $$   | $$          \____  $$| $$  | $$| $$      | $$  | $$   | $$     | $$  | $$  | $$| $$  $$$$ \____  $$
+//    | $$\  $ | $$| $$  | $$| $$  | $$| $$\  $$$| $$        | $$  | $$  \ $$| $$  | $$   | $$          /$$  \ $$| $$  | $$| $$      | $$  | $$   | $$     | $$  | $$  | $$| $$\  $$$ /$$  \ $$
+//    | $$ \/  | $$|  $$$$$$/|  $$$$$$/| $$ \  $$| $$$$$$$$ /$$$$$$|  $$$$$$/| $$  | $$   | $$         |  $$$$$$/|  $$$$$$/| $$$$$$$$|  $$$$$$/   | $$    /$$$$$$|  $$$$$$/| $$ \  $$|  $$$$$$/
+//    |__/     |__/ \______/  \______/ |__/  \__/|________/|______/ \______/ |__/  |__/   |__/          \______/  \______/ |________/ \______/    |__/   |______/ \______/ |__/  \__/ \______/
+
+
+// Main.js
+
+
+
+
+// Requirements
 const electron = require("electron");
 const dialog = electron.dialog;
 const path = require("path");
@@ -15,6 +31,7 @@ console.log(__dirname);
 
 let robloxstudio_location = null;
 
+// The starting point for Moonlight
 async function main() {
     loadingwindow = new electron.BrowserWindow({
         width: 700,
@@ -51,6 +68,7 @@ async function main() {
 
     await utils.sleep(300);
 
+    // Alpha Notice Message
     await dialog.showMessageBox({
         title: "MoonLight - Alpha Build Warning",
         type: "info",
@@ -64,9 +82,11 @@ async function main() {
             "Developed by Parafield Studios!"
     });
 
+    // Detects if ur using anything besides Windows or MacOS
     if (utils.getOperatingSystem() === utils.OperatingSystem.OSUNSUPPORTED) {
         console.error("Current OS is unsupported!");
 
+        // Message Box
         await dialog.showMessageBox({
             title: "MoonLight - Unsupported Operating System",
             type: "error",
@@ -90,6 +110,7 @@ async function main() {
     console.log(utils.getOperatingSystem());
     console.log("Locating Roblox Studio.");
 
+    // Checks if it's Windows or Mac
     if (osType === utils.OperatingSystem.MACOS) {
         potentialPath = path.join(utils.homepath, 'Documents', 'Roblox');
         console.log("Checking "+path.join(utils.homepath, 'Documents', 'Roblox'));
@@ -100,18 +121,22 @@ async function main() {
         console.error('Unsupported operating system!');
     }
 
+    // Installs Studio if not detected
     if (potentialPath) {
         if (fs.existsSync(potentialPath)) {
             console.log(`Roblox Studio Located at ${potentialPath}`);
             robloxstudio_location = potentialPath;
         } else {
             console.error('Could not find Roblox Studio!');
+
+            // Message Box
             const { response } = await dialog.showMessageBox({
                 type: "question",
                 buttons: ["Install", "Just Download the Installer", "Cancel"],
                 defaultId: 0,
                 cancelId: 1,
                 title: "MoonLight - Could not find Roblox Studio",
+                // WHAT IS THIS INTENTIONAL TYPO LMFAO :sob:
                 message: "Oops!\n\nMoonLight cannot find Roblox Studio!\nWould you like to automagically install Roblox Studio?",
                 icon: rendering.getIcon()
             });
@@ -132,6 +157,7 @@ async function main() {
                     process.exit();
                 } else if (utils.getOperatingSystem() === utils.OperatingSystem.WINDOWS) {
                     try {
+
                         const exePath = await utils.downloadToTemp(
                             "https://roblox.com/download/studio",
                             "robloxstudioinstaller.exe"
