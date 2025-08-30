@@ -36,6 +36,7 @@ let robloxstudio_location = null;
 
 // The starting point for Moonlight
 async function main() {
+
     loadingwindow = new electron.BrowserWindow({
         width: 700,
         height: 394,

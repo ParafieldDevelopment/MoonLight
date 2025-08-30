@@ -5,6 +5,8 @@ const path = require("node:path");
 const {ipcMain} = require("electron");
 
 async function openprojectselection() {
+    const isMac = process.platform === 'darwin';
+
     window = new electron.BrowserWindow({
         titleBarOverlay: isMac,
         trafficLightPosition: isMac ? { x: 15, y: 20 } : undefined,
@@ -27,14 +29,12 @@ async function openprojectselection() {
 
     ipcMain.on('minimize-window', (event) => {
         const win = electron.BrowserWindow.fromWebContents(event.sender);
-        console.log("min")
 
         if (win) win.minimize();
     });
 
     ipcMain.on('maximize-window', (event) => {
         const win = electron.BrowserWindow.fromWebContents(event.sender);
-        console.log("max")
 
         if (win) {
             if (win.isMaximized()) win.unmaximize();
@@ -45,8 +45,6 @@ async function openprojectselection() {
     ipcMain.on('close-window', (event) => {
         const win = electron.BrowserWindow.fromWebContents(event.sender);
         if (win) win.close();
-
-        console.log("close")
     });
 
     await window.loadURL("moonlight://projectselection");
