@@ -4,9 +4,9 @@ const path = require("path");
 const fs = require("fs");
 const rendering = require("./rendering");
 const utils = require("./utils");
-const utilities = require("./utils");
 const open = require('open').default;
 const { spawn } = require('child_process');
+const {UrlRegistery, urlregistery} = require("./urlregistery");
 
 let loadingwindow = null;
 
@@ -185,9 +185,15 @@ async function main() {
 
     global.robloxstudio = robloxstudio_location;
 
-    console.log("Starting connection to plugin.");
+    console.log("Starting URL Handler");
 
+    urlregistery.
 
+    .registerUrl("home",function() {
+        console.log("log");
+    });
+
+    await electron.protocol.handle("launcher",request => urlregistery.request);
 
     loadingwindow.hide();
     loadingwindow.destroy();
