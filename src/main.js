@@ -4,16 +4,21 @@ const path = require("path");
 const fs = require("fs");
 const rendering = require("./rendering");
 const utils = require("./utils");
+const utilities = require("./utils");
+const open = require('open').default;
+const { spawn } = require('child_process');
 
 let loadingwindow = null;
 
 console.log("Starting MoonLight...");
 console.log(__dirname);
 
+let robloxstudio_location = null;
+
 async function main() {
     loadingwindow = new electron.BrowserWindow({
-        width: 800,
-        height: 450,
+        width: 700,
+        height: 394,
         frame: false,
         transparent: true,
         resizable: false,
@@ -57,7 +62,132 @@ async function main() {
             "In the meantime please enjoy MoonLight\n" +
             "\n"+
             "Developed by Parafield Studios!"
-    })
+    });
+
+    if (utils.getOperatingSystem() === utils.OperatingSystem.OSUNSUPPORTED) {
+        console.error("Current OS is unsupported!");
+
+        await dialog.showMessageBox({
+            title: "MoonLight - Unsupported Operating System",
+            type: "error",
+            icon: rendering.getIcon(),
+            message: "Sorry!\n\n" +
+                "Your current OS isn't supported by MoonLight yet and it cannot start as Roblox Studio isn't supported here\n" +
+                "Please switch to Windows or macOS to continue using MoonLight."
+        });
+        process.exit();
+    }
+
+    console.log("Locating Roblox Studio.");
+
+    // /Users/USERNAME/Documents/Roblox/Plugins
+    // C:\Users\USERNAME\AppData\Local\Roblox\Plugins
+
+    const osType = utils.getOperatingSystem();
+
+    let potentialPath;
+
+    console.log(utils.getOperatingSystem());
+    console.log("Locating Roblox Studio.");
+
+    if (osType === utils.OperatingSystem.MACOS) {
+        potentialPath = path.join(utils.homepath, 'Documents', 'Roblox');
+        console.log("Checking "+path.join(utils.homepath, 'Documents', 'Roblox'));
+    } else if (osType === utils.OperatingSystem.WINDOWS) {
+        potentialPath = path.join(utils.getAppDataPath(), 'Roblox');
+        console.log("Checking "+path.join(utils.getAppDataPath(), 'Roblox'));
+    } else {
+        console.error('Unsupported operating system!');
+    }
+
+    if (potentialPath) {
+        if (fs.existsSync(potentialPath)) {
+            console.log(`Roblox Studio Located at ${potentialPath}`);
+            robloxstudio_location = potentialPath;
+        } else {
+            console.error('Could not find Roblox Studio!');
+            const { response } = await dialog.showMessageBox({
+                type: "question",
+                buttons: ["Install", "Just Download the Installer", "Cancel"],
+                defaultId: 0,
+                cancelId: 1,
+                title: "MoonLight - Could not find Roblox Studio",
+                message: "Oops!\n\nMoonLight cannot find Roblox Studio!\nWould you like to automagically install Roblox Studio?",
+                icon: rendering.getIcon()
+            });
+
+            if (response === 0) {
+                console.log("Starting automatic install.");
+                if (utils.getOperatingSystem() === utils.OperatingSystem.MACOS) {
+                    await utils.openDMG(utils.downloadToTemp("https://roblox.com/download/studio","robloxstudioinstaller.dmg"));
+
+                    await dialog.showMessageBox({
+                        title: "MoonLight - Opened",
+                        type: "info",
+                        icon: rendering.getIcon(),
+                        message: "A new finder window has been opened with the Roblox Studio Installer app" +
+                            "\nDouble Click the \"RobloxStudioInstaller\" to launch the app and start the install.\n\n" +
+                            "Once completed please relaunch MoonLight."
+                    });
+                    process.exit();
+                } else if (utils.getOperatingSystem() === utils.OperatingSystem.WINDOWS) {
+                    try {
+                        const exePath = await utils.downloadToTemp(
+                            "https://roblox.com/download/studio",
+                            "robloxstudioinstaller.exe"
+                        );
+
+                        if (!fs.existsSync(exePath)) throw new Error("Downloaded installer not found!");
+
+                        const child = spawn(exePath, [], {
+                            detached: true,
+                            stdio: 'ignore'
+                        });
+
+                        child.unref();
+                    } catch (err) {
+                        console.error(err.stack);
+                        console.error('Error during download or launch:', err);
+                        await dialog.showMessageBox({
+                            title: "MoonLight - Error",
+                            type: "error",
+                            icon: rendering.getIcon(),
+                            message: "A problem occurred while downloading and launching the installer."
+                        });
+                        process.exit();
+                    }
+                    await dialog.showMessageBox({
+                        title: "MoonLight - Opened",
+                        type: "info",
+                        icon: rendering.getIcon(),
+                        message: "The Roblox Studio Installer has been opened and should now be installing Roblox Studio!\n\n" +
+                            "Once completed please relaunch MoonLight."
+                    });
+                    process.exit();
+                }
+
+            } if (response === 1) {
+                console.log("Starting download.");
+                await open("https://roblox.com/download/studio");
+                const { response } = await dialog.showMessageBox({
+                    type: "info",
+                    title: "MoonLight - Download Started",
+                    message: "Download Started\n\n" +
+                        "Please run the installer to install Roblox Studio. Once completed please relaunch MoonLight.",
+                    icon: rendering.getIcon()
+                });
+                process.exit();
+            } else {
+                process.exit();
+            }
+        }
+    }
+
+    global.robloxstudio = robloxstudio_location;
+
+    console.log("Starting connection to plugin.");
+
+
 
     loadingwindow.hide();
     loadingwindow.destroy();
@@ -67,15 +197,19 @@ electron.app.on('ready', async() => {
     try {
         await main();
     } catch (error) {
-        loadingwindow.hide();
+        console.error("[ CRASHED ]\nFull traceback below\n")
+        console.error(error.stack);
         await dialog.showMessageBox(loadingwindow,{
                 title: "MoonLight - Crashed",
                 type: "error",
                 icon: rendering.getIcon(),
-                message: "Uh oh.\nMoonLight has crashed!\n\n\nFull log provided below\n\n"+error.stack
+                message: "MoonLight has crashed!\n\n\nFull log provided below\n\n"+error.stack
             }
         ).then(() => {
             process.exit(1);
         });
+
+        loadingwindow.hide();
+        loadingwindow.destroy();
     }
 });

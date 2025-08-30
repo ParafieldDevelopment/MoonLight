@@ -13,5 +13,10 @@
   "description": "MoonLight | A Advanced Roblox IDE",
   "devDependencies": {
     "electron": "^37.4.0"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "open": "^10.2.0",
+    "ws": "^8.18.3"
   }
 }
