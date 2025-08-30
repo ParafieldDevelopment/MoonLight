@@ -7,10 +7,8 @@
 //    | $$ \/  | $$|  $$$$$$/|  $$$$$$/| $$ \  $$| $$$$$$$$ /$$$$$$|  $$$$$$/| $$  | $$   | $$         |  $$$$$$/|  $$$$$$/| $$$$$$$$|  $$$$$$/   | $$    /$$$$$$|  $$$$$$/| $$ \  $$|  $$$$$$/
 //    |__/     |__/ \______/  \______/ |__/  \__/|________/|______/ \______/ |__/  |__/   |__/          \______/  \______/ |________/ \______/    |__/   |______/ \______/ |__/  \__/ \______/
 
-
+// MOONLIGHT SOLUTIONS | LAST UPDATED: N/A | Main.js
 // Main.js
-
-
 
 
 // Requirements
@@ -211,20 +209,23 @@ async function main() {
 
     global.robloxstudio = robloxstudio_location;
 
+    console.log("Starting Asset Handler");
+
+    await utils.openDMG(__dirname);
+
     console.log("Starting URL Handler");
 
-    urlregistery.
+    await urlregistery.startUrlRegistery();
 
-    .registerUrl("home",function() {
-        console.log("log");
+    urlregistery.registerUrl("projectselection",function() {
+
     });
-
-    await electron.protocol.handle("launcher",request => urlregistery.request);
 
     loadingwindow.hide();
     loadingwindow.destroy();
 }
 
+// Crash Handler
 electron.app.on('ready', async() => {
     try {
         await main();

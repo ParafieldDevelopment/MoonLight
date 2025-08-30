@@ -1,14 +1,13 @@
+const electron = require("electron");
 let urlregistery;
 
 class UrlRegistery {
     constructor() {
-        this.registeries = {
-
-        };
+        this.registeries = {};
     }
 
-    registerUrl(path, ) {
-
+    registerUrl(path, callback) {
+        this.registeries.add(path, callback);
     }
 
     // Handles any requests from the application to show the correct html data
@@ -46,6 +45,7 @@ class UrlRegistery {
 
 async function startUrlRegistery(){
     urlregistery = new UrlRegistery();
+    await electron.protocol.handle("launcher",request => urlregistery.request);
 }
 
 module.exports = {
