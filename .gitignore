@@ -1,0 +1,9 @@
+node_modules/*
+.DS_Store
+.out
+.env
+*.log
+*.env
+package-lock.json
+dist
+phoenixlauncher
