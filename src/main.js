@@ -18,7 +18,6 @@ const path = require("path");
 const fs = require("fs");
 const rendering = require("./rendering");
 const utils = require("./utils");
-const open = require('open').default;
 const {spawn} = require('child_process');
 const {UrlRegistery} = require("./urlregistery");
 const {Windowmanager} = require("./windowmanager");
@@ -33,6 +32,12 @@ console.log(__dirname);
 global.srcpath = __dirname;
 
 let robloxstudio_location = null;
+
+async function openURL(url) {
+    const open = await import('open').then(mod => mod.default);
+    open(url);
+}
+
 
 // The starting point for Moonlight
 async function main() {
@@ -200,7 +205,7 @@ async function main() {
             }
             if (response === 1) {
                 console.log("Starting download.");
-                await open("https://roblox.com/download/studio");
+                await openURL("https://roblox.com/download/studio");
                 const {response} = await dialog.showMessageBox({
                     type: "info",
                     title: "MoonLight - Download Started",
@@ -227,8 +232,18 @@ async function main() {
     global.urlregistery = new UrlRegistery();
     electron.protocol.handle("moonlight", (request) => global.urlregistery.request(request));
 
-    global.urlregistery.registerUrl("projectselection", async function () {
+    global.urlregistery.registerUrl("projectselection", async function (request) {
         return await rendering.renderTemplate(path.join(__dirname, "templates", "projectselection.html"))
+    });
+
+    global.urlregistery.registerUrl("manual", async function (request) {
+        const url = new URL(request.url);
+        const segments = url.pathname.split('/').filter(Boolean);
+        const lastSegment = segments[segments.length - 1];
+
+        console.log(lastSegment);
+
+        return await rendering.renderTemplate(path.join(__dirname, "templates", lastSegment+".html"))
     });
 
     windowmanager.windowmanagerins = new Windowmanager();

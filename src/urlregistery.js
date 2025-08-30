@@ -22,7 +22,7 @@ class UrlRegistery {
                 return new Response("<h1>Not found</h1>", {status: 404});
             }
 
-            const returndata = await handler(pathSegments);
+            const returndata = await handler(request);
 
             return new Response(returndata, {
                 status: 200,

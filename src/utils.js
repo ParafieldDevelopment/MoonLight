@@ -53,7 +53,6 @@ async function downloadToTemp(url, filename) {
     return filePath;
 }
 
-
 async function openDMG(filePath) {
     return new Promise((resolve, reject) => {
         exec(`open "${filePath}"`, (err) => {

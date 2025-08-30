@@ -47,7 +47,7 @@ async function openprojectselection() {
         if (win) win.close();
     });
 
-    await window.loadURL("moonlight://projectselection");
+    await window.loadURL("moonlight://manual/projectselection");
 
     window.show();
     window.setMenu(null);
