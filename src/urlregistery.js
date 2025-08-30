@@ -11,7 +11,7 @@ class UrlRegistery {
     }
 
     // Handles any requests from the application to show the correct html data
-    async request(request){
+    async request(request) {
         const url = new URL(request.url);
 
         try {
@@ -19,7 +19,7 @@ class UrlRegistery {
             const pathSegments = url.pathname.split('/').filter(segment => segment);
 
             if (!handler) {
-                return new Response("<h1>Not found</h1>", { status: 404 });
+                return new Response("<h1>Not found</h1>", {status: 404});
             }
 
             const returndata = await handler(pathSegments);
@@ -31,7 +31,7 @@ class UrlRegistery {
                 }
             })
             // Error Catcher
-        } catch(error) {
+        } catch (error) {
             console.error(error);
             return new Response("<h1>An error occurred</h1>", {
                 status: 404,

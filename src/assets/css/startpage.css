@@ -12,14 +12,3 @@ body {
 .main-image:hover {
     transform: scale(1.03);
 }
-
-div.topbar {
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
-
-img.icon {
-    width: 30px;
-    height: 30px;
-}

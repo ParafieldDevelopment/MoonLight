@@ -6,6 +6,11 @@ const {ipcMain} = require("electron");
 
 async function openprojectselection() {
     window = new electron.BrowserWindow({
+        titleBarOverlay: isMac,
+        trafficLightPosition: isMac ? { x: 15, y: 20 } : undefined,
+        titleBarStyle: isMac ? 'hidden' : undefined,
+        autoHideMenuBar: true,
+
         width: 800,
         height: 600,
         icon: rendering.getIcon(),

@@ -1,10 +1,10 @@
-const { exec } = require('child_process');
+const {exec} = require('child_process');
 const ejs = require('ejs');
 const mime = require('mime-types');
 const path = require('path');
 const fs = require('fs').promises;
 const os = require('os')
-const { protocol } = require('electron');
+const {protocol} = require('electron');
 
 function getIcon() {
     if (os.platform() === 'darwin') {
@@ -32,17 +32,17 @@ async function registerAppProtocol(basePath = __dirname) {
 
             if (filePath.endsWith('.ttf')) mimeType = 'font/ttf';
 
-            console.log("["+request.url+"] "+filePath+ " ["+mimeType+"]");
+            console.log("[" + request.url + "] " + filePath + " [" + mimeType + "]");
 
             return new Response(data, {
-                headers: { 'Content-Type': mimeType }
+                headers: {'Content-Type': mimeType}
             });
         } catch (err) {
             console.error('[Protocol Error]', filePath, err);
 
             return new Response('404 Not Found', {
                 status: 404,
-                headers: { 'Content-Type': 'text/plain' }
+                headers: {'Content-Type': 'text/plain'}
             });
         }
     });
@@ -64,7 +64,8 @@ async function renderTemplate(templatePath, data = {}) {
     });
 }
 
-module.exports = { getIcon,
+module.exports = {
+    getIcon,
     registerAppProtocol,
     renderTemplate,
     renderDirectTemplate

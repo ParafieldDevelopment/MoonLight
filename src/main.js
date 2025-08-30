@@ -45,7 +45,7 @@ async function main() {
         fullscreenable: false,
         autoHideMenuBar: true,
         show: false,
-        title: 'MoonLight - '+electron.app.getVersion(),
+        title: 'MoonLight - ' + electron.app.getVersion(),
         icon: rendering.getIcon(),
         webPreferences: {
             nodeIntegration: false,
@@ -57,7 +57,7 @@ async function main() {
     loadingwindow.setMenuBarVisibility(false);
     loadingwindow.focus();
 
-    await loadingwindow.loadFile(path.join(__dirname,"templates","starting.html"));
+    await loadingwindow.loadFile(path.join(__dirname, "templates", "starting.html"));
 
     loadingwindow.show();
 
@@ -66,7 +66,7 @@ async function main() {
     const fadeIn = setInterval(() => {
         opacity += 0.5;
         loadingwindow.setOpacity(opacity);
-        if(opacity >= 1) clearInterval(fadeIn);
+        if (opacity >= 1) clearInterval(fadeIn);
     }, 16);
 
     await utils.sleep(300);
@@ -81,7 +81,7 @@ async function main() {
             "Since this is a Alpha build (very early stage of this IDE), not everything is completed and there will be some major bugs!\n\n" +
             "If you do encounter any bugs. Please create a issue in https://github.com/ParafieldDevelopment/MoonLight\n\n" +
             "In the meantime please enjoy MoonLight\n" +
-            "\n"+
+            "\n" +
             "Developed by Parafield Studios!"
     });
 
@@ -116,10 +116,10 @@ async function main() {
     // Checks if it's Windows or Mac
     if (osType === utils.OperatingSystem.MACOS) {
         potentialPath = path.join(utils.homepath, 'Documents', 'Roblox');
-        console.log("Checking "+path.join(utils.homepath, 'Documents', 'Roblox'));
+        console.log("Checking " + path.join(utils.homepath, 'Documents', 'Roblox'));
     } else if (osType === utils.OperatingSystem.WINDOWS) {
         potentialPath = path.join(utils.getAppDataPath(), 'Roblox');
-        console.log("Checking "+path.join(utils.getAppDataPath(), 'Roblox'));
+        console.log("Checking " + path.join(utils.getAppDataPath(), 'Roblox'));
     } else {
         console.error('Unsupported operating system!');
     }
@@ -133,7 +133,7 @@ async function main() {
             console.error('Could not find Roblox Studio!');
 
             // Message Box
-            const { response } = await dialog.showMessageBox({
+            const {response} = await dialog.showMessageBox({
                 type: "question",
                 buttons: ["Install", "Just Download the Installer", "Cancel"],
                 defaultId: 0,
@@ -148,7 +148,7 @@ async function main() {
             if (response === 0) {
                 console.log("Starting automatic install.");
                 if (utils.getOperatingSystem() === utils.OperatingSystem.MACOS) {
-                    await utils.openDMG(utils.downloadToTemp("https://roblox.com/download/studio","robloxstudioinstaller.dmg"));
+                    await utils.openDMG(utils.downloadToTemp("https://roblox.com/download/studio", "robloxstudioinstaller.dmg"));
 
                     await dialog.showMessageBox({
                         title: "MoonLight - Opened",
@@ -196,10 +196,11 @@ async function main() {
                     process.exit();
                 }
 
-            } if (response === 1) {
+            }
+            if (response === 1) {
                 console.log("Starting download.");
                 await open("https://roblox.com/download/studio");
-                const { response } = await dialog.showMessageBox({
+                const {response} = await dialog.showMessageBox({
                     type: "info",
                     title: "MoonLight - Download Started",
                     message: "Download Started\n\n" +
@@ -238,17 +239,17 @@ async function main() {
 }
 
 // Crash Handler
-electron.app.on('ready', async() => {
+electron.app.on('ready', async () => {
     try {
         await main();
     } catch (error) {
         console.error("[ CRASHED ]\nFull traceback below\n")
         console.error(error.stack);
-        await dialog.showMessageBox(loadingwindow,{
+        await dialog.showMessageBox(loadingwindow, {
                 title: "MoonLight - Crashed",
                 type: "error",
                 icon: rendering.getIcon(),
-                message: "MoonLight has crashed!\n\n\nFull log provided below\n\n"+error.stack
+                message: "MoonLight has crashed!\n\n\nFull log provided below\n\n" + error.stack
             }
         ).then(() => {
             process.exit(1);

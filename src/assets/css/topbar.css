@@ -36,7 +36,18 @@ nav.topnav {
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 0px) {
-    nav.topbar {
+    nav.topnav {
         padding-left: 80px;
     }
+}
+
+div.topbar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+img.icon {
+    width: 30px;
+    height: 30px;
 }
