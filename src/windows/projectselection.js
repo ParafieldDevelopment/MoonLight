@@ -9,7 +9,7 @@ async function openprojectselection() {
 
     window = new electron.BrowserWindow({
         titleBarOverlay: isMac,
-        trafficLightPosition: isMac ? { x: 15, y: 20 } : undefined,
+        trafficLightPosition: isMac ? { x: 15, y: 13 } : undefined,
         titleBarStyle: isMac ? 'hidden' : undefined,
         autoHideMenuBar: true,
 
