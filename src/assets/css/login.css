@@ -1,0 +1,156 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('app://assets/fonts/montserrat.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    margin: 0;
+    height: 100%;
+    background-image: url('app://assets/backgroundonlymoon.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: rgba(0,0,0,0.5);
+    background-blend-mode: overlay;
+    overflow: hidden;
+}
+
+.login-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 140px;
+    z-index: 5;
+    animation: floatWrapper 6s ease-in-out infinite;
+}
+
+.login-logo {
+    width: 140px;
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: floatLogo 6s ease-in-out infinite, rotateLogo 30s linear infinite;
+}
+
+.login-logo img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+}
+
+.login-box {
+    width: 420px;
+    background: rgba(30, 30, 30, 0.85);
+    border-radius: 12px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.5), 0 0 20px rgba(0,120,215,0.2);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    animation: floatBox 6s ease-in-out infinite;
+}
+
+.login-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    background: #0078D7;
+}
+
+.login-box h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.login-box p {
+    font-size: 0.95rem;
+    color: #ccc;
+    margin-bottom: 1rem;
+}
+
+.login-box .subtitle {
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-bottom: 1.5rem;
+}
+
+.roblox-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(45deg, #E2211C, #BF1A16);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    width: 100%;
+}
+
+.roblox-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+
+.roblox-btn:active {
+    transform: translateY(1px);
+}
+
+.roblox-logo {
+    width: 22px;
+    height: 22px;
+}
+
+.secondary-link {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #0078D7;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.secondary-link:hover {
+    color: #005A9E;
+}
+
+/* Floating animations */
+@keyframes floatWrapper {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+    50% { transform: translate(-50%, -50%) translateY(-12px); }
+}
+
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes floatBox {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Slow subtle rotation for logo */
+@keyframes rotateLogo {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(5deg); }
+}

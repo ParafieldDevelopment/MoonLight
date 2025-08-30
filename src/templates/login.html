@@ -1,35 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <style>
-            html, body {
-                margin: 0;
-                padding: 0;
-                height: 100%;
-                width: 100%;
-            }
+<head>
+    <meta charset="UTF-8">
+    <title>MoonLight - StartPage</title>
+    <link rel="stylesheet" href="<%= urlFor('assets/css/startpage.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/login.css') %>">
+</head>
+<body>
+<nav class="topnav">
+    <div class="topbar">
+        <img src="app://assets/iconcircle.png" class="icon">
+    </div>
+    <% if (global.platform === 'win32') { %>
+    <div class="window-controls">
+        <button id="min-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+            </svg>
+        </button>
+        <button id="max-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                <path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </button>
+        <button id="close-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+    <% } %>
+</nav>
 
-            body img {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                object-fit: cover;
-                z-index: -1;
-            }
+<div class="login-wrapper">
+    <div class="login-logo">
+        <img src="app://assets/transparent.png" alt="MoonLight Logo">
+    </div>
 
-            .responsive-img {
-                width: 100%;
-                height: auto;
-                max-width: 900px;
-                display: block;
-                margin: 0 auto;
-            }
-        </style>
-    </head>
-    <body>
-        <img src="../assets/splashscreen.png" alt="Splash Screen | IF YOU ARE SEEING THIS THEN HOW THE HELL DID YOU BREAK IT?!" class="responsive-img">
-    </body>
+    <div class="login-box">
+        <h1>Welcome to MoonLight</h1>
+        <p>Sign in with your Roblox account to continue</p>
+        <p class="subtitle">Please log in to continue your development journey.</p>
+        <button class="roblox-btn" id="roblox-login">
+            <img src="app://assets/ROBLOX_Logo_2015.webp" alt="Roblox" class="roblox-logo">
+            Login with Roblox
+        </button>
+        <span class="secondary-link" onclick="console.log('Switch account clicked')">
+            Sign in with a different account
+        </span>
+    </div>
+</div>
+
+<script>
+    document.getElementById('roblox-login').addEventListener('click', () => {
+        console.log("Redirecting to Roblox OAuth...");
+        window.open("https://auth.roblox.com/", "_self");
+    });
+</script>
+</body>
 </html>
