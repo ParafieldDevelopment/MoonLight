@@ -211,13 +211,14 @@ async function main() {
 
     console.log("Starting Asset Handler");
 
-    await utils.openDMG(__dirname);
+    rendering.registerAppProtocol(__dirname);
 
     console.log("Starting URL Handler");
 
-    await urlregistery.startUrlRegistery();
+    global.urlregistery = new UrlRegistery();
+    await electron.protocol.handle("launcher",request => urlregistery.request);
 
-    urlregistery.registerUrl("projectselection",function() {
+    global.urlregistery.registerUrl("projectselection",function() {
 
     });
 

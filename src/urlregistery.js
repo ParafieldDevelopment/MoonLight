@@ -7,7 +7,7 @@ class UrlRegistery {
     }
 
     registerUrl(path, callback) {
-        this.registeries.add(path, callback);
+        this.registeries[path] = callback;
     }
 
     // Handles any requests from the application to show the correct html data
@@ -43,13 +43,7 @@ class UrlRegistery {
     }
 }
 
-async function startUrlRegistery(){
-    urlregistery = new UrlRegistery();
-    await electron.protocol.handle("launcher",request => urlregistery.request);
-}
-
 module.exports = {
     UrlRegistery,
-    urlregistery,
-    startUrlRegistery,
+    urlregistery
 }
