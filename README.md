@@ -1,4 +1,7 @@
+![banner](https://raw.githubusercontent.com/ParafieldDevelopment/MoonLight/refs/heads/main/banner/img.png)
+
 # MoonLight
+
 MoonLight | An Advanced Roblox IDE
 
 An IDE built with electron that replaces the old and boring Roblox Script editor with a new and modern IDE.
