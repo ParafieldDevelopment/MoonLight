@@ -13,7 +13,9 @@ async function openprojectselection() {
         titleBarStyle: isMac ? 'hidden' : undefined,
         autoHideMenuBar: true,
 
-        width: 800,
+        minWidth: 1000,
+        minHeight: 600,
+        width: 1000,
         height: 600,
         icon: rendering.getIcon(),
         show: false,
@@ -21,7 +23,7 @@ async function openprojectselection() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: true,
-            preload: path.join(global.srcpath, "preloads", "projectselection.js")
+            preload: path.join(global.srcpath, "preloads", "loginpage.js")
         }
     });
 

@@ -248,7 +248,7 @@ async function main() {
 
     windowmanager.windowmanagerins = new Windowmanager();
 
-    await require("./windows/projectselection").openprojectselection();
+    await require("./windows/loginpage").openprojectselection();
 
     loadingwindow.hide();
     loadingwindow.destroy();
