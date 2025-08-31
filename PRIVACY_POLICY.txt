@@ -1,0 +1,39 @@
+MoonLight IDE Piracy Policy
+
+Effective Date: August 30, 2025
+
+MoonLight is an open-source IDE designed to enhance the Roblox Studio experience by providing tools to manage experiences, groups, and view user profiles. While the IDE is free to use and modify under its open-source license, unauthorized access or misuse is strictly prohibited.
+
+1. Authorized Use
+
+MoonLight may only be used by individuals who have legitimate access to the Roblox accounts and groups they interact with through the IDE.
+
+Users must comply with Roblox’s Terms of Service and Community Guidelines when using MoonLight.
+
+Modifying experiences, groups, or viewing profiles must only be done for accounts the user owns or has explicit permission to manage.
+
+2. Prohibited Actions
+
+The following actions are considered unauthorized use and are strictly forbidden:
+
+Distributing MoonLight as a paid software without explicit permission from the developers.
+
+Selling, licensing, or monetizing the IDE or its source code without approval.
+
+Using the IDE to access, modify, or steal data from Roblox accounts that you do not own or have permission to manage.
+
+Bypassing or modifying authentication or other security mechanisms implemented in MoonLight or Roblox.
+
+Claiming MoonLight as your own work, or distributing modified versions without proper attribution.
+
+3. Enforcement
+
+MoonLight developers reserve the right to revoke access, issue warnings, or take legal action against any user found violating this piracy policy.
+
+This policy supplements Roblox’s Terms of Service and does not replace any legal obligations toward Roblox or other third parties.
+
+4. Open-Source Compliance
+
+MoonLight is distributed under the [Specify License Here, e.g., MIT or Apache 2.0]. Any modification or redistribution must comply with the chosen open-source license.
+
+Attribution to the original developers (Parafield Development) is required for any derivative works.

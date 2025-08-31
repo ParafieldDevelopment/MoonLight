@@ -33,12 +33,6 @@ global.srcpath = __dirname;
 
 let robloxstudio_location = null;
 
-async function openURL(url) {
-    const open = await import('open').then(mod => mod.default);
-    open(url);
-}
-
-
 // The starting point for Moonlight
 async function main() {
 

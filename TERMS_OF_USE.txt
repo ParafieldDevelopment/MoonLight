@@ -1,0 +1,57 @@
+MoonLight IDE Terms of Use
+
+Effective Date: August 30, 2025
+
+These Terms of Use (“Terms”) govern your use of MoonLight, an open-source IDE designed to enhance Roblox development by allowing management of experiences, groups, and user profiles. By using MoonLight, you agree to comply with these Terms.
+
+1. Acceptance of Terms
+
+By downloading, installing, or using MoonLight, you agree to these Terms and any applicable laws. If you do not agree, you must not use the IDE.
+
+2. Authorized Use
+
+MoonLight may only be used with Roblox accounts and groups you have legitimate access to.
+
+You must comply with Roblox’s Terms of Service and Community Guidelines when using MoonLight.
+
+Any activity involving accounts you do not own or have explicit permission to manage is strictly prohibited.
+
+3. License
+
+MoonLight is open-source software licensed under [Specify License Here, e.g., MIT or Apache 2.0].
+
+You may use, modify, and redistribute the IDE in accordance with the terms of the chosen open-source license.
+
+Attribution to the original developers (Parafield Development) is required for derivative works.
+
+4. Restrictions
+
+You may not:
+
+Sell or monetize MoonLight or its source code without explicit permission.
+
+Bypass authentication or security measures in MoonLight or Roblox.
+
+Use MoonLight to access, modify, or collect data from accounts you do not own or manage.
+
+Claim MoonLight as your own work without attribution.
+
+5. Disclaimer
+
+MoonLight is provided “as-is” without warranties of any kind, either express or implied.
+
+The developers are not responsible for any Roblox account actions, bans, or data loss resulting from the use of MoonLight.
+
+Users are solely responsible for their actions within Roblox when using MoonLight.
+
+6. Limitation of Liability
+
+To the maximum extent permitted by law, Parafield Development shall not be liable for any indirect, incidental, special, or consequential damages arising from the use or inability to use MoonLight.
+
+7. Termination
+
+The developers may revoke access to MoonLight or take legal action if these Terms are violated.
+
+8. Changes to Terms
+
+Parafield Development reserves the right to update these Terms at any time. Users are encouraged to check the official repository for the latest version.
