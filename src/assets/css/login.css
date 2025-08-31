@@ -109,6 +109,33 @@ body {
     width: 100%;
 }
 
+.noaccount-button {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(45deg, #777777, #676767);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    width: 100%;
+}
+
+.noaccount-button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+
+.noaccount-button:active {
+    transform: translateY(1px);
+}
+
 .addaccount-button:hover {
     transform: scale(1.03);
     box-shadow: 0 6px 20px rgba(0,0,0,0.35);
