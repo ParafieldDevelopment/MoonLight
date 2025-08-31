@@ -4,7 +4,7 @@ const rendering = require('../rendering');
 const path = require("node:path");
 const {ipcMain} = require("electron");
 
-async function openprojectselection() {
+async function openloginpage() {
     const isMac = process.platform === 'darwin';
 
     window = new electron.BrowserWindow({
@@ -23,11 +23,11 @@ async function openprojectselection() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: true,
-            preload: path.join(global.srcpath, "preloads", "loginpage.js")
+            preload: path.join(global.srcpath, "preloads", "login.js")
         }
     });
 
-    await windowmanager.windowmanagerins.register(window);
+    await windowmanager.windowmanagerins.register("login",window);
 
     ipcMain.on('minimize-window', (event) => {
         const win = electron.BrowserWindow.fromWebContents(event.sender);
@@ -58,5 +58,5 @@ async function openprojectselection() {
 }
 
 module.exports = {
-    openprojectselection,
+    openloginpage,
 }
