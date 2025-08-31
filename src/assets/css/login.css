@@ -6,8 +6,11 @@
     font-display: swap;
 }
 
-body {
+* {
     font-family: 'Montserrat', 'Segoe UI', sans-serif;
+}
+
+body {
     margin: 0;
     height: 100%;
     background-image: url('app://assets/backgroundonlymoon.png');
@@ -89,7 +92,7 @@ body {
     margin-bottom: 1.5rem;
 }
 
-.roblox-btn {
+.addaccount-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -98,7 +101,7 @@ body {
     font-size: 1.05rem;
     font-weight: 600;
     color: #fff;
-    background: linear-gradient(45deg, #E2211C, #BF1A16);
+    background: linear-gradient(45deg, #1c78e2, #167ebf);
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -106,16 +109,16 @@ body {
     width: 100%;
 }
 
-.roblox-btn:hover {
+.addaccount-button:hover {
     transform: scale(1.03);
     box-shadow: 0 6px 20px rgba(0,0,0,0.35);
 }
 
-.roblox-btn:active {
+.addaccount-button:active {
     transform: translateY(1px);
 }
 
-.roblox-logo {
+.fit-logo {
     width: 22px;
     height: 22px;
 }
@@ -146,7 +149,7 @@ body {
 
 @keyframes floatBox {
     0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-5px); }
 }
 
 /* Slow subtle rotation for logo */

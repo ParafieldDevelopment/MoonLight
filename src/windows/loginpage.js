@@ -13,9 +13,9 @@ async function openloginpage() {
         titleBarStyle: isMac ? 'hidden' : undefined,
         autoHideMenuBar: true,
 
-        minWidth: 1000,
+        minWidth: 600,
         minHeight: 600,
-        width: 1000,
+        width: 600,
         height: 600,
         icon: rendering.getIcon(),
         show: false,
