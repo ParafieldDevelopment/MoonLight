@@ -196,12 +196,12 @@
 
     window.moonlight.onLoadingMenuCancel(() => {
         document.querySelector("#loading").style.display = "none";
-        document.querySelector("#mainbox").style.display = "block";
+        document.querySelector("#accountselection").style.display = "block";
     });
 
     window.moonlight.onOpenLoading(() => {
         document.querySelector("#loading").style.display = "block";
-        document.querySelector("#mainbox").style.display = "none";
+        document.querySelector("#accountselection").style.display = "none";
     });
 
     window.moonlight.onMessageUpdate((value) => {
