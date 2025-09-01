@@ -146,7 +146,6 @@
 
 <script>
     const noAccountBtn = document.getElementById("no-account");
-    const addAccountBtn = document.getElementById("add-account");
     const popup = document.getElementById("noAccountPopup");
     const cancelBtn = document.getElementById("popup-cancel");
     const confirmBtn = document.getElementById("popup-confirm");
@@ -159,11 +158,6 @@
         audio.currentTime = 0;
         audio.play().catch(err => console.warn("Sound play blocked:", err));
     }
-
-    addAccountBtn.addEventListener("click", () => {
-        playSound(selectSound);
-        window.moonlight.addNewAccount();
-    });
 
     // Popup open → play prompt
     noAccountBtn.addEventListener("click", () => {
@@ -184,7 +178,9 @@
         document.getElementById("loading").style.display = "block";
         playSound(selectSound);
 
-        window.moonlight.chooseAccount(null);
+        setTimeout(() => {
+            console.log("Entered MoonLight without account");
+        }, 2000);
     });
 
     // All other buttons → play select sound
@@ -192,20 +188,6 @@
         if (btn !== noAccountBtn && btn !== cancelBtn && btn !== confirmBtn) {
             btn.addEventListener("click", () => playSound(selectSound));
         }
-    });
-
-    window.moonlight.onLoadingMenuCancel(() => {
-        document.querySelector("#loading").style.display = "none";
-        document.querySelector("#mainbox").style.display = "block";
-    });
-
-    window.moonlight.onOpenLoading(() => {
-        document.querySelector("#loading").style.display = "block";
-        document.querySelector("#mainbox").style.display = "none";
-    });
-
-    window.moonlight.onMessageUpdate((value) => {
-        document.querySelector("#loading p ").textContent = value;
     });
 </script>
 </body>
