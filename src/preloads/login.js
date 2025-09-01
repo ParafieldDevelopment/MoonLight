@@ -1,10 +1,19 @@
 const {contextBridge, ipcRenderer} = require('electron');
 
-contextBridge.exposeInMainWorld('moonlight', {
+api = {
     minimize: () => ipcRenderer.send('minimize-window'),
     maximize: () => ipcRenderer.send('maximize-window'),
-    close: () => ipcRenderer.send('close-window')
-});
+    close: () => ipcRenderer.send('close-window'),
+
+    chooseAccount: (account) => ipcRenderer.send('choose-account',account),
+    addNewAccount: () => ipcRenderer.send('new-account'),
+
+    onMessageUpdate: (callback) => ipcRenderer.on('loadingmenu-message', (_event,message) => callback(message)),
+    onLoadingMenuCancel: (callback) => ipcRenderer.on('loadingmenu-cancel', (_event) => callback()),
+    onOpenLoading: (callback) => ipcRenderer.on('loadingmenu-open', (_event) => callback()),
+}
+
+contextBridge.exposeInMainWorld('moonlight', api);
 
 window.addEventListener('DOMContentLoaded', () => {
     const minButton = document.getElementById('min-btn');
@@ -29,3 +38,12 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+/**
+ * @typedef {typeof api} MoonlightAPI
+ */
+
+/**
+ * @type {MoonlightAPI}
+ */
+window.moonlight;

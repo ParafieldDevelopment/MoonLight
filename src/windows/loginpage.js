@@ -49,6 +49,12 @@ async function openloginpage() {
         if (win) win.close();
     });
 
+    ipcMain.on('choose-account', (event) => {
+        window.webContents.send('loadingmenu-open');
+
+        window.webContents.send('loadingmenu-message',"Continuing with no account...");
+    });
+
     await window.loadURL("moonlight://manual/login");
 
     window.show();

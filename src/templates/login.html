@@ -163,6 +163,7 @@
     const cancelBtn = document.getElementById("popup-cancel");
     const confirmBtn = document.getElementById("popup-confirm");
     const promptSound = document.getElementById("promptSound");
+    const addAccountBtn = document.getElementById("add-account");
 
     // Show popup when clicking "Continue without a account"
     noAccountBtn.addEventListener("click", () => {
@@ -172,6 +173,10 @@
         promptSound.play().catch(err => console.warn("Sound play blocked:", err));
     });
 
+    addAccountBtn.addEventListener("click", () => {
+        window.moonlight.addNewAccount(); // Tells the main process to add a new account
+    })
+
     // Cancel button hides popup
     cancelBtn.addEventListener("click", () => {
         popup.style.display = "none";
@@ -180,13 +185,22 @@
     // Confirm button continues
     confirmBtn.addEventListener("click", () => {
         popup.style.display = "none";
-        document.getElementById("accountselection").style.display = "none";
-        document.getElementById("loading").style.display = "block";
 
-        // Simulate loading delay (replace with your logic)
-        setTimeout(() => {
-            console.log("Entered MoonLight without account");
-        }, 2000);
+        window.moonlight.chooseAccount(null); // Tells the process to continue with no account
+    });
+
+    window.moonlight.onMessageUpdate((value) => {
+        document.querySelector('#loading p').textContent = value;
+    });
+
+    window.moonlight.onLoadingMenuCancel((value) => {
+        document.getElementById('accountselection').style.display = 'block';
+        document.getElementById('loading').style.display = 'none';
+    });
+
+    window.moonlight.onOpenLoading((value) => {
+        document.getElementById('accountselection').style.display = 'none';
+        document.getElementById('loading').style.display = 'block';
     });
 </script>
 </body>
