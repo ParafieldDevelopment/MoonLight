@@ -1,63 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>MoonLight - StartPage</title>
-        <link rel="stylesheet" href="<%= urlFor('assets/css/startpage.css') %>">
-        <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
-    </head>
-    <body>
-        <script>
-            window.onload = function () {
-                const fontFace = new FontFace(
-                    'Montserrat',
-                    'url(app://assets/fonts/monserract.ttf)'
-                );
+<head>
+    <meta charset="UTF-8">
+    <title>MoonLight - Project Selection</title>
+    <link rel="stylesheet" href="<%= urlFor('assets/css/startpage.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: #1e1e1e;
+            color: #fff;
+        }
 
-                fontFace.load().then((loadedFont) => {
-                    document.fonts.add(loadedFont);
-                    console.log('Font loaded programmatically');
-                });
+        .grid {
+            display: flex;
+            height: calc(100vh - 50px);
+        }
 
-                document.body.style.fontFamily = 'Montserrat, sans-serif';
-            }
-        </script>
+        /* Sidebar */
+        .sidebar {
+            width: 120px;
+            background: #2c2c2c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            gap: 20px;
+        }
 
-        <nav class="topnav">
-                <div class="topbar">
-                    <img src="app://assets/iconcircle.png" class="icon">
-                    <p>Start Menu</p>
-                </div>
-            <% if (global.platform === 'win32') { %>
-                <div class="window-controls">
-                    <button id="min-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" width="20" height="20">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
-                        </svg>
-                    </button>
-                    <button id="max-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-                            <path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/>
-                        </svg>
-                    </button>
-                    <button id="close-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" width="22" height="22">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-            <% } %>
-        </nav>
+        .sidebar-button {
+            width: 80px;
+            height: 80px;
+            background: #3a3a3a;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
 
-        <div class="grid">
-            <div class="sidebar">
-                <button class="sidebar-button">
+        .sidebar-button:hover {
+            background: #555;
+        }
 
-                </button>
+        .sidebar-button.active {
+            background: #0078ff;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 120, 255, 0.5);
+        }
+
+        /* Tooltip */
+        .sidebar-button::after {
+            content: attr(title);
+            position: absolute;
+            left: 110%;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #333;
+            padding: 5px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+            font-size: 12px;
+            color: #fff;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .sidebar-button:hover::after {
+            opacity: 1;
+        }
+
+        /* Mainbox */
+        .mainbox {
+            flex: 1;
+            padding: 25px;
+            background: #262626;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mainbox h2 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .search-bar {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-bar input, .search-bar select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: none;
+            background: #3a3a3a;
+            color: #fff;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #2a2a2a, #262626);
+            padding: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 120, 255, 0.4);
+            background: linear-gradient(135deg, #2f2f2f, #2a2a2a);
+        }
+
+        .project-card .thumbnail {
+            height: 80px;
+            background: #3a3a3a;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .project-card h3 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .project-card .owner {
+            margin: 2px 0 5px;
+            font-size: 12px;
+            color: #aaa;
+            font-style: italic;
+        }
+
+        .project-card p {
+            margin: 0;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            font-size: 10px;
+            border-radius: 6px;
+            margin-top: 5px;
+            align-self: flex-start;
+            color: #fff;
+        }
+
+        .badge.public { background: #28a745; } /* green */
+        .badge.private { background: #6c757d; } /* gray */
+    </style>
+</head>
+<body>
+<script>
+    window.onload = function () {
+        const fontFace = new FontFace('Montserrat', 'url(app://assets/fonts/monserract.ttf)');
+        fontFace.load().then((loadedFont) => {
+            document.fonts.add(loadedFont);
+        });
+        document.body.style.fontFamily = 'Montserrat, sans-serif';
+    }
+</script>
+
+<nav class="topnav">
+    <div class="topbar">
+        <img src="app://assets/iconcircle.png" class="icon">
+        <p>Project Selection</p>
+    </div>
+    <% if (global.platform === 'win32') { %>
+    <div class="window-controls">
+        <button id="min-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/></svg></button>
+        <button id="max-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+        <button id="close-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg></button>
+    </div>
+    <% } %>
+</nav>
+
+<div class="grid">
+    <div class="sidebar">
+        <button class="sidebar-button active" title="New Project"></button>
+        <button class="sidebar-button" title="Open Project"></button>
+        <button class="sidebar-button" title="Settings"></button>
+    </div>
+    <div class="mainbox">
+        <h2>Welcome to MoonLight</h2>
+        <div class="search-bar">
+            <input type="text" placeholder="Search projects..." id="searchInput">
+            <select id="sortSelect">
+                <option value="modified">Last Modified</option>
+                <option value="name">Name</option>
+            </select>
+        </div>
+        <div class="project-grid" id="projectGrid">
+            <div class="project-card">
+                <div class="thumbnail"></div>
+                <h3>My First Project</h3>
+                <p class="owner">&lt;@MyUsername&gt;</p>
+                <p>Last modified: Aug 31, 2025</p>
+                <span class="badge public">Public</span>
             </div>
-            <div class="mainbox">
-                <h2>Welcome to moonlight</h2>
+            <div class="project-card">
+                <div class="thumbnail"></div>
+                <h3>Test Game</h3>
+                <p class="owner">&lt;@MyGroupName&gt;</p>
+                <p>Last modified: Aug 30, 2025</p>
+                <span class="badge private">Private</span>
+            </div>
+            <div class="project-card">
+                <div class="thumbnail"></div>
+                <h3>Adventure Game</h3>
+                <p class="owner">&lt;@AnotherUsername&gt;</p>
+                <p>Last modified: Aug 25, 2025</p>
+                <span class="badge public">Public</span>
             </div>
         </div>
-    </body>
+    </div>
+</div>
+
+<script>
+    const selectSound = new Audio("src/assets/sounds/select.wav");
+    const hoverSound  = new Audio("src/assets/sounds/prompt.mp3");
+
+    // Sidebar buttons
+    document.querySelectorAll('.sidebar-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            selectSound.currentTime = 0; selectSound.play().catch(()=>{});
+            document.querySelectorAll('.sidebar-button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+        btn.addEventListener('mouseenter', () => { hoverSound.currentTime = 0; hoverSound.play().catch(()=>{}); });
+    });
+
+    // Project cards
+    document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('click', () => {
+            selectSound.currentTime = 0; selectSound.play().catch(()=>{});
+            console.log("Opened project:", card.querySelector('h3').innerText);
+        });
+        card.addEventListener('mouseenter', () => { hoverSound.currentTime = 0; hoverSound.play().catch(()=>{}); });
+    });
+
+    // Search filter
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', () => {
+        const term = searchInput.value.toLowerCase();
+        document.querySelectorAll('.project-card').forEach(card => {
+            const name = card.querySelector('h3').innerText.toLowerCase();
+            card.style.display = name.includes(term) ? 'flex' : 'none';
+        });
+    });
+</script>
+</body>
 </html>
