@@ -13,9 +13,9 @@ async function openprojectselection() {
         titleBarStyle: isMac ? 'hidden' : undefined,
         autoHideMenuBar: true,
 
-        minWidth: 1500,
+        minWidth: 800,
         minHeight: 800,
-        width: 1500,
+        width: 1200,
         height: 800,
         icon: rendering.getIcon(),
         show: false,
