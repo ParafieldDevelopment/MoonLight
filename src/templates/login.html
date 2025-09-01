@@ -1,69 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>MoonLight - StartPage</title>
-        <link rel="stylesheet" href="<%= urlFor('assets/css/startpage.css') %>">
-        <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
-        <link rel="stylesheet" href="<%= urlFor('assets/css/login.css') %>">
-        <link rel="stylesheet" href="<%= urlFor('assets/css/loadingspinner.css') %>">
-    </head>
-    <body>
-        <nav class="topnav">
-            <div class="topbar">
-                <img src="app://assets/iconcircle.png" class="icon">
-            </div>
-            <% if (global.platform === 'win32') { %>
-            <div class="window-controls">
-                <button id="min-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
-                    </svg>
-                </button>
-                <button id="max-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-                        <path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/>
-                    </svg>
-                </button>
-                <button id="close-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            <% } %>
-        </nav>
+<head>
+    <meta charset="UTF-8">
+    <title>MoonLight - StartPage</title>
+    <link rel="stylesheet" href="<%= urlFor('assets/css/startpage.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/login.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/loadingspinner.css') %>">
+    <style>
+        /* Overlay background */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
 
-        <div class="login-wrapper" id="mainbox">
-            <div class="login-box" id="accountselection">
-                <h1>Welcome to MoonLight</h1>
+        /* Inherit login-box styles but tweak for popup */
+        .popup-box {
+            width: 420px;
+            max-width: 90%;
+            text-align: center;
+            border: none;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+            animation: fadeIn 0.2s ease-in-out;
+        }
 
-                <p>Please select a Roblox account to continue</p>
+        /* Buttons row */
+        .popup-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-evenly;
+            gap: 10px;
+        }
 
-                <p class="subtitle">Please log in to continue your development journey.</p>
+        .popup-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
 
-                <div id="accounts">
-                    <p>No accounts.</p>
-                </div>
+        /* Cancel */
+        #popup-cancel {
+            background: #444;
+            color: white;
+        }
 
-                <button class="addaccount-button" id="add-account">
-                    Add a account
-                </button>
+        #popup-cancel:hover {
+            background: #666;
+        }
 
-                <button class="noaccount-button" id="no-account">
-                    Continue with without a account
-                </button>
-            </div>
+        /* Confirm */
+        #popup-confirm {
+            background: #0078ff;
+            color: white;
+        }
 
-            <div class="login-box" id="loading" style="display: none;">
-                <h1>Welcome to MoonLight</h1>
-                <p>Loading...</p>
-                <span class="loader"></span>
-            </div>
+        #popup-confirm:hover {
+            background: #005fcc;
+        }
+
+        /* Fade animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+<nav class="topnav">
+    <div class="topbar">
+        <img src="app://assets/iconcircle.png" class="icon">
+    </div>
+    <% if (global.platform === 'win32') { %>
+    <div class="window-controls">
+        <button id="min-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" width="20" height="20">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/>
+            </svg>
+        </button>
+        <button id="max-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                <path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </button>
+        <button id="close-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" width="22" height="22">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+    <% } %>
+</nav>
+
+<div class="login-wrapper" id="mainbox">
+    <div class="login-box" id="accountselection">
+        <h1>Welcome to MoonLight</h1>
+
+        <p>Please select a Roblox account to continue</p>
+
+        <p class="subtitle">Please log in to continue your development journey.</p>
+
+        <div id="accounts">
+            <p>No accounts.</p>
         </div>
 
-        <script>
+        <button class="addaccount-button" id="add-account">
+            Add a account
+        </button>
 
-        </script>
-    </body>
+        <button class="noaccount-button" id="no-account">
+            Continue without a account
+        </button>
+    </div>
+
+    <div class="login-box" id="loading" style="display: none;">
+        <h1>Welcome to MoonLight</h1>
+        <p>Loading...</p>
+        <span class="loader"></span>
+    </div>
+</div>
+
+<!-- Confirmation Popup -->
+<div id="noAccountPopup" class="popup-overlay" style="display: none;">
+    <div class="login-box popup-box">
+        <h2>Continue Without an Account?</h2>
+        <p>
+            Some features may be unavailable if you continue without signing in to a Roblox account.
+            Are you sure you want to proceed?
+        </p>
+        <div class="popup-buttons">
+            <button id="popup-cancel">Cancel</button>
+            <button id="popup-confirm">Continue</button>
+        </div>
+    </div>
+</div>
+
+<!-- Sound -->
+<audio id="promptSound" src="<%= urlFor('assets/sounds/prompt.mp3') %>" preload="auto"></audio>
+
+<script>
+    const noAccountBtn = document.getElementById("no-account");
+    const popup = document.getElementById("noAccountPopup");
+    const cancelBtn = document.getElementById("popup-cancel");
+    const confirmBtn = document.getElementById("popup-confirm");
+    const promptSound = document.getElementById("promptSound");
+
+    // Show popup when clicking "Continue without a account"
+    noAccountBtn.addEventListener("click", () => {
+        popup.style.display = "flex";
+        // Play sound
+        promptSound.currentTime = 0; // reset if already played
+        promptSound.play().catch(err => console.warn("Sound play blocked:", err));
+    });
+
+    // Cancel button hides popup
+    cancelBtn.addEventListener("click", () => {
+        popup.style.display = "none";
+    });
+
+    // Confirm button continues
+    confirmBtn.addEventListener("click", () => {
+        popup.style.display = "none";
+        document.getElementById("accountselection").style.display = "none";
+        document.getElementById("loading").style.display = "block";
+
+        // Simulate loading delay (replace with your logic)
+        setTimeout(() => {
+            console.log("Entered MoonLight without account");
+        }, 2000);
+    });
+</script>
+</body>
 </html>
