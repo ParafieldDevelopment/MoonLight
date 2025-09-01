@@ -1,63 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>MoonLight - StartPage</title>
-        <link rel="stylesheet" href="<%= urlFor('assets/css/startpage.css') %>">
-        <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
-    </head>
-    <body>
-        <script>
-            window.onload = function () {
-                const fontFace = new FontFace(
-                    'Montserrat',
-                    'url(app://assets/fonts/monserract.ttf)'
-                );
+<head>
+    <meta charset="UTF-8">
+    <title>MoonLight - Project Selection</title>
+    <link rel="stylesheet" href="<%= urlFor('assets/css/startpage.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
+</head>
+<body>
+<script>
+    window.onload = function () {
+        const fontFace = new FontFace('Montserrat', 'url(app://assets/fonts/monserract.ttf)');
+        fontFace.load().then((loadedFont) => {
+            document.fonts.add(loadedFont);
+        });
+        document.body.style.fontFamily = 'Montserrat, sans-serif';
+    }
+</script>
 
-                fontFace.load().then((loadedFont) => {
-                    document.fonts.add(loadedFont);
-                    console.log('Font loaded programmatically');
-                });
+<nav class="topnav">
+    <div class="topbar">
+        <img src="app://assets/iconcircle.png" class="icon">
+        <p>Project Selection</p>
+    </div>
+    <% if (global.platform === 'win32') { %>
+    <div class="window-controls">
+        <button id="min-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/></svg></button>
+        <button id="max-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+        <button id="close-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg></button>
+    </div>
+    <% } %>
+</nav>
 
-                document.body.style.fontFamily = 'Montserrat, sans-serif';
-            }
-        </script>
-
-        <nav class="topnav">
-                <div class="topbar">
-                    <img src="app://assets/iconcircle.png" class="icon">
-                    <p>Start Menu</p>
-                </div>
-            <% if (global.platform === 'win32') { %>
-                <div class="window-controls">
-                    <button id="min-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" width="20" height="20">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
-                        </svg>
-                    </button>
-                    <button id="max-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-                            <path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/>
-                        </svg>
-                    </button>
-                    <button id="close-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" width="22" height="22">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-            <% } %>
-        </nav>
-
-        <div class="grid">
-            <div class="sidebar">
-                <button class="sidebar-button">
-
-                </button>
+<div class="internaltopbar">
+    <div class="accountbox">
+        <img src="app://assets/user.svg">
+        <div class="accountdetails">
+            <p>Not Signed in</p>
+            <!--
+            <p>mas6y6</p>
+            <p style="font-size: 10px">Account: 13+</p>
+            -->
+        </div>
+    </div>
+</div>
+<div class="grid">
+    <div class="sidebar">
+        <button class="sidebar-button active" title="New Project">
+            <p>New Project</p>
+        </button>
+        <button class="sidebar-button" title="Open Project">
+            <p>Open Project</p>
+        </button>
+        <button class="sidebar-button" title="Settings">
+            <p>Settings</p>
+        </button>
+    </div>
+    <div class="mainbox">
+        <h2>Welcome to MoonLight</h2>
+        <div class="search-bar">
+            <input type="text" placeholder="Search projects..." id="searchInput">
+            <select id="sortSelect">
+                <option value="modified">Last Modified</option>
+                <option value="name">Name</option>
+            </select>
+        </div>
+        <div class="project-grid" id="projectGrid">
+            <div class="project-card">
+                <div class="thumbnail"></div>
+                <h3>My First Project</h3>
+                <p class="owner">&lt;@MyUsername&gt;</p>
+                <p>Last modified: Aug 31, 2025</p>
+                <span class="badge public">Public</span>
             </div>
-            <div class="mainbox">
-                <h2>Welcome to moonlight</h2>
+            <div class="project-card">
+                <div class="thumbnail"></div>
+                <h3>Test Game</h3>
+                <p class="owner">&lt;@MyGroupName&gt;</p>
+                <p>Last modified: Aug 30, 2025</p>
+                <span class="badge private">Private</span>
+            </div>
+            <div class="project-card">
+                <div class="thumbnail"></div>
+                <h3>Adventure Game</h3>
+                <p class="owner">&lt;@AnotherUsername&gt;</p>
+                <p>Last modified: Aug 25, 2025</p>
+                <span class="badge public">Public</span>
             </div>
         </div>
-    </body>
+    </div>
+</div>
+
+<script>
+    const selectSound = new Audio("src/assets/sounds/select.wav");
+    const hoverSound  = new Audio("src/assets/sounds/prompt.mp3");
+
+    // Sidebar buttons
+    document.querySelectorAll('.sidebar-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            selectSound.currentTime = 0; selectSound.play().catch(()=>{});
+            document.querySelectorAll('.sidebar-button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+        btn.addEventListener('mouseenter', () => { hoverSound.currentTime = 0; hoverSound.play().catch(()=>{}); });
+    });
+
+    // Project cards
+    document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('click', () => {
+            selectSound.currentTime = 0; selectSound.play().catch(()=>{});
+            console.log("Opened project:", card.querySelector('h3').innerText);
+        });
+        card.addEventListener('mouseenter', () => { hoverSound.currentTime = 0; hoverSound.play().catch(()=>{}); });
+    });
+
+    // Search filter
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', () => {
+        const term = searchInput.value.toLowerCase();
+        document.querySelectorAll('.project-card').forEach(card => {
+            const name = card.querySelector('h3').innerText.toLowerCase();
+            card.style.display = name.includes(term) ? 'flex' : 'none';
+        });
+    });
+</script>
+</body>
 </html>
