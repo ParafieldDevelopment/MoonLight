@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
     <link rel="stylesheet" href="<%= urlFor('assets/css/login.css') %>">
     <link rel="stylesheet" href="<%= urlFor('assets/css/loadingspinner.css') %>">
-    <link rel="stylesheet" href="<%= urlFor('assets/css/ProjectSelection.css') %>"
-    <style>
-
-
-    </style>
+    <link rel="stylesheet" href="<%= urlFor('assets/css/ProjectSelection.css') %>">
 </head>
 <body>
+
+<!-- Intro Screen -->
+<div id="intro-screen">
+    <div id="starfield"></div>
+    <img id="intro-logo" src="<%= urlFor('assets/transparent.png') %>" alt="MoonLight Logo">
+    <div id="intro-sub">Loading Projects...</div>
+</div>
 
 <!-- Topbar -->
 <nav class="topnav">
@@ -23,7 +26,8 @@
     </div>
     <div class="window-controls">
         <button id="min-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" width="20" height="20">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/>
             </svg>
         </button>
@@ -33,7 +37,8 @@
             </svg>
         </button>
         <button id="close-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" width="22" height="22">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
             </svg>
         </button>
@@ -69,9 +74,64 @@
         <span>@username &nbsp; | &nbsp; Account: ???</span>
     </div>
     <div class="build-info">
-        2025.0.0.0a – Internal Alpha Build
+        2025.0.0.0a – Experimental Alpha Build
     </div>
 </footer>
 
+<script>
+    window.addEventListener("load", () => {
+        const intro = document.getElementById("intro-screen");
+        const starfield = document.getElementById("starfield");
+
+        // --- Create dynamic stars ---
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement("div");
+            star.classList.add("star");
+            const size = Math.random() * 2 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.opacity = Math.random() * 0.8 + 0.2;
+            starfield.appendChild(star);
+        }
+
+        // --- Spawn shooting stars ---
+        function spawnShootingStar() {
+            const shootingStar = document.createElement("div");
+            shootingStar.classList.add("shooting-star");
+            shootingStar.style.top = `${Math.random() * 40 + 10}%`;
+            shootingStar.style.left = `-${Math.random() * 200}px`;
+            shootingStar.style.animation = `shooting ${1 + Math.random() * 1.5}s linear`;
+            intro.appendChild(shootingStar);
+            shootingStar.addEventListener('animationend', () => shootingStar.remove());
+        }
+
+        const shootingInterval = setInterval(spawnShootingStar, 400);
+
+        // --- Spawn particles ---
+        function spawnParticle() {
+            const particle = document.createElement("div");
+            particle.classList.add("particle");
+            particle.style.width = particle.style.height = `${Math.random() * 4 + 2}px`;
+            particle.style.background = `hsl(${Math.random() * 360}, 80%, 70%)`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.setProperty('--dx', `${(Math.random() - 0.5) * 200}px`);
+            particle.style.setProperty('--dy', `${(Math.random() - 0.5) * 200}px`);
+            intro.appendChild(particle);
+            particle.addEventListener('animationend', () => particle.remove());
+        }
+
+        const particleInterval = setInterval(spawnParticle, 200);
+
+        // --- Fade out intro after 3 seconds ---
+        setTimeout(() => {
+            intro.classList.add("fade-out");
+            clearInterval(shootingInterval);
+            clearInterval(particleInterval);
+        }, 3000);
+    });
+</script>
 </body>
 </html>

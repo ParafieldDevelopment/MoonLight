@@ -123,3 +123,118 @@ footer {
 .build-info {
     color: #aaa;
 }
+
+/* --- Intro Overlay --- */
+#intro-screen {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, #05050a, #0a0a20);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+
+#intro-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Starfield container */
+#starfield {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+}
+
+/* Logo image */
+#intro-logo {
+    width: 200px; /* adjust size */
+    height: auto;
+    z-index: 10;
+    animation: bounce 1.5s ease-in-out infinite, glow 2s ease-in-out infinite alternate;
+}
+
+#intro-sub {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    opacity: 0.8;
+    z-index: 10;
+}
+
+/* Bounce animation */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Glow effect for logo */
+@keyframes glow {
+    from {
+        filter: drop-shadow(0 0 5px #6b5cff) drop-shadow(0 0 10px #6b5cff);
+    }
+    to {
+        filter: drop-shadow(0 0 20px #b084ff) drop-shadow(0 0 30px #b084ff);
+    }
+}
+
+/* Shooting star animation */
+@keyframes shooting {
+    0% {
+        transform: translate(0, 0) rotate(-45deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(120vw, 80vh) rotate(-45deg);
+        opacity: 0;
+    }
+}
+
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(-45deg, white, rgba(255, 255, 255, 0));
+    transform: rotate(-45deg); /* diagonal left */
+    z-index: 5;
+    opacity: 0;
+}
+
+/* Particle animation */
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.7;
+    z-index: 2;
+    animation: float 2s linear forwards;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translate(var(--dx, 0), var(--dy, 0));
+        opacity: 0;
+    }
+}
