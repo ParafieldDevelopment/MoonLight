@@ -72,14 +72,8 @@
 
         /* Fade animation */
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
@@ -114,22 +108,13 @@
 <div class="login-wrapper" id="mainbox">
     <div class="login-box" id="accountselection">
         <h1>Welcome to MoonLight</h1>
-
         <p>Please select a Roblox account to continue</p>
-
         <p class="subtitle">Please log in to continue your development journey.</p>
-
         <div id="accounts">
             <p>No accounts.</p>
         </div>
-
-        <button class="addaccount-button" id="add-account">
-            Add a account
-        </button>
-
-        <button class="noaccount-button" id="no-account">
-            Continue without a account
-        </button>
+        <button class="addaccount-button" id="add-account">Add a account</button>
+        <button class="noaccount-button" id="no-account">Continue without a account</button>
     </div>
 
     <div class="login-box" id="loading" style="display: none;">
@@ -154,39 +139,73 @@
     </div>
 </div>
 
-<!-- Sound -->
+<!-- Sound Effects -->
 <audio id="promptSound" src="<%= urlFor('assets/sounds/prompt.mp3') %>" preload="auto"></audio>
+<audio id="selectSound" src="<%= urlFor('assets/sounds/select.mp3') %>" preload="auto"></audio>
+<audio id="backSound" src="<%= urlFor('assets/sounds/back.mp3') %>" preload="auto"></audio>
 
 <script>
     const noAccountBtn = document.getElementById("no-account");
+    const addAccountBtn = document.getElementById("add-account");
     const popup = document.getElementById("noAccountPopup");
     const cancelBtn = document.getElementById("popup-cancel");
     const confirmBtn = document.getElementById("popup-confirm");
     const promptSound = document.getElementById("promptSound");
+    const backSound = document.getElementById("backSound");
+    const selectSound = document.getElementById("selectSound");
 
-    // Show popup when clicking "Continue without a account"
+    function playSound(audio) {
+        if (!audio) return;
+        audio.currentTime = 0;
+        audio.play().catch(err => console.warn("Sound play blocked:", err));
+    }
+
+    addAccountBtn.addEventListener("click", () => {
+        playSound(selectSound);
+        window.moonlight.addNewAccount();
+    });
+
+    // Popup open → play prompt
     noAccountBtn.addEventListener("click", () => {
         popup.style.display = "flex";
-        // Play sound
-        promptSound.currentTime = 0; // reset if already played
-        promptSound.play().catch(err => console.warn("Sound play blocked:", err));
+        playSound(promptSound);
     });
 
-    // Cancel button hides popup
+    // Cancel button → play back
     cancelBtn.addEventListener("click", () => {
         popup.style.display = "none";
+        playSound(backSound);
     });
 
-    // Confirm button continues
+    // Confirm button → play select
     confirmBtn.addEventListener("click", () => {
         popup.style.display = "none";
         document.getElementById("accountselection").style.display = "none";
         document.getElementById("loading").style.display = "block";
+        playSound(selectSound);
 
-        // Simulate loading delay (replace with your logic)
-        setTimeout(() => {
-            console.log("Entered MoonLight without account");
-        }, 2000);
+        window.moonlight.chooseAccount(null);
+    });
+
+    // All other buttons → play select sound
+    document.querySelectorAll("button").forEach(btn => {
+        if (btn !== noAccountBtn && btn !== cancelBtn && btn !== confirmBtn) {
+            btn.addEventListener("click", () => playSound(selectSound));
+        }
+    });
+
+    window.moonlight.onLoadingMenuCancel(() => {
+        document.querySelector("#loading").style.display = "none";
+        document.querySelector("#mainbox").style.display = "block";
+    });
+
+    window.moonlight.onOpenLoading(() => {
+        document.querySelector("#loading").style.display = "block";
+        document.querySelector("#mainbox").style.display = "none";
+    });
+
+    window.moonlight.onMessageUpdate((value) => {
+        document.querySelector("#loading p ").textContent = value;
     });
 </script>
 </body>
