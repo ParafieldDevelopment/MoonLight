@@ -1,0 +1,125 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(160deg, #242424, #1a1a1a);
+    font-family: "Montserrat", sans-serif;
+    color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Header (MoonLight Title Section) */
+header {
+    padding: 20px 40px;
+}
+
+header h1 {
+    font-family: monospace;
+    font-size: 2.4rem;
+    margin-bottom: 5px;
+    text-shadow: 0 0 8px rgba(180, 180, 255, 0.4);
+}
+
+header h2 {
+    font-size: 1.2rem;
+    font-weight: normal;
+    border-bottom: none;
+    display: inline-block;
+    padding-bottom: 4px;
+    background: linear-gradient(to right, #666, transparent);
+    -webkit-background-clip: text;
+    color: #bbb;
+}
+
+/* User/Group Selector */
+.view-as {
+    margin: 20px 40px;
+}
+
+.view-as p {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.selector {
+    background: #111;
+    border-radius: 30px;
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.selector img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #444;
+}
+
+.selector span {
+    font-family: monospace;
+}
+
+.selector:hover {
+    background: #1e1e1e;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
+}
+
+/* Main Content */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.placeholder {
+    background: rgba(30, 30, 30, 0.8);
+    border-radius: 12px;
+    width: 600px;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    opacity: 0.9;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* Footer */
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(20, 20, 20, 0.95);
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+}
+
+.account {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.account img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #333;
+}
+
+.build-info {
+    color: #aaa;
+}

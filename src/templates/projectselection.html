@@ -3,185 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>MoonLight - Project Selection</title>
+    <link rel="stylesheet" href="<%= urlFor('assets/css/startpage.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/login.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/loadingspinner.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/ProjectSelection.css') %>"
     <style>
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            background: linear-gradient(160deg, #242424, #1a1a1a);
-            font-family: "Montserrat", sans-serif;
-            color: #f5f5f5;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-
-        /* Top Navigation / Draggable Titlebar */
-        nav.topnav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #1c1c1c;
-            padding: 6px 12px;
-            -webkit-app-region: drag;
-        }
-
-        .topbar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .topbar .icon {
-            width: 22px;
-            height: 22px;
-        }
-
-        .topbar p {
-            font-size: 14px;
-            font-weight: bold;
-            -webkit-app-region: no-drag;
-        }
-
-        .window-controls {
-            display: flex;
-            gap: 8px;
-            -webkit-app-region: no-drag;
-        }
-
-        .window-controls button {
-            background: transparent;
-            border: none;
-            color: #f5f5f5;
-            cursor: pointer;
-            padding: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .window-controls button:hover {
-            border-radius: 4px;
-        }
-
-        #min-btn:hover { background: #e6c20033; color: #ffdd55; }
-        #max-btn:hover { background: #00993333; color: #33ff77; }
-        #close-btn:hover { background: #cc000033; color: #ff5555; }
-
-        /* Header (MoonLight Title Section) */
-        header {
-            padding: 20px 40px;
-        }
-
-        header h1 {
-            font-family: monospace;
-            font-size: 2.4rem;
-            margin-bottom: 5px;
-            text-shadow: 0 0 8px rgba(180, 180, 255, 0.4);
-        }
-
-        header h2 {
-            font-size: 1.2rem;
-            font-weight: normal;
-            border-bottom: none;
-            display: inline-block;
-            padding-bottom: 4px;
-            background: linear-gradient(to right, #666, transparent);
-            -webkit-background-clip: text;
-            color: #bbb;
-        }
-
-        /* User/Group Selector */
-        .view-as {
-            margin: 20px 40px;
-        }
-
-        .view-as p {
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .selector {
-            background: #111;
-            border-radius: 30px;
-            padding: 8px 16px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: background 0.2s, box-shadow 0.2s;
-        }
-
-        .selector img {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: #444;
-        }
-
-        .selector span {
-            font-family: monospace;
-        }
-
-        .selector:hover {
-            background: #1e1e1e;
-            box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
-        }
-
-        /* Main Content */
-        .content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .placeholder {
-            background: rgba(30, 30, 30, 0.8);
-            border-radius: 12px;
-            width: 600px;
-            height: 350px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 3rem;
-            opacity: 0.9;
-            backdrop-filter: blur(6px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-
-        /* Footer */
-        footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(20, 20, 20, 0.95);
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            backdrop-filter: blur(8px);
-        }
-
-        .account {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .account img {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #333;
-        }
-
-        .build-info {
-            color: #aaa;
-        }
 
     </style>
 </head>
@@ -190,7 +18,7 @@
 <!-- Topbar -->
 <nav class="topnav">
     <div class="topbar">
-        <img src="app://assets/iconcircle.png" class="icon" alt="App Icon">
+        <img src="app://assets/iconcircle2.png" class="icon" alt="App Icon">
         <p>Project Selection</p>
     </div>
     <div class="window-controls">
@@ -223,7 +51,7 @@
     <p>View as:</p>
     <div class="selector">
         <img src="https://via.placeholder.com/24" alt="Group Icon">
-        <span>Xportation Corporation ></span>
+        <span>??? ></span>
     </div>
 </div>
 
@@ -238,10 +66,10 @@
 <footer>
     <div class="account">
         <img src="https://via.placeholder.com/28" alt="User Icon">
-        <span>@mas6y6 &nbsp; | &nbsp; Account: 13+</span>
+        <span>@username &nbsp; | &nbsp; Account: ???</span>
     </div>
     <div class="build-info">
-        2025.0.0.0a – Alpha Build
+        2025.0.0.0a – Internal Alpha Build
     </div>
 </footer>
 

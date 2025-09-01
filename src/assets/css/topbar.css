@@ -1,59 +1,52 @@
+/* Top Navigation / Draggable Titlebar */
 nav.topnav {
-    -webkit-app-region: drag;
-    height: 40px;
     display: flex;
-    background-color: rgb(37, 37, 37);
+    justify-content: space-between;
     align-items: center;
-    padding-left: 10px;
-    flex: 1;
-    border-bottom: 2px solid #555;
+    background: #1c1c1c;
+    padding: 6px 12px;
+    -webkit-app-region: drag;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.topbar .icon {
+    width: 22px;
+    height: 22px;
+}
+
+.topbar p {
+    font-size: 14px;
+    font-weight: bold;
+    -webkit-app-region: no-drag;
 }
 
 .window-controls {
     display: flex;
+    gap: 8px;
+    -webkit-app-region: no-drag;
 }
 
 .window-controls button {
-    width: 35px;
-    height: 40px;
     background: transparent;
     border: none;
-    color: white;
-    font-size: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    color: #f5f5f5;
     cursor: pointer;
-    -webkit-app-region: no-drag;
-    transition: 0.3s all;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
 }
 
 .window-controls button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
 }
 
-#close-btn:hover {
-    background-color: #e81123;
-}
-
-@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 0px) {
-    nav.topnav {
-        padding-left: 80px;
-    }
-}
-
-div.topbar {
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
-
-img.icon {
-    width: 30px;
-    height: 30px;
-    margin-right: 5px;
-}
-
-.window-controls button:focus-visible {
-    background-color: rgba(37, 37, 37, 0.2);
-}
+#min-btn:hover { background: #e6c20033; color: #ffdd55; }
+#max-btn:hover { background: #00993333; color: #33ff77; }
+#close-btn:hover { background: #cc000033; color: #ff5555; }
