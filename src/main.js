@@ -226,6 +226,10 @@ async function main() {
     global.urlregistery = new UrlRegistery();
     electron.protocol.handle("moonlight", (request) => global.urlregistery.request(request));
 
+    global.urlregistery.registerUrl("login", async function (request) {
+        return await rendering.renderTemplate(path.join(__dirname, "templates", "login.html"))
+    });
+
     global.urlregistery.registerUrl("projectselection", async function (request) {
         return await rendering.renderTemplate(path.join(__dirname, "templates", "projectselection.html"))
     });

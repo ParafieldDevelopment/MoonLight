@@ -3,10 +3,8 @@ const windowmanager = require('../windowmanager');
 const rendering = require('../rendering');
 const path = require("node:path");
 const {ipcMain} = require("electron");
-const {openprojectselection} = require("./projectselection");
-const utils = require('../utils');
 
-async function openloginpage() {
+async function openprojectselection() {
     const isMac = process.platform === 'darwin';
 
     window = new electron.BrowserWindow({
@@ -17,7 +15,7 @@ async function openloginpage() {
 
         minWidth: 800,
         minHeight: 800,
-        width: 1000,
+        width: 800,
         height: 800,
         icon: rendering.getIcon(),
         show: false,
@@ -25,7 +23,7 @@ async function openloginpage() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: true,
-            preload: path.join(global.srcpath, "preloads", "login.js")
+            preload: path.join(global.srcpath, "preloads", "projectselection.js")
         }
     });
 
@@ -51,23 +49,8 @@ async function openloginpage() {
         if (win) win.close();
     });
 
-    ipcMain.on('choose-account', async (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
 
-        window.webContents.send('loadingmenu-open');
-
-        window.webContents.send('loadingmenu-message',"Continuing with no account...");
-
-        await utils.sleep(500);
-
-        await openprojectselection();
-
-        await utils.sleep(200);
-
-        win.close();
-    });
-
-    await window.loadURL("moonlight://login");
+    await window.loadURL("moonlight://projectselection");
 
     window.show();
     window.setMenu(null);
@@ -76,5 +59,5 @@ async function openloginpage() {
 }
 
 module.exports = {
-    openloginpage,
+    openprojectselection,
 }
