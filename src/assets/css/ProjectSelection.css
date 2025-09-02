@@ -77,25 +77,56 @@ header h2 {
 .content {
     flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end; /* align left; use flex-end for right */
+    align-items: flex-start;     /* align to top */
+    padding: 40px;               /* spacing from edges or sidebar */
+    gap: 20px;                   /* spacing if you add more items later */
 }
 
+.content {
+    display: flex;            /* allow child divs to sit side by side */
+    justify-content: flex-end; /* keep children aligned to the right */
+    align-items: flex-start;  /* top-align children */
+    gap: 20px;                /* space between multiple children */
+    padding: 40px;            /* spacing from edges */
+    width: 50%;               /* make content take half the page (adjust as needed) */
+    min-width: 400px;         /* prevent it from getting too small */
+    max-width: 600px;         /* cap width */
+}
+
+
+/* Placeholder box */
 .placeholder {
-    background: rgba(30, 30, 30, 0.8);
+    background: rgba(30, 30, 30, 0.85);
     border-radius: 12px;
-    width: 600px;
+    width: 100%;           /* take full width of its parent .content */
     height: 350px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 3rem;
-    opacity: 0.9;
+    font-size: 2.5rem;
+    opacity: 0.95;
     backdrop-filter: blur(6px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
 
-/* Footer */
+.sidebar {
+    background: rgba(40, 40, 40, 0.85);
+    border-radius: 12px;
+    width: 300px;            /* adjust as needed */
+    height: 350px;           /* match placeholder height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    opacity: 0.9;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+
+
+/* Footer remains unchanged but ensure spacing works */
 footer {
     display: flex;
     justify-content: space-between;
@@ -106,6 +137,7 @@ footer {
     border-top: 1px solid rgba(255,255,255,0.08);
     backdrop-filter: blur(8px);
 }
+
 
 .account {
     display: flex;

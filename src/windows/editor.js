@@ -15,8 +15,8 @@ async function openeditor() {
 
         minWidth: 600,
         minHeight: 600,
-        width: 600,
-        height: 600,
+        width: 1920,
+        height: 1080,
         icon: rendering.getIcon(),
         show: false,
         frame: false,

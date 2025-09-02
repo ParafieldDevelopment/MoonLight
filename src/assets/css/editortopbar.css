@@ -1,0 +1,92 @@
+/* Layout sections */
+.topbar-left,
+.topbar-center,
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    -webkit-app-region: no-drag; /* only text/buttons non-draggable */
+}
+
+.topbar-left {
+    flex: 0;
+}
+
+.topbar-center {
+    flex: 1;
+    justify-content: center;
+    gap: 6px;
+}
+
+.topbar-right {
+    flex: 0;
+}
+
+/* App title & project name */
+.app-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #f5f5f5;
+}
+
+.project-name {
+    font-size: 13px;
+    color: #aaa;
+}
+
+/* Tabs like JetBrains */
+.tab {
+    padding: 4px 10px;
+    background: #2a2a2a;
+    border-radius: 4px 4px 0 0;
+    font-size: 13px;
+    color: #ccc;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.tab:hover {
+    background: #333;
+    color: #fff;
+}
+
+.tab.active {
+    background: #3c3c3c;
+    color: #fff;
+    font-weight: bold;
+}
+
+.add-tab {
+    padding: 2px 8px;
+    background: #2a2a2a;
+    border: none;
+    border-radius: 4px;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+}
+
+.add-tab:hover {
+    background: #444;
+    color: #fff;
+}
+
+/* Right side controls */
+.settings-btn {
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.settings-btn:hover {
+    color: #fff;
+}
+
+.user-avatar img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
