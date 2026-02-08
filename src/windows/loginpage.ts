@@ -31,26 +31,6 @@ export async function openloginpage() {
 
     await windowManager.register("login",window);
 
-    ipcMain.on('minimize-window', (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-
-        if (win) win.minimize();
-    });
-
-    ipcMain.on('maximize-window', (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-
-        if (win) {
-            if (win.isMaximized()) win.unmaximize();
-            else win.maximize();
-        }
-    });
-
-    ipcMain.on('close-window', (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-        if (win) win.close();
-    });
-
     ipcMain.on('choose-account', async (event) => {
         const win = electron.BrowserWindow.fromWebContents(event.sender);
 

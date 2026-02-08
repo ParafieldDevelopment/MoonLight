@@ -13,6 +13,7 @@
 
 // Requirements
 import electron = require("electron");
+const { ipcMain } = electron;
 const dialog = electron.dialog;
 import path = require("path");
 import { promises as fs } from "fs";
@@ -246,7 +247,24 @@ async function main() {
         return await rendering.renderTemplate(path.join(__dirname, "../src/templates", lastSegment+".html"))
     });
 
-    // windowmanager.windowmanagerins = new Windowmanager();
+    // Centralized IPC handlers for window controls
+    ipcMain.on('minimize-window', (event) => {
+        const win = electron.BrowserWindow.fromWebContents(event.sender);
+        if (win) win.minimize();
+    });
+
+    ipcMain.on('maximize-window', (event) => {
+        const win = electron.BrowserWindow.fromWebContents(event.sender);
+        if (win) {
+            if (win.isMaximized()) win.unmaximize();
+            else win.maximize();
+        }
+    });
+
+    ipcMain.on('close-window', (event) => {
+        const win = electron.BrowserWindow.fromWebContents(event.sender);
+        if (win) win.close();
+    });
 
     await require("./windows/loginpage").openloginpage();
 

@@ -97,7 +97,7 @@
 <div class="view-as">
     <p>View as:</p>
     <div class="selector">
-        <img src="https://via.placeholder.com/24" alt="Group Icon">
+        <img src="<%= urlFor('assets/iconcircle2.png') %>" alt="Group Icon" style="width: 24px; height: 24px;">
         <span>??? ></span>
     </div>
 </div>
@@ -126,7 +126,7 @@
 <!-- Footer -->
 <footer>
     <div class="account">
-        <img src="https://via.placeholder.com/28" alt="User Icon">
+        <img src="<%= urlFor('assets/user.svg') %>" alt="User Icon" style="width: 28px; height: 28px;">
         <span>@username &nbsp; | &nbsp; Account: ???</span>
     </div>
     <div class="build-info">
@@ -188,6 +188,10 @@
             clearInterval(particleInterval);
         }, 3000);
     });
+
+    document.getElementById('min-btn').addEventListener('click', () => window.moonlight.minimize());
+    document.getElementById('max-btn').addEventListener('click', () => window.moonlight.maximize());
+    document.getElementById('close-btn').addEventListener('click', () => window.moonlight.close());
 </script>
 </body>
 </html>
