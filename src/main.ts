@@ -198,7 +198,7 @@ async function main() {
 
     await utils.sleep(300);
 
-    /*
+
     // Alpha Notice Message - THIS IS A BLOCKING OPERATION AND WILL DELAY STARTUP
     await dialog.showMessageBox({
         title: "MoonLight - Alpha Build Warning",
@@ -212,7 +212,7 @@ async function main() {
             "\n" +
             "Developed by Parafield Studios!"
     });
-    */
+
 
     await checkRobloxStudio();
 
