@@ -86,20 +86,20 @@ async function main() {
     });
 
     // Detects if ur using anything besides Windows or MacOS
-    if (utils.getOperatingSystem() === utils.OperatingSystem.OSUNSUPPORTED) {
-        console.error("Current OS is unsupported!");
-
-        // Message Box
-        await dialog.showMessageBox({
-            title: "MoonLight - Unsupported Operating System",
-            type: "error",
-            icon: rendering.getIcon(),
-            message: "Sorry!\n\n" +
-                "Your current OS isn't supported by MoonLight yet and it cannot start as Roblox Studio isn't supported here\n" +
-                "Please switch to Windows or macOS to continue using MoonLight."
-        });
-        process.exit();
-    }
+    // if (utils.getOperatingSystem() === utils.OperatingSystem.OSUNSUPPORTED) {
+    //     console.error("Current OS is unsupported!");
+    //
+    //     // Message Box
+    //     await dialog.showMessageBox({
+    //         title: "MoonLight - Unsupported Operating System",
+    //         type: "error",
+    //         icon: rendering.getIcon(),
+    //         message: "Sorry!\n\n" +
+    //             "Your current OS isn't supported by MoonLight yet and it cannot start as Roblox Studio isn't supported here\n" +
+    //             "Please switch to Windows or macOS to continue using MoonLight."
+    //     });
+    //     process.exit();
+    // }
 
     console.log("Locating Roblox Studio.");
 

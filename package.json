@@ -1,9 +1,9 @@
 {
   "name": "moonlight",
   "version": "2025.0.0.0a",
-  "main": "src/main.js",
+  "main": "dist/main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "tsc && cp -r src/assets dist/ && electron ."
   },
   "keywords": [
     "Roblox"
@@ -11,19 +11,25 @@
   "author": "batistacakewalk",
   "license": "MIT",
   "description": "MoonLight | A Advanced Roblox IDE",
-  "devDependencies": {
-    "electron": "^37.4.0"
-  },
   "dependencies": {
     "ejs": "^3.1.10",
     "mime-types": "^3.0.1",
     "open": "^10.2.0",
     "ws": "^8.18.3"
   },
+  "devDependencies": {
+    "electron": "^37.4.0",
+    "electron-builder": "^24.0.0",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "@types/ejs": "^3.1.0",
+    "@types/mime-types": "^2.1.0",
+    "@types/ws": "^8.5.0"
+  },
   "build": {
     "appId": "com.yourname.moonlight",
     "files": [
-      "src/**/*",
+      "dist/**/*",
       "package.json"
     ],
     "directories": {
@@ -32,9 +38,5 @@
     "win": {
       "target": "nsis"
     }
-  },
-  "devDependencies": {
-    "electron": "^25.0.0",
-    "electron-builder": "^24.0.0"
   }
 }
