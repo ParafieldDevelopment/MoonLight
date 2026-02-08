@@ -354,3 +354,7 @@ footer {
     overflow-y: auto;
 }
 
+.jetbrains-logo img {
+    width: 40px;
+    height: 40px;
+}
