@@ -105,21 +105,25 @@
 
 <!-- Main Content -->
 <div class="content">
-
-    <!-- Second Div (new content panel) -->
     <div class="sidebar">
-        <!-- You can put anything here -->
-        <p>???</p>
-        <p>???</p>
-        <p>???</p>
-        <p>???</p>
+        <ul class="sidebar-nav">
+            <li><button class="sidebar-btn active">All Projects</button></li>
+            <li><button class="sidebar-btn">Recent</button></li>
+            <li><button class="sidebar-btn">New Project</button></li>
+            <li><button class="sidebar-btn">Open Project...</button></li>
+        </ul>
     </div>
 
-    <!-- First Div (your placeholder) -->
-    <div class="placeholder">
-        ¯\_(ツ)_/¯
+    <div class="main-content">
+        <div class="project-controls">
+            <input type="text" id="project-search" placeholder="Search projects...">
+            <button id="new-project-btn">Create New Project</button>
+        </div>
+        <div class="project-list-container">
+            <!-- Projects will be dynamically loaded here -->
+            <p>Your projects will appear here.</p>
+        </div>
     </div>
-
 </div>
 
 

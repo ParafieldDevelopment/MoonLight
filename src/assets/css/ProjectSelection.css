@@ -77,21 +77,9 @@ header h2 {
 .content {
     flex: 1;
     display: flex;
-    justify-content: flex-end; /* align left; use flex-end for right */
-    align-items: flex-start;     /* align to top */
-    padding: 40px;               /* spacing from edges or sidebar */
-    gap: 20px;                   /* spacing if you add more items later */
-}
-
-.content {
-    display: flex;            /* allow child divs to sit side by side */
-    justify-content: flex-end; /* keep children aligned to the right */
-    align-items: flex-start;  /* top-align children */
-    gap: 20px;                /* space between multiple children */
-    padding: 40px;            /* spacing from edges */
-    width: 50%;               /* make content take half the page (adjust as needed) */
-    min-width: 400px;         /* prevent it from getting too small */
-    max-width: 600px;         /* cap width */
+    padding: 20px 40px;
+    gap: 20px;
+    flex-direction: row; /* Ensure sidebar and main content are side-by-side */
 }
 
 
@@ -113,15 +101,43 @@ header h2 {
 .sidebar {
     background: rgba(40, 40, 40, 0.85);
     border-radius: 12px;
-    width: 300px;            /* adjust as needed */
-    height: 350px;           /* match placeholder height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    opacity: 0.9;
+    width: 200px;
+    padding: 15px;
     backdrop-filter: blur(6px);
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav li {
+    margin-bottom: 10px;
+}
+
+.sidebar-nav .sidebar-btn {
+    background: none;
+    border: none;
+    color: #f5f5f5;
+    font-size: 1rem;
+    padding: 10px 15px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-nav .sidebar-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-nav .sidebar-btn.active {
+    background: #6a0dad; /* A distinct color for the active state */
+    color: #fff;
+    font-weight: bold;
 }
 
 
@@ -270,3 +286,71 @@ footer {
         opacity: 0;
     }
 }
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: rgba(30, 30, 30, 0.85);
+    border-radius: 12px;
+    padding: 20px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.project-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#project-search {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #444;
+    background-color: #2a2a2a;
+    color: #f5f5f5;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#project-search::placeholder {
+    color: #aaa;
+}
+
+#project-search:focus {
+    border-color: #6a0dad;
+    box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.3);
+}
+
+#new-project-btn {
+    padding: 10px 20px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+#new-project-btn:hover {
+    background-color: #7b22d9;
+}
+
+.project-list-container {
+    flex: 1;
+    padding: 10px;
+    border: 1px dashed #444;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px; /* Ensure it has some height even with no projects */
+    color: #aaa;
+    font-style: italic;
+    overflow-y: auto;
+}
+
