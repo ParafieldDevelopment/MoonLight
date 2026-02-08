@@ -3,199 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>MoonLight - Project Selection</title>
-    <style>
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: linear-gradient(160deg, #242424, #1a1a1a);
-            font-family: "Montserrat", sans-serif;
-            color: #f5f5f5;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-
-        /* Top Navigation / Draggable Titlebar */
-        nav.topnav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #1c1c1c;
-            padding: 6px 12px;
-            -webkit-app-region: drag;
-        }
-
-        .topbar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .topbar .icon {
-            width: 22px;
-            height: 22px;
-        }
-
-        .topbar p {
-            font-size: 14px;
-            font-weight: bold;
-            -webkit-app-region: no-drag;
-        }
-
-        .window-controls {
-            display: flex;
-            gap: 8px;
-            -webkit-app-region: no-drag;
-        }
-
-        .window-controls button {
-            background: transparent;
-            border: none;
-            color: #f5f5f5;
-            cursor: pointer;
-            padding: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .window-controls button:hover {
-            border-radius: 4px;
-        }
-
-        #min-btn:hover { background: #e6c20033; color: #ffdd55; }
-        #max-btn:hover { background: #00993333; color: #33ff77; }
-        #close-btn:hover { background: #cc000033; color: #ff5555; }
-
-        /* Header (MoonLight Title Section) */
-        header {
-            padding: 20px 40px;
-        }
-
-        header h1 {
-            font-family: monospace;
-            font-size: 2.4rem;
-            margin-bottom: 5px;
-            text-shadow: 0 0 8px rgba(180, 180, 255, 0.4);
-        }
-
-        header h2 {
-            font-size: 1.2rem;
-            font-weight: normal;
-            border-bottom: none;
-            display: inline-block;
-            padding-bottom: 4px;
-            background: linear-gradient(to right, #666, transparent);
-            -webkit-background-clip: text;
-            color: #bbb;
-        }
-
-        /* User/Group Selector */
-        .view-as {
-            margin: 20px 40px;
-        }
-
-        .view-as p {
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .selector {
-            background: #111;
-            border-radius: 30px;
-            padding: 8px 16px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: background 0.2s, box-shadow 0.2s;
-        }
-
-        .selector img {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: #444;
-        }
-
-        .selector span {
-            font-family: monospace;
-        }
-
-        .selector:hover {
-            background: #1e1e1e;
-            box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
-        }
-
-        /* Main Content */
-        .content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .placeholder {
-            background: rgba(30, 30, 30, 0.8);
-            border-radius: 12px;
-            width: 600px;
-            height: 350px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 3rem;
-            opacity: 0.9;
-            backdrop-filter: blur(6px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-
-        /* Footer */
-        footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(20, 20, 20, 0.95);
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            backdrop-filter: blur(8px);
-        }
-
-        .account {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .account img {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #333;
-        }
-
-        .build-info {
-            color: #aaa;
-        }
-
-    </style>
+    <link rel="stylesheet" href="<%= urlFor('assets/css/startpage.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/login.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/loadingspinner.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/ProjectSelection.css') %>">
 </head>
 <body>
+
+<!-- Intro Screen -->
+<div id="intro-screen">
+    <div id="starfield"></div>
+    <img id="intro-logo" src="<%= urlFor('assets/transparent.png') %>" alt="MoonLight Logo">
+    <div id="intro-sub">Loading Projects...</div>
+</div>
 
 <!-- Topbar -->
 <nav class="topnav">
     <div class="topbar">
-        <img src="app://assets/iconcircle.png" class="icon" alt="App Icon">
+        <img src="app://assets/iconcircle2.png" class="icon" alt="App Icon">
         <p>Project Selection</p>
     </div>
     <div class="window-controls">
         <button id="min-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" width="20" height="20">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/>
             </svg>
         </button>
@@ -205,12 +37,55 @@
             </svg>
         </button>
         <button id="close-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" width="22" height="22">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
             </svg>
         </button>
     </div>
 </nav>
+
+<!--<nav class="topnav">-->
+<!--    <div class="topbar">-->
+<!--        <img src="app://assets/iconcircle2.png" class="icon" alt="App Icon">-->
+<!--        <p><u>F</u>ile</p>-->
+<!--        <p><u>E</u>dit</p>-->
+<!--        <p><u>V</u>iew</p>-->
+<!--        <p><u>T</u>ools</p>-->
+<!--        <p><u>G</u>it</p>-->
+<!--        <p><u>W</u>indow</p>-->
+<!--        <p><u>H</u>elp</p>-->
+<!--        <p> | </p>-->
+
+<!--        &lt;!&ndash;Project Name&ndash;&gt;-->
+<!--        <div class="topbar">-->
+<!--            <img src="app://assets/iconwin.png" class="icon" alt="App Icon">-->
+<!--            <p>ProjectName</p>-->
+<!--            <p>></p>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="window-controls">-->
+<!--        <button id="min-btn">-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+<!--                 stroke="currentColor" width="20" height="20">-->
+<!--                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/>-->
+<!--            </svg>-->
+<!--        </button>-->
+<!--        <button id="max-btn">-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">-->
+<!--                <path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/>-->
+<!--            </svg>-->
+<!--        </button>-->
+<!--        <button id="close-btn">-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+<!--                 stroke="currentColor" width="22" height="22">-->
+<!--                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>-->
+<!--            </svg>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</nav>-->
+
 
 <!-- Page Header -->
 <header>
@@ -223,27 +98,96 @@
     <p>View as:</p>
     <div class="selector">
         <img src="https://via.placeholder.com/24" alt="Group Icon">
-        <span>Xportation Corporation ></span>
+        <span>??? ></span>
     </div>
 </div>
 
+
 <!-- Main Content -->
 <div class="content">
+
+    <!-- Second Div (new content panel) -->
+    <div class="sidebar">
+        <!-- You can put anything here -->
+        <p>???</p>
+        <p>???</p>
+        <p>???</p>
+        <p>???</p>
+    </div>
+
+    <!-- First Div (your placeholder) -->
     <div class="placeholder">
         ¯\_(ツ)_/¯
     </div>
+
 </div>
+
 
 <!-- Footer -->
 <footer>
     <div class="account">
         <img src="https://via.placeholder.com/28" alt="User Icon">
-        <span>@mas6y6 &nbsp; | &nbsp; Account: 13+</span>
+        <span>@username &nbsp; | &nbsp; Account: ???</span>
     </div>
     <div class="build-info">
-        2025.0.0.0a – Alpha Build
+        2025.0.0.0a – Experimental Alpha Build
     </div>
 </footer>
 
+<script>
+    window.addEventListener("load", () => {
+        const intro = document.getElementById("intro-screen");
+        const starfield = document.getElementById("starfield");
+
+        // --- Create dynamic stars ---
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement("div");
+            star.classList.add("star");
+            const size = Math.random() * 2 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.opacity = Math.random() * 0.8 + 0.2;
+            starfield.appendChild(star);
+        }
+
+        // --- Spawn shooting stars ---
+        function spawnShootingStar() {
+            const shootingStar = document.createElement("div");
+            shootingStar.classList.add("shooting-star");
+            shootingStar.style.top = `${Math.random() * 40 + 10}%`;
+            shootingStar.style.left = `-${Math.random() * 200}px`;
+            shootingStar.style.animation = `shooting ${1 + Math.random() * 1.5}s linear`;
+            intro.appendChild(shootingStar);
+            shootingStar.addEventListener('animationend', () => shootingStar.remove());
+        }
+
+        const shootingInterval = setInterval(spawnShootingStar, 400);
+
+        // --- Spawn particles ---
+        function spawnParticle() {
+            const particle = document.createElement("div");
+            particle.classList.add("particle");
+            particle.style.width = particle.style.height = `${Math.random() * 4 + 2}px`;
+            particle.style.background = `hsl(${Math.random() * 360}, 80%, 70%)`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.setProperty('--dx', `${(Math.random() - 0.5) * 200}px`);
+            particle.style.setProperty('--dy', `${(Math.random() - 0.5) * 200}px`);
+            intro.appendChild(particle);
+            particle.addEventListener('animationend', () => particle.remove());
+        }
+
+        const particleInterval = setInterval(spawnParticle, 200);
+
+        // --- Fade out intro after 3 seconds ---
+        setTimeout(() => {
+            intro.classList.add("fade-out");
+            clearInterval(shootingInterval);
+            clearInterval(particleInterval);
+        }, 3000);
+    });
+</script>
 </body>
 </html>
