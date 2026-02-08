@@ -58,11 +58,7 @@ export async function openloginpage() {
 
         window.webContents.send('loadingmenu-message',"Continuing with no account...");
 
-        await utils.sleep(500);
-
         await openprojectselection();
-
-        await utils.sleep(200);
 
         win!.close();
     });
@@ -72,5 +68,6 @@ export async function openloginpage() {
     window.show();
     window.setMenu(null);
 
+    // Should be disabled in production builds
     window.webContents.openDevTools();
 }

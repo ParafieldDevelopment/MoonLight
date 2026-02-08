@@ -13,31 +13,28 @@ export function sleep(ms: number) {
 export const OperatingSystem = Object.freeze({
     WINDOWS: 'win32',
     MACOS: 'darwin',
+    LINUX: 'linux',
     OSUNSUPPORTED: 'unknown'
 })
 
-export function getAppDataPath() {
+export function getRobloxStudioPath(): string | string[] {
     const platform = process.platform;
+    const home = os.homedir();
 
     if (platform === 'win32') {
-        return process.env.LOCALAPPDATA || path.join(os.homedir(), 'AppData');
+        return process.env.LOCALAPPDATA ? path.join(process.env.LOCALAPPDATA, 'Roblox') : path.join(home, 'AppData', 'Local', 'Roblox');
     }
     if (platform === 'darwin') {
-        return path.join(os.homedir(), 'Library', 'Application Support');
+        return path.join(home, 'Documents', 'Roblox');
     }
-    throw new Error('Unsupported platform: Roblox Studio does not support Linux.');
-}
-
-export function getAppDataPathRoaming() {
-    const platform = process.platform;
-
-    if (platform === 'win32') {
-        return process.env.APPDATA || path.join(os.homedir(), 'AppData');
+    if (platform === 'linux') {
+        const VINEGAR_PATHS = {
+            flatpak: path.join(home, '.var/app/org.vinegarhq.Vinegar/data/vinegar/prefixes/studio'),
+            standalone: path.join(home, '.local/share/vinegar/prefixes/studio')
+        };
+        return [VINEGAR_PATHS.flatpak, VINEGAR_PATHS.standalone];
     }
-    if (platform === 'darwin') {
-        return path.join(os.homedir(), 'Library', 'Application Support');
-    }
-    throw new Error('Unsupported platform: Roblox Studio does not support Linux.');
+    throw new Error('Unsupported platform: Roblox Studio does not support this OS.');
 }
 
 export async function downloadToTemp(url: string, filename: string) {
@@ -76,6 +73,10 @@ export function getOperatingSystem() {
 
     if (platform === 'darwin') {
         return OperatingSystem.MACOS;
+    }
+
+    if (platform === 'linux') {
+        return OperatingSystem.LINUX;
     }
 
     return OperatingSystem.OSUNSUPPORTED;
