@@ -3,7 +3,8 @@
   "version": "2025.0.0.0a",
   "main": "dist/main.js",
   "scripts": {
-    "start": "tsc && cp -r src/assets dist/ && electron ."
+    "start-linux": "tsc && cp -r src/assets dist/ && electron .",
+    "start-windows": "tsc && xcopy src\\assets dist\\assets /E /I /Y && electron ."
   },
   "keywords": [
     "Roblox"
