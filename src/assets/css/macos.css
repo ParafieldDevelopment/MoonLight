@@ -1,0 +1,5 @@
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 0px) {
+    nav.topnav {
+        padding-left: 80px;
+    }
+}
