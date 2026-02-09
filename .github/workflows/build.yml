@@ -34,12 +34,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          PUBLISH_FLAG="never"
+          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            PUBLISH_FLAG="always"
+          fi
+          
           if [ "$RUNNER_OS" == "Windows" ]; then
-            npm run dist:win
+            npm run build && npx electron-builder --win --publish $PUBLISH_FLAG
           elif [ "$RUNNER_OS" == "macOS" ]; then
-            npm run dist:mac
+            npm run build && npx electron-builder --mac --publish $PUBLISH_FLAG
           else
-            npm run dist:linux
+            npm run build && npx electron-builder --linux --publish $PUBLISH_FLAG
           fi
         shell: bash
 
