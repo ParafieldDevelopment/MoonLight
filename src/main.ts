@@ -275,6 +275,99 @@ async function main() {
         await openeditor();
     });
 
+    ipcMain.on('new-project', async (event) => {
+        const win = electron.BrowserWindow.fromWebContents(event.sender);
+        await dialog.showMessageBox(win!, {
+            title: "MoonLight",
+            type: "info",
+            icon: rendering.getIcon(),
+            message: "New Project functionality is coming soon!"
+        });
+    });
+
+    ipcMain.on('open-project', async (event) => {
+        const win = electron.BrowserWindow.fromWebContents(event.sender);
+        const { canceled, filePaths } = await dialog.showOpenDialog(win!, {
+            properties: ['openFile', 'openDirectory'],
+            filters: [
+                { name: 'Roblox Files', extensions: ['rbxl', 'rbxlx'] },
+                { name: 'All Files', extensions: ['*'] }
+            ]
+        });
+
+        if (!canceled && filePaths.length > 0) {
+            console.log("Opening project:", filePaths[0]);
+            await openeditor();
+        }
+    });
+
+    ipcMain.on('vcs-project', async (event) => {
+        const win = electron.BrowserWindow.fromWebContents(event.sender);
+        await dialog.showMessageBox(win!, {
+            title: "MoonLight",
+            type: "info",
+            icon: rendering.getIcon(),
+            message: "VCS integration is coming soon!"
+        });
+    });
+
+    ipcMain.on('open-settings', async (event) => {
+        const win = electron.BrowserWindow.fromWebContents(event.sender);
+        await dialog.showMessageBox(win!, {
+            title: "MoonLight",
+            type: "info",
+            icon: rendering.getIcon(),
+            message: "Settings menu is coming soon!"
+        });
+    });
+
+    ipcMain.on('open-collab', async (event) => {
+        const win = electron.BrowserWindow.fromWebContents(event.sender);
+        await dialog.showMessageBox(win!, {
+            title: "MoonLight",
+            type: "info",
+            icon: rendering.getIcon(),
+            message: "Collaboration features are coming soon!"
+        });
+    });
+
+    ipcMain.on('open-external-link', async (event, url: string) => {
+        await electron.shell.openExternal(url);
+    });
+    
+    ipcMain.on('menu-action', async (event, action: string) => {
+        const win = electron.BrowserWindow.fromWebContents(event.sender);
+        console.log("Menu action received:", action);
+        
+        switch (action) {
+            case 'exit':
+                electron.app.quit();
+                break;
+            case 'about':
+                await dialog.showMessageBox(win!, {
+                    title: "About MoonLight",
+                    type: "info",
+                    icon: rendering.getIcon(),
+                    message: `MoonLight IDE\nVersion: ${electron.app.getVersion()}\n\nDeveloped by Parafield Studios`
+                });
+                break;
+            case 'documentation':
+                await electron.shell.openExternal('https://github.com/ParafieldDevelopment/MoonLight');
+                break;
+            case 'report-issue':
+                await electron.shell.openExternal('https://github.com/ParafieldDevelopment/MoonLight/issues');
+                break;
+            default:
+                await dialog.showMessageBox(win!, {
+                    title: "MoonLight",
+                    type: "info",
+                    icon: rendering.getIcon(),
+                    message: `${action.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} functionality is coming soon!`
+                });
+                break;
+        }
+    });
+
     await require("./windows/loginpage").openloginpage();
 
     loadingwindow!.hide();

@@ -25,18 +25,18 @@
         <p>Project Selection</p>
     </div>
     <div class="window-controls">
-        <button id="min-btn">
+        <button id="min-btn" title="Minimize">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" width="20" height="20">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/>
             </svg>
         </button>
-        <button id="max-btn">
+        <button id="max-btn" title="Maximize">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                 <path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/>
             </svg>
         </button>
-        <button id="close-btn">
+        <button id="close-btn" title="Close">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" width="22" height="22">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
@@ -177,15 +177,61 @@
         }, 3000);
     });
 
-    document.querySelectorAll('.project-item').forEach(item => {
-        item.addEventListener('click', () => {
-            window.moonlight.openEditor();
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("Project Selection DOM Loaded");
+
+        if (!window.moonlight) {
+            console.error("Moonlight API not found! Preload script might have failed.");
+            return;
+        }
+
+        // Helper function to safe-add event listeners
+        const addClick = (id, fn) => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('click', fn);
+            } else {
+                console.warn(`Element with id "${id}" not found.`);
+            }
+        };
+
+        // Window controls
+        addClick('min-btn', () => window.moonlight.minimize());
+        addClick('max-btn', () => window.moonlight.maximize());
+        addClick('close-btn', () => window.moonlight.close());
+
+        // Project buttons
+        addClick('new-project-btn', () => window.moonlight.newProject());
+        addClick('open-project-btn', () => window.moonlight.openProject());
+        addClick('vcs-project-btn', () => window.moonlight.vcsProject());
+
+        // Settings and Collaboration
+        addClick('settings-btn', () => window.moonlight.openSettings());
+        addClick('collab-btn', () => window.moonlight.openCollab());
+
+        // Project items
+        document.querySelectorAll('.project-item').forEach(item => {
+            item.addEventListener('click', () => {
+                window.moonlight.openEditor();
+            });
+        });
+
+        // Sidebar navigation
+        const sidebarBtns = document.querySelectorAll('.sidebar-btn');
+        sidebarBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                sidebarBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const text = btn.textContent.trim();
+                if (text === 'Learn') {
+                    window.moonlight.openExternalLink('https://github.com/ParafieldDevelopment/MoonLight');
+                } else if (text !== 'Projects') {
+                    window.moonlight.openSettings();
+                }
+            });
         });
     });
-
-    document.getElementById('min-btn').addEventListener('click', () => window.moonlight.minimize());
-    document.getElementById('max-btn').addEventListener('click', () => window.moonlight.maximize());
-    document.getElementById('close-btn').addEventListener('click', () => window.moonlight.close());
 </script>
 </body>
 </html>

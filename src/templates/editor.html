@@ -5,6 +5,70 @@
     <title>MoonLight - Editor</title>
     <link rel="stylesheet" href="<%= urlFor('assets/css/editor.css') %>">
     <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
+    <style>
+        /* Dropdown Menu Styles */
+        .menu-item-container {
+            position: relative;
+            -webkit-app-region: no-drag;
+        }
+
+        .topbar-buttons p {
+            padding: 2px 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            margin: 0;
+            user-select: none;
+        }
+
+        .topbar-buttons p:hover, .topbar-buttons p.active {
+            background-color: #3c3c3c;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #2b2d30;
+            border: 1px solid #43454a;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            min-width: 180px;
+            z-index: 1000;
+            display: none;
+            padding: 4px 0;
+            margin-top: 4px;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 6px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #dfe1e5;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #4e5057;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: #43454a;
+            margin: 4px 0;
+        }
+
+        .shortcut {
+            color: #868a91;
+            font-size: 11px;
+            margin-left: 20px;
+        }
+    </style>
 </head>
 <body>
 
@@ -13,10 +77,54 @@
     <div class="topbar">
         <img src="app://assets/iconcircle2.png" class="icon" alt="App Icon">
         <div class="topbar-buttons">
-            <p><u>F</u>ile</p>
-            <p><u>E</u>dit</p>
-            <p><u>V</u>iew</p>
-            <p><u>H</u>elp</p>
+            <div class="menu-item-container">
+                <p id="file-menu-btn"><u>F</u>ile</p>
+                <div id="file-menu" class="dropdown-menu">
+                    <div class="dropdown-item" data-action="new-file">New File... <span class="shortcut">Ctrl+N</span></div>
+                    <div class="dropdown-item" data-action="open-file">Open... <span class="shortcut">Ctrl+O</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" data-action="save-file">Save <span class="shortcut">Ctrl+S</span></div>
+                    <div class="dropdown-item" data-action="save-all">Save All <span class="shortcut">Ctrl+Shift+S</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" data-action="close-project">Close Project</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" data-action="exit">Exit</div>
+                </div>
+            </div>
+            <div class="menu-item-container">
+                <p id="edit-menu-btn"><u>E</u>dit</p>
+                <div id="edit-menu" class="dropdown-menu">
+                    <div class="dropdown-item" data-action="undo">Undo <span class="shortcut">Ctrl+Z</span></div>
+                    <div class="dropdown-item" data-action="redo">Redo <span class="shortcut">Ctrl+Y</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" data-action="cut">Cut <span class="shortcut">Ctrl+X</span></div>
+                    <div class="dropdown-item" data-action="copy">Copy <span class="shortcut">Ctrl+C</span></div>
+                    <div class="dropdown-item" data-action="paste">Paste <span class="shortcut">Ctrl+V</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" data-action="find">Find... <span class="shortcut">Ctrl+F</span></div>
+                    <div class="dropdown-item" data-action="replace">Replace... <span class="shortcut">Ctrl+R</span></div>
+                </div>
+            </div>
+            <div class="menu-item-container">
+                <p id="view-menu-btn"><u>V</u>iew</p>
+                <div id="view-menu" class="dropdown-menu">
+                    <div class="dropdown-item" data-action="toggle-sidebar">Appearance <span class="shortcut">></span></div>
+                    <div class="dropdown-item" data-action="zoom-in">Zoom In <span class="shortcut">Ctrl++</span></div>
+                    <div class="dropdown-item" data-action="zoom-out">Zoom Out <span class="shortcut">Ctrl+-</span></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" data-action="fullscreen">Full Screen <span class="shortcut">F11</span></div>
+                </div>
+            </div>
+            <div class="menu-item-container">
+                <p id="help-menu-btn"><u>H</u>elp</p>
+                <div id="help-menu" class="dropdown-menu">
+                    <div class="dropdown-item" data-action="about">About MoonLight</div>
+                    <div class="dropdown-item" data-action="check-updates">Check for Updates...</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" data-action="documentation">Documentation</div>
+                    <div class="dropdown-item" data-action="report-issue">Report Issue</div>
+                </div>
+            </div>
         </div>
         <p class="project-name">MyProject</p>
     </div>
@@ -93,6 +201,60 @@
     document.getElementById('min-btn').addEventListener('click', () => window.moonlight.minimize());
     document.getElementById('max-btn').addEventListener('click', () => window.moonlight.maximize());
     document.getElementById('close-btn').addEventListener('click', () => window.moonlight.close());
+
+    // Menu dropdown logic
+    const menuButtons = document.querySelectorAll('.topbar-buttons p');
+    const dropdowns = document.querySelectorAll('.dropdown-menu');
+
+    menuButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const menu = btn.nextElementSibling;
+            const isShowing = menu.classList.contains('show');
+
+            // Hide all first
+            dropdowns.forEach(d => d.classList.remove('show'));
+            menuButtons.forEach(b => b.classList.remove('active'));
+
+            if (!isShowing) {
+                menu.classList.add('show');
+                btn.classList.add('active');
+            }
+        });
+
+        btn.addEventListener('mouseenter', () => {
+            // If another menu is already open, switch to this one
+            const anyOpen = Array.from(dropdowns).some(d => d.classList.contains('show'));
+            if (anyOpen) {
+                dropdowns.forEach(d => d.classList.remove('show'));
+                menuButtons.forEach(b => b.classList.remove('active'));
+                btn.nextElementSibling.classList.add('show');
+                btn.classList.add('active');
+            }
+        });
+    });
+
+    // Close menus when clicking outside
+    document.addEventListener('click', () => {
+        dropdowns.forEach(d => d.classList.remove('show'));
+        menuButtons.forEach(b => b.classList.remove('active'));
+    });
+
+    // Handle menu item actions
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const action = item.dataset.action;
+            console.log("Menu Action:", action);
+            
+            if (window.moonlight && window.moonlight.menuAction) {
+                window.moonlight.menuAction(action);
+            }
+            
+            dropdowns.forEach(d => d.classList.remove('show'));
+            menuButtons.forEach(b => b.classList.remove('active'));
+        });
+    });
 
     document.querySelectorAll('.tool-window-button').forEach(button => {
         button.addEventListener('click', () => {

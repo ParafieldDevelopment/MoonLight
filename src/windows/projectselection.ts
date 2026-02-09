@@ -27,7 +27,6 @@ export function openprojectselection() {
                 preload: path.join((global as any).srcpath, "../dist/preloads", "projectselection.js")
             }
         });
-
         windowManager.register("projectselection",window);
 
         window.once('ready-to-show', () => {
