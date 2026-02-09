@@ -11,9 +11,9 @@ export function getIcon() {
     if (os.platform() === 'darwin') {
         return path.join(__dirname, '../assets', 'icon.icns');
     } else if (os.platform() === 'win32') {
-        return path.join(__dirname, '../assets', 'icon.ico');
+        return path.join(__dirname, '../assets', 'iconcircle.ico');
     } else {
-        return path.join(__dirname, '../assets', 'icon.ico');
+        return path.join(__dirname, '../assets', 'iconcircle.ico');
     }
 }
 

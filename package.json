@@ -52,7 +52,7 @@
         "nsis",
         "zip"
       ],
-      "icon": "src/assets/icon.ico"
+      "icon": "src/assets/iconcircle.ico"
     },
     "mac": {
       "target": [
