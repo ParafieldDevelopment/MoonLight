@@ -54,7 +54,7 @@ async function openeditor() {
     window.show();
     window.setMenu(null);
 
-    window.webContents.openDevTools();
+    window.webContents.openDevTools({ mode: 'detach' })
 }
 
 module.exports = {

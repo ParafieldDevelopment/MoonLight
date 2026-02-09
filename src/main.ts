@@ -368,6 +368,34 @@ async function main() {
         }
     });
 
+    ipcMain.on('save-setting', async (event, key: string, value: any) => {
+        const settingsPath = path.join(electron.app.getPath('userData'), 'settings.json');
+        try {
+            let settings: any = {};
+            try {
+                const data = await fs.readFile(settingsPath, 'utf-8');
+                settings = JSON.parse(data);
+            } catch (e) {
+                // Settings file doesn't exist or is invalid, use empty object
+            }
+            settings[key] = value;
+            await fs.writeFile(settingsPath, JSON.stringify(settings, null, 2));
+        } catch (error) {
+            console.error('Failed to save setting:', error);
+        }
+    });
+
+    ipcMain.handle('get-setting', async (event, key: string, defaultValue: any) => {
+        const settingsPath = path.join(electron.app.getPath('userData'), 'settings.json');
+        try {
+            const data = await fs.readFile(settingsPath, 'utf-8');
+            const settings = JSON.parse(data);
+            return settings[key] !== undefined ? settings[key] : defaultValue;
+        } catch (e) {
+            return defaultValue;
+        }
+    });
+
     await require("./windows/loginpage").openloginpage();
 
     loadingwindow!.hide();

@@ -69,8 +69,48 @@ body {
 
 .side-panel {
     width: 250px;
+    min-width: 150px;
+    max-width: 600px;
     background-color: #333333;
     border-right: 1px solid #2d2d2d;
+    overflow: hidden;
+    position: relative;
+}
+
+.side-panel.collapsed {
+    width: 0 !important;
+    min-width: 0 !important;
+    border-right: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.resizer {
+    width: 4px;
+    cursor: col-resize;
+    background-color: transparent;
+    transition: background-color 0.2s;
+    z-index: 10;
+    margin-left: -2px;
+    margin-right: -2px;
+}
+
+.resizer:hover, .resizer.resizing {
+    background-color: #007acc;
+}
+
+.resizer-h {
+    height: 4px;
+    cursor: row-resize;
+    background-color: transparent;
+    transition: background-color 0.2s;
+    z-index: 10;
+    margin-top: -2px;
+    margin-bottom: -2px;
+}
+
+.resizer-h:hover, .resizer-h.resizing {
+    background-color: #007acc;
 }
 
 .panel-header {
@@ -182,7 +222,10 @@ body {
 .bottom-panel {
     background-color: #333333;
     border-top: 1px solid #2d2d2d;
-    height: 200px; /* Give bottom panels a default height */
+    height: 200px; /* Default height */
+    min-height: 100px;
+    max-height: 600px;
+    overflow: hidden;
 }
 
 .is-hidden {

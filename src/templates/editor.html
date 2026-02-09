@@ -167,6 +167,7 @@
                     <!-- File structure here -->
                 </ul>
             </div>
+            <div class="resizer" id="explorer-resizer"></div>
             <div class="editor-container">
                 <div class="tabs">
                     <div class="tab active"><span>ServerScript</span><button class="close-tab">×</button></div>
@@ -176,6 +177,7 @@
                 </div>
             </div>
         </div>
+        <div class="resizer-h" id="bottom-resizer"></div>
         <div id="problems-panel" class="bottom-panel is-hidden">
             <div class="panel-header"><h3>Problems</h3></div>
             <p>No problems have been detected.</p>
@@ -256,25 +258,161 @@
         });
     });
 
-    document.querySelectorAll('.tool-window-button').forEach(button => {
-        button.addEventListener('click', () => {
-            const targetPanel = document.querySelector(button.dataset.target);
-            if (targetPanel) {
-                const isActive = button.classList.contains('active');
+    // Tool window toggling logic
+    const toolButtons = document.querySelectorAll('.tool-window-button');
+    const sidePanel = document.getElementById('project-panel');
+    const resizer = document.getElementById('explorer-resizer');
+    const bottomResizer = document.getElementById('bottom-resizer');
 
-                // Exclusive toggling for panels in the same position
-                document.querySelectorAll(`.tool-window-button[data-position="${button.dataset.position}"]`).forEach(b => {
-                    if (b !== button) {
-                        b.classList.remove('active');
-                        document.querySelector(b.dataset.target).classList.add('is-hidden');
-                    }
-                });
+    async function updateBottomResizerVisibility() {
+        const anyBottomVisible = !document.getElementById('problems-panel').classList.contains('is-hidden') || 
+                                 !document.getElementById('output-panel').classList.contains('is-hidden');
+        bottomResizer.style.display = anyBottomVisible ? 'block' : 'none';
+    }
 
-                targetPanel.classList.toggle('is-hidden');
-                button.classList.toggle('active');
+    async function initExplorerState() {
+        if (!window.moonlight || !window.moonlight.getSetting) return;
+        
+        const isCollapsed = await window.moonlight.getSetting('explorer-collapsed', false);
+        const explorerWidth = await window.moonlight.getSetting('explorer-width', 250);
+        const bottomHeight = await window.moonlight.getSetting('bottom-height', 200);
+        const explorerBtn = document.querySelector('.tool-window-button[data-target="#project-panel"]');
+        
+        if (sidePanel) {
+            sidePanel.style.width = explorerWidth + 'px';
+        }
+
+        document.querySelectorAll('.bottom-panel').forEach(p => {
+            p.style.height = bottomHeight + 'px';
+        });
+
+        if (isCollapsed) {
+            sidePanel.classList.add('collapsed');
+            resizer.style.display = 'none';
+            if (explorerBtn) explorerBtn.classList.remove('active');
+        } else {
+            sidePanel.classList.remove('collapsed');
+            resizer.style.display = 'block';
+            if (explorerBtn) explorerBtn.classList.add('active');
+        }
+    }
+
+    // Resizing logic
+    let isResizing = false;
+    let isResizingBottom = false;
+    let startY, startHeight;
+
+    resizer.addEventListener('mousedown', (e) => {
+        isResizing = true;
+        document.body.style.cursor = 'col-resize';
+        resizer.classList.add('resizing');
+    });
+
+    bottomResizer.addEventListener('mousedown', (e) => {
+        isResizingBottom = true;
+        startY = e.clientY;
+        const activePanel = document.querySelector('.bottom-panel:not(.is-hidden)');
+        startHeight = activePanel ? activePanel.offsetHeight : 200;
+        document.body.style.cursor = 'row-resize';
+        bottomResizer.classList.add('resizing');
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (isResizing) {
+            let newWidth = e.clientX - sidePanel.getBoundingClientRect().left;
+            
+            // Boundaries (matched with CSS min/max)
+            if (newWidth < 150) newWidth = 150;
+            if (newWidth > 600) newWidth = 600;
+            
+            sidePanel.style.width = newWidth + 'px';
+        }
+
+        if (isResizingBottom) {
+            let deltaY = startY - e.clientY;
+            let newHeight = startHeight + deltaY;
+
+            // Boundaries
+            if (newHeight < 100) newHeight = 100;
+            if (newHeight > 600) newHeight = 600;
+
+            document.querySelectorAll('.bottom-panel').forEach(p => {
+                p.style.height = newHeight + 'px';
+            });
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (isResizing) {
+            isResizing = false;
+            document.body.style.cursor = 'default';
+            resizer.classList.remove('resizing');
+            
+            if (window.moonlight && window.moonlight.saveSetting) {
+                window.moonlight.saveSetting('explorer-width', parseInt(sidePanel.style.width));
+            }
+        }
+
+        if (isResizingBottom) {
+            isResizingBottom = false;
+            document.body.style.cursor = 'default';
+            bottomResizer.classList.remove('resizing');
+
+            const currentHeight = parseInt(document.querySelector('.bottom-panel').style.height);
+            if (window.moonlight && window.moonlight.saveSetting) {
+                window.moonlight.saveSetting('bottom-height', currentHeight);
+            }
+        }
+    });
+
+    toolButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-target');
+            const target = document.querySelector(targetId);
+            if (!target) return;
+            
+            if (targetId === '#project-panel') {
+                const isNowCollapsed = !target.classList.contains('collapsed');
+                if (isNowCollapsed) {
+                    target.classList.add('collapsed');
+                    resizer.style.display = 'none';
+                    btn.classList.remove('active');
+                } else {
+                    target.classList.remove('collapsed');
+                    resizer.style.display = 'block';
+                    btn.classList.add('active');
+                }
+                if (window.moonlight && window.moonlight.saveSetting) {
+                    window.moonlight.saveSetting('explorer-collapsed', isNowCollapsed);
+                }
+            } else {
+                // Exclusive toggling for panels in the same position (mainly for bottom panels)
+                const position = btn.getAttribute('data-position');
+                if (position) {
+                    document.querySelectorAll(`.tool-window-button[data-position="${position}"]`).forEach(b => {
+                        if (b !== btn) {
+                            b.classList.remove('active');
+                            const otherTarget = document.querySelector(b.getAttribute('data-target'));
+                            if (otherTarget) otherTarget.classList.add('is-hidden');
+                        }
+                    });
+                }
+
+                const isHidden = target.classList.contains('is-hidden');
+                if (isHidden) {
+                    target.classList.remove('is-hidden');
+                    btn.classList.add('active');
+                } else {
+                    target.classList.add('is-hidden');
+                    btn.classList.remove('active');
+                }
+                updateBottomResizerVisibility();
             }
         });
     });
+
+    updateBottomResizerVisibility();
+    initExplorerState();
 </script>
 </body>
 </html>
