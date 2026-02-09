@@ -5,6 +5,7 @@ import dialog = electron.dialog;
 import rendering = require("./rendering");
 import {openeditor} from "../windows/editor";
 import path = require("path");
+import {openSettings} from "../windows/settings";
 
 // Centralized IPC handlers for window controls
 ipcMain.on('minimize-window', (event) => {
@@ -20,9 +21,28 @@ ipcMain.on('maximize-window', (event) => {
     }
 });
 
-ipcMain.on('close-window', (event) => {
+ipcMain.on('close-window', async (event) => {
     const win = electron.BrowserWindow.fromWebContents(event.sender);
-    if (win) win.close();
+    if (!win) return;
+
+    const allWindows = electron.BrowserWindow.getAllWindows();
+    if (allWindows.length === 1) {
+        const { response } = await dialog.showMessageBox(win, {
+            type: 'question',
+            buttons: ['Yes', 'No'],
+            defaultId: 0,
+            cancelId: 1,
+            title: 'Confirm Exit',
+            message: 'Are you sure you want to close the IDE?',
+            icon: rendering.getIcon()
+        });
+
+        if (response === 0) {
+            win.close();
+        }
+    } else {
+        win.close();
+    }
 });
 
 ipcMain.on('open-editor', async () => {
@@ -67,12 +87,7 @@ ipcMain.on('vcs-project', async (event) => {
 
 ipcMain.on('open-settings', async (event) => {
     const win = electron.BrowserWindow.fromWebContents(event.sender);
-    await dialog.showMessageBox(win!, {
-        title: "MoonLight",
-        type: "info",
-        icon: rendering.getIcon(),
-        message: "Settings menu is coming soon!"
-    });
+    openSettings();
 });
 
 ipcMain.on('open-collab', async (event) => {
@@ -95,7 +110,25 @@ ipcMain.on('menu-action', async (event, action: string) => {
 
     switch (action) {
         case 'exit':
-            electron.app.quit();
+            const allWindows = electron.BrowserWindow.getAllWindows();
+            if (allWindows.length > 0) {
+                const win = electron.BrowserWindow.fromWebContents(event.sender) || allWindows[0];
+                const { response } = await dialog.showMessageBox(win, {
+                    type: 'question',
+                    buttons: ['Yes', 'No'],
+                    defaultId: 0,
+                    cancelId: 1,
+                    title: 'Confirm Exit',
+                    message: 'Are you sure you want to close the IDE?',
+                    icon: rendering.getIcon()
+                });
+
+                if (response === 0) {
+                    allWindows.forEach(w => w.close());
+                }
+            } else {
+                electron.app.quit();
+            }
             break;
         case 'about':
             await dialog.showMessageBox(win!, {

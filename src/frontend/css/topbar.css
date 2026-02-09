@@ -3,9 +3,14 @@ nav.topnav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 50px;
     background: #1c1c1c;
-    padding: 6px 12px;
+    padding: 0 12px;
     -webkit-app-region: drag;
+}
+
+body:has(.editor-main-area) nav.topnav {
+    height: 40px;
 }
 
 .topbar {
@@ -77,6 +82,7 @@ nav.topnav {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 4px;
     transition: background 0.2s, color 0.2s;
 }
 

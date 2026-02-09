@@ -13,7 +13,6 @@
 
 // Requirements
 import electron = require("electron");
-const { ipcMain } = electron;
 const dialog = electron.dialog;
 import path = require("path");
 import { promises as fs } from "fs";
@@ -21,13 +20,18 @@ import rendering = require("./libraries/rendering");
 import utils = require("./libraries/utils");
 import {spawn} from 'child_process';
 import {UrlRegistery} from "./libraries/urlregistery";
-import {windowManager} from "./libraries/windowmanager";
-import {getOperatingSystem} from "./libraries/utils";
-import {openeditor} from "./windows/editor";
-import {mkdir} from "node:fs";
 import {openprojectselection} from "./windows/projectselection";
+import {MoonlightWebsocketServer} from "./roblox/MoonlightWebsocketServer";
+import EventEmitter from "node:events";
 
 let loadingwindow: electron.BrowserWindow | null = null;
+declare global {
+    var ideEvents: EventEmitter;
+}
+
+if (!global.ideEvents) {
+    global.ideEvents = new EventEmitter();
+}
 
 console.log("Starting MoonLight...");
 
@@ -63,7 +67,7 @@ async function checkRobloxStudio() {
                 foundRobloxStudio = true;
                 break;
             } catch {
-                // Continue to next path
+                // Continue to the next path
             }
         }
     } else {
@@ -245,6 +249,11 @@ async function main() {
         return await rendering.renderTemplate(path.join(__dirname, "frontend/html", "editor.html"))
     });
 
+    // Register settings.html
+    (global as any).urlregistery.registerUrl("settings", async function (request: Request) {
+        return await rendering.renderTemplate(path.join(__dirname, "frontend/html", "settings.html"))
+    });
+
     // Register manual file registration
     (global as any).urlregistery.registerUrl("manual", async function (request: Request) {
         const url = new URL(request.url);
@@ -263,6 +272,19 @@ async function main() {
 
     loadingwindow!.hide();
     loadingwindow!.destroy();
+}
+
+export async function exitIDE() {
+    console.log("Exiting MoonLight...");
+
+    ideEvents.emit('ide:exiting');
+
+    if (MoonlightWebsocketServer.exists()) {
+        console.log("Shutting down Moonlight Websocket Server...");
+        MoonlightWebsocketServer.get().shutdown();
+    }
+
+    electron.app.quit();
 }
 
 // Crash Handler
@@ -289,4 +311,8 @@ electron.app.on('ready', async () => {
              process.exit(1);
         }
     }
+});
+
+electron.app.on('window-all-closed', async () => {
+    await exitIDE();
 });

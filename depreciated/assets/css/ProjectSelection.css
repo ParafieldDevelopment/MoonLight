@@ -10,7 +10,7 @@ body {
 /* Content container */
 .content {
     display: flex;
-    height: calc(100vh - 60px); /* Adjust based on topnav and footer height */
+    height: calc(100vh - 50px); /* Adjust based on topnav and footer height */
 }
 
 /* Sidebar */

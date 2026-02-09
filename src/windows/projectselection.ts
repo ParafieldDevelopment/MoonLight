@@ -3,9 +3,14 @@ import {windowManager} from '../libraries/windowmanager';
 import rendering = require('../libraries/rendering');
 import path = require("node:path");
 import {ipcMain} from "electron";
+import * as fs from "node:fs/promises";
 
 export function openprojectselection() {
-    return new Promise<void>((resolve) => {
+    return new Promise<void>(async (resolve) => {
+        if (windowManager.getWindow("projectselection")) {
+            windowManager.getWindow("projectselection").focus();
+            return
+        }
         const isMac = process.platform === 'darwin';
 
         const window = new electron.BrowserWindow({
@@ -27,9 +32,7 @@ export function openprojectselection() {
                 preload: path.join((global as any).srcpath, "frontend/preloads", "projectselection.js")
             }
         });
-        windowManager.register("projectselection",window);
-
-
+        windowManager.addWindow("projectselection",window);
 
         window.once('ready-to-show', () => {
             window.show();
@@ -38,6 +41,16 @@ export function openprojectselection() {
             resolve();
         });
 
-        window.loadURL("moonlight://projectselection");
+        await window.loadURL("moonlight://projectselection");
+        let project_json_path = path.join(electron.app.getPath('userData'), 'MoonlightIDE','projects.json');
+
+        try {
+            await fs.access(project_json_path);
+        } catch {
+            await fs.writeFile(project_json_path, "[]");
+            return;
+        }
+        let projects = JSON.parse(await fs.readFile(project_json_path, 'utf-8'));
+        window.webContents.send('moonlight-frontend:updateSelectionPage',projects);
     });
 }

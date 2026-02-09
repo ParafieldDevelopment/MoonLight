@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MoonLight - StartPage</title>
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/startpage.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/topbar.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/loadingspinner.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/macos.css') %>">
+    <style>
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!window.moonlight) {
+                console.error("Moonlight API not found!");
+                return;
+            }
+
+            const addClick = (id, fn) => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('click', fn);
+            };
+
+            addClick('min-btn', () => window.moonlight.minimize());
+            addClick('max-btn', () => window.moonlight.maximize());
+            addClick('close-btn', () => window.moonlight.close());
+        });
+    </script>
+</head>
+<body>
+<nav class="topnav">
+    <div class="topbar">
+        <img src="app://frontend/iconcircle2.png" class="icon" alt="App Icon">
+        <p>Settings</p>
+    </div>
+    <div class="window-controls">
+        <button id="min-btn" title="Minimize">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" width="20" height="20">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/>
+            </svg>
+        </button>
+        <button id="max-btn" title="Maximize">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                <path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </button>
+        <button id="close-btn" title="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" width="22" height="22">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+</nav>
+
+<div id="mainbox">
+</div>
+
+</body>
+</html>

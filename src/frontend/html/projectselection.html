@@ -54,10 +54,10 @@
             <h1>MoonLight</h1>
         </div>
         <ul class="sidebar-nav">
-            <li><button class="sidebar-btn active">Projects</button></li>
-            <li><button class="sidebar-btn">Customize</button></li>
-            <li><button class="sidebar-btn">Plugins</button></li>
-            <li><button class="sidebar-btn">Learn</button></li>
+            <li><button class="sidebar-btn active" data-target=".projects-main">Projects</button></li>
+            <li><button class="sidebar-btn" data-target=".customize-main">Customize</button></li>
+            <li><button class="sidebar-btn" data-target=".plugins-main">Plugins</button></li>
+            <li><button class="sidebar-btn" data-target=".learn-main">Learn</button></li>
         </ul>
         <div class="sidebar-controls">
             <button id="settings-btn">
@@ -74,7 +74,7 @@
         </div>
     </div>
 
-    <div class="main-content">
+    <div class="projects-main show">
         <div class="project-controls">
             <input type="text" id="project-search" placeholder="Search projects...">
             <div class="project-buttons">
@@ -85,28 +85,25 @@
         </div>
         <div class="project-list-container">
             <ul class="project-list">
-                <li class="project-item">
-                    <img src="<%= urlFor('frontend/iconcircle2.png') %>" alt="Project Icon">
-                    <div class="project-info">
-                        <h3>My Awesome Game</h3>
-                        <p>@username</p>
-                    </div>
-                </li>
-                <li class="project-item">
-                    <img src="<%= urlFor('frontend/iconcircle2.png') %>" alt="Project Icon">
-                    <div class="project-info">
-                        <h3>Studio Testers</h3>
-                        <p>@GroupName</p>
-                    </div>
-                </li>
-                <li class="project-item">
-                    <img src="<%= urlFor('frontend/iconcircle2.png') %>" alt="Project Icon">
-                    <div class="project-info">
-                        <h3>Local Project</h3>
-                        <p>C:\Users\username\Documents\Roblox\Projects\local.rbxl</p>
-                    </div>
-                </li>
             </ul>
+        </div>
+    </div>
+
+    <div class="customize-main">
+        <div class="coming-soon">
+            <p>Customize - Coming Soon</p>
+        </div>
+    </div>
+
+    <div class="plugins-main">
+        <div class="coming-soon">
+            <p>Plugins - Coming Soon</p>
+        </div>
+    </div>
+
+    <div class="learn-main">
+        <div class="coming-soon">
+            <p>Learn - Coming Soon</p>
         </div>
     </div>
 </div>
@@ -213,25 +210,90 @@
         // Project items
         document.querySelectorAll('.project-item').forEach(item => {
             item.addEventListener('click', () => {
-                window.moonlight.openEditor();
+                // window.moonlight.sendOpenProject();
             });
         });
 
-        // Sidebar navigation
+        window.moonlight.updateSelectionPage((data) => {
+            if (data.length === 0) {
+                document.querySelector('.project-list').innerHTML = '<p>No projects found.</p>';
+                return;
+            }
+
+            data.forEach(project => {
+                const li = document.createElement("li");
+                li.className = "project-item";
+                li.dataset.id = project.id;
+
+                const img = document.createElement("img");
+                img.src = project.icon;
+                img.alt = "Project Icon";
+
+                const info = document.createElement("div");
+                info.className = "project-info";
+
+                const h3 = document.createElement("h3");
+                h3.textContent = project.title;
+
+                const p = document.createElement("p");
+                p.textContent = project.description;
+
+                info.append(h3, p);
+                li.append(img, info);
+                document.querySelector('.project-list').appendChild(li);
+            });
+
+
+        });
+
+        /** @type {NodeListOf<HTMLButtonElement>} */
         const sidebarBtns = document.querySelectorAll('.sidebar-btn');
-        sidebarBtns.forEach(btn => {
+
+        /** @type {Element[]} */
+        const panels = [
+            document.querySelector('.projects-main'),
+            document.querySelector('.customize-main'),
+            document.querySelector('.plugins-main'),
+            document.querySelector('.learn-main')
+        ].filter(Boolean);
+
+        const labelToPanelClass = {
+            Projects: 'projects-main',
+            Customize: 'customize-main',
+            Plugins: 'plugins-main',
+            Learn: 'learn-main'
+        };
+
+        sidebarBtns.forEach((btn) => {
+            const label = (btn.textContent || '').trim();
+            const panelClass = labelToPanelClass[label];
+            if (panelClass) btn.dataset.target = `.${panelClass}`;
+        });
+
+        function showPanel(selector) {
+            panels.forEach(p => p.classList.remove('show'));
+            const panel = document.querySelector(selector);
+            if (panel) panel.classList.add('show');
+        }
+
+        sidebarBtns.forEach((btn) => {
             btn.addEventListener('click', () => {
+                const target = btn.dataset.target;
+
+                if (target) showPanel(target);
+
                 sidebarBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-
-                const text = btn.textContent.trim();
-                if (text === 'Learn') {
-                    window.moonlight.openExternalLink('https://github.com/ParafieldDevelopment/MoonLight');
-                } else if (text !== 'Projects') {
-                    window.moonlight.openSettings();
-                }
             });
         });
+
+        // Optional: ensure the initial state matches the button that starts as ".active"
+        /** @type {HTMLButtonElement | null} */
+        const initiallyActive = document.querySelector('.sidebar-btn.active');
+
+        if (initiallyActive && initiallyActive.dataset.target) {
+            showPanel(initiallyActive.dataset.target);
+        }
     });
 </script>
 </body>

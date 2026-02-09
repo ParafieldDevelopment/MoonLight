@@ -6,7 +6,11 @@ import {ipcMain} from "electron";
 import {openprojectselection} from "./projectselection";
 import utils = require('../libraries/utils');
 
-export async function openloginpage() {
+export async function openLoginPage() {
+    if (windowManager.getWindow("login")) {
+        windowManager.getWindow("login").focus();
+        return
+    }
     const isMac = process.platform === 'darwin';
 
     const window = new electron.BrowserWindow({
@@ -29,7 +33,7 @@ export async function openloginpage() {
         }
     });
 
-    windowManager.register("login", window);
+    windowManager.addWindow("login", window);
 
     ipcMain.on('choose-account', async (event) => {
         const win = electron.BrowserWindow.fromWebContents(event.sender);
@@ -40,7 +44,7 @@ export async function openloginpage() {
 
         await openprojectselection();
 
-        win!.close();
+        windowManager.closeWindow("login");
     });
 
     await window.loadURL("moonlight://login");
@@ -50,4 +54,9 @@ export async function openloginpage() {
 
     // Should be disabled in production builds
     window.webContents.openDevTools();
+
+    window.once('closed', () => {
+        windowManager.deregisterWindow("login");
+        window.destroy();
+    })
 }

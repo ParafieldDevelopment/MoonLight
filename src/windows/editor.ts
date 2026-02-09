@@ -27,27 +27,7 @@ export async function openeditor() {
         }
     });
 
-    await windowManager.register("editor",window);
-
-    ipcMain.on('minimize-window', (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-
-        if (win) win.minimize();
-    });
-
-    ipcMain.on('maximize-window', (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-
-        if (win) {
-            if (win.isMaximized()) win.unmaximize();
-            else win.maximize();
-        }
-    });
-
-    ipcMain.on('close-window', (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-        if (win) win.close();
-    });
+    windowManager.addWindow("editor", window);
 
     await window.loadURL("moonlight://editor");
 
