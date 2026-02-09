@@ -5,6 +5,6 @@ contextBridge.exposeInMainWorld('moonlight', {
   maximize: () => ipcRenderer.send('maximize-window'),
   close: () => ipcRenderer.send('close-window'),
   menuAction: (action: string) => ipcRenderer.send('menu-action', action)
-})
+});
 
 export {};
