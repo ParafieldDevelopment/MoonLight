@@ -46,20 +46,20 @@
                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
             </button>
             <button class="tool-window-button" data-target="#output-panel" data-position="bottom">
-                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" /></svg>
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" /></svg>
             </button>
         </div>
     </div>
 
-    <div class="main-content-grid">
-        <div id="project-panel" class="side-panel">
-            <div class="panel-header"><h3>Project</h3></div>
-            <ul class="file-list">
-                <!-- File structure here -->
-            </ul>
-        </div>
-        <div class="editor-container">
-            <div class="editor-group">
+    <div class="main-content-wrapper">
+        <div class="editor-main-area">
+            <div id="project-panel" class="side-panel">
+                <div class="panel-header"><h3>Project</h3></div>
+                <ul class="file-list">
+                    <!-- File structure here -->
+                </ul>
+            </div>
+            <div class="editor-container">
                 <div class="tabs">
                     <div class="tab active"><span>ServerScript</span><button class="close-tab">×</button></div>
                 </div>
@@ -100,6 +100,7 @@
             if (targetPanel) {
                 const isActive = button.classList.contains('active');
 
+                // Exclusive toggling for panels in the same position
                 document.querySelectorAll(`.tool-window-button[data-position="${button.dataset.position}"]`).forEach(b => {
                     if (b !== button) {
                         b.classList.remove('active');
@@ -113,3 +114,5 @@
         });
     });
 </script>
+</body>
+</html>
