@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MoonLight - Editor</title>
+    <link rel="stylesheet" href="<%= urlFor('assets/css/editor.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
+</head>
+<body>
+
+<!-- Topbar -->
+<nav class="topnav">
+    <div class="topbar">
+        <img src="app://assets/iconcircle2.png" class="icon" alt="App Icon">
+        <p>MoonLight Editor</p>
+    </div>
+    <div class="window-controls">
+        <button id="min-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" width="20" height="20">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/>
+            </svg>
+        </button>
+        <button id="max-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                <path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </button>
+        <button id="close-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" width="22" height="22">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main-container">
+    <div class="activity-bar">
+        <!-- Icons for different views like Explorer, Search, Git, etc. -->
+        <div class="activity-item active" title="Explorer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.75h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5M3.75 6h16.5" />
+            </svg>
+        </div>
+        <div class="activity-item" title="Search">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+        </div>
+    </div>
+    <div class="sidebar" id="file-explorer">
+        <div class="sidebar-header">
+            <h3>Explorer</h3>
+        </div>
+        <ul class="file-list">
+            <li class="file-item folder">src
+                <ul>
+                    <li class="file-item">index.js</li>
+                    <li class="file-item">styles.css</li>
+                </ul>
+            </li>
+            <li class="file-item">package.json</li>
+            <li class="file-item">README.md</li>
+        </ul>
+    </div>
+    <div class="editor-group">
+        <div class="tabs">
+            <div class="tab active">
+                <span>index.js</span>
+                <button class="close-tab">×</button>
+            </div>
+            <div class="tab">
+                <span>styles.css</span>
+                <button class="close-tab">×</button>
+            </div>
+        </div>
+        <div class="editor-area">
+            <div class="code-editor">
+                <textarea>// Your code here</textarea>
+            </div>
+            <div class="minimap">
+                <!-- Minimap would be rendered here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Status Bar -->
+<div class="statusbar">
+    <div class="left">
+        <span>main*</span>
+        <span>Ln 1, Col 1</span>
+    </div>
+    <div class="right">
+        <span>UTF-8</span>
+        <span>Spaces: 4</span>
+        <span>v2025.0.0.0a</span>
+    </div>
+</div>
+
+<script>
+    document.getElementById('min-btn').addEventListener('click', () => window.moonlight.minimize());
+    document.getElementById('max-btn').addEventListener('click', () => window.moonlight.maximize());
+    document.getElementById('close-btn').addEventListener('click', () => window.moonlight.close());
+</script>
+
+</body>
+</html>

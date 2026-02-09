@@ -23,6 +23,7 @@ import {spawn} from 'child_process';
 import {UrlRegistery} from "./urlregistery";
 import {windowManager} from "./windowmanager";
 import {getOperatingSystem} from "./utils";
+import {openeditor} from "./windows/editor";
 
 let loadingwindow: electron.BrowserWindow | null = null;
 
@@ -237,6 +238,10 @@ async function main() {
         return await rendering.renderTemplate(path.join(__dirname, "../src/templates", "projectselection.html"))
     });
 
+    (global as any).urlregistery.registerUrl("editor", async function (request: Request) {
+        return await rendering.renderTemplate(path.join(__dirname, "../src/templates", "editor.html"))
+    });
+
     (global as any).urlregistery.registerUrl("manual", async function (request: Request) {
         const url = new URL(request.url);
         const segments = url.pathname.split('/').filter(Boolean);
@@ -264,6 +269,10 @@ async function main() {
     ipcMain.on('close-window', (event) => {
         const win = electron.BrowserWindow.fromWebContents(event.sender);
         if (win) win.close();
+    });
+
+    ipcMain.on('open-editor', async () => {
+        await openeditor();
     });
 
     await require("./windows/loginpage").openloginpage();

@@ -23,11 +23,11 @@ export async function openeditor() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: true,
-            preload: path.join((global as any).srcpath, "../dist/preloads", "login.js")
+            preload: path.join((global as any).srcpath, "../dist/preloads", "editor.js")
         }
     });
 
-    await windowManager.register("login",window);
+    await windowManager.register("editor",window);
 
     ipcMain.on('minimize-window', (event) => {
         const win = electron.BrowserWindow.fromWebContents(event.sender);

@@ -177,6 +177,12 @@
         }, 3000);
     });
 
+    document.querySelectorAll('.project-item').forEach(item => {
+        item.addEventListener('click', () => {
+            window.moonlight.openEditor();
+        });
+    });
+
     document.getElementById('min-btn').addEventListener('click', () => window.moonlight.minimize());
     document.getElementById('max-btn').addEventListener('click', () => window.moonlight.maximize());
     document.getElementById('close-btn').addEventListener('click', () => window.moonlight.close());
