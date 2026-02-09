@@ -11,24 +11,60 @@ nav.topnav {
 .topbar {
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 .topbar .icon {
     width: 22px;
     height: 22px;
+    margin-right: 10px;
 }
 
-.topbar p {
+.topbar-buttons {
+    display: flex;
+    gap: 15px;
+    -webkit-app-region: no-drag;
+}
+
+.topbar-buttons p {
     font-size: 14px;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.project-name {
+    margin-left: 15px;
+    font-weight: bold;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
     -webkit-app-region: no-drag;
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.toolbar-group button {
+    background: none;
+    border: none;
+    color: #dcdcdc;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.toolbar-group button:hover {
+    background-color: #555555;
 }
 
 .window-controls {
     display: flex;
     gap: 8px;
-    -webkit-app-region: no-drag;
 }
 
 .window-controls button {
