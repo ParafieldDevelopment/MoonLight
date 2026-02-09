@@ -1,6 +1,6 @@
 import electron = require('electron');
-import {windowManager} from '../windowmanager';
-import rendering = require('../rendering');
+import {windowManager} from '../libraries/windowmanager';
+import rendering = require('../libraries/rendering');
 import path = require("node:path");
 import {ipcMain} from "electron";
 
@@ -24,10 +24,12 @@ export function openprojectselection() {
             webPreferences: {
                 nodeIntegration: true,
                 contextIsolation: true,
-                preload: path.join((global as any).srcpath, "../dist/preloads", "projectselection.js")
+                preload: path.join((global as any).srcpath, "frontend/preloads", "projectselection.js")
             }
         });
         windowManager.register("projectselection",window);
+
+
 
         window.once('ready-to-show', () => {
             window.show();

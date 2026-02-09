@@ -1,10 +1,10 @@
 import electron = require('electron');
-import {windowManager} from '../windowmanager';
-import rendering = require('../rendering');
+import {windowManager} from '../libraries/windowmanager';
+import rendering = require('../libraries/rendering');
 import path = require("node:path");
 import {ipcMain} from "electron";
 import {openprojectselection} from "./projectselection";
-import utils = require('../utils');
+import utils = require('../libraries/utils');
 
 export async function openloginpage() {
     const isMac = process.platform === 'darwin';
@@ -25,11 +25,11 @@ export async function openloginpage() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: true,
-            preload: path.join((global as any).srcpath, "../dist/preloads", "login.js")
+            preload: path.join((global as any).srcpath, "frontend/preloads", "login.js")
         }
     });
 
-    await windowManager.register("login",window);
+    windowManager.register("login", window);
 
     ipcMain.on('choose-account', async (event) => {
         const win = electron.BrowserWindow.fromWebContents(event.sender);

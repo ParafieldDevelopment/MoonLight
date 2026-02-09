@@ -1,10 +1,17 @@
 {
   "name": "moonlight",
-  "version": "2025.0.0.0a",
+  "version": "0.0.0",
   "main": "dist/main.js",
   "scripts": {
-    "start-linux": "tsc && cp -r src/assets dist/ && electron .",
-    "start-windows": "tsc && xcopy src\\assets dist\\assets /E /I /Y && electron ."
+    "start-linux": "tsc && cp -r src/frontend dist/ && cp -r src/assets dist/ && electron .",
+    "start-windows": "tsc && xcopy src\\frontend dist\\frontend /E /I /Y && xcopy src\\assets dist\\assets /E /I /Y && electron .",
+    "build": "tsc && node -e \"const fs = require('fs'); const path = require('path'); const copyDir = (src, dest) => { if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true }); fs.readdirSync(src).forEach(file => { const s = path.join(src, file); const d = path.join(dest, file); if (fs.lstatSync(s).isDirectory()) copyDir(s, d); else fs.copyFileSync(s, d); }); }; copyDir('src/frontend', 'dist/frontend'); copyDir('src/assets', 'dist/assets');\"",
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:inno": "npm run build && electron-builder --win --dir && iscc installer.iss",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "dist:all": "npm run build && electron-builder --win --mac --linux"
   },
   "keywords": [
     "Roblox"
@@ -29,16 +36,45 @@
     "typescript": "^5.0.0"
   },
   "build": {
-    "appId": "com.yourname.moonlight",
+    "appId": "com.moonlight.ide",
+    "productName": "MoonLight",
+    "copyright": "Copyright © 2025 Parafield Studios",
+    "directories": {
+      "output": "out",
+      "buildResources": "src/assets"
+    },
     "files": [
       "dist/**/*",
       "package.json"
     ],
-    "directories": {
-      "buildResources": "assets"
-    },
     "win": {
-      "target": "nsis"
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "icon": "src/assets/icon.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "src/assets/icon.icns",
+      "category": "public.app-category.developer-tools"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ],
+      "icon": "src/assets/icon.ico",
+      "category": "Development"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "MoonLight"
     }
   }
 }

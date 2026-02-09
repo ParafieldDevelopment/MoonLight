@@ -13,4 +13,5 @@ contextBridge.exposeInMainWorld('moonlight', {
   openSettings: () => ipcRenderer.send('open-settings'),
   openCollab: () => ipcRenderer.send('open-collab'),
   openExternalLink: (url: string) => ipcRenderer.send('open-external-link', url)
+
 });

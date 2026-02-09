@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Montserrat';
-    src: url('app://assets/fonts/montserrat.ttf') format('truetype');
+    src: url('app://frontend/fonts/montserrat.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -13,7 +13,7 @@
 body {
     margin: 0;
     height: 100%;
-    background-image: url('app://assets/backgroundonlymoon.png');
+    background-image: url('app://frontend/backgroundonlymoon.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

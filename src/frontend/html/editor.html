@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>MoonLight - Editor</title>
-    <link rel="stylesheet" href="<%= urlFor('assets/css/editor.css') %>">
-    <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
-    <link rel="stylesheet" href="<%= urlFor('assets/css/macos.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/editor.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/topbar.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/macos.css') %>">
     <style>
         /* Dropdown Menu Styles */
         .menu-item-container {
@@ -76,7 +76,7 @@
 <!-- Topbar -->
 <nav class="topnav">
     <div class="topbar">
-        <img src="app://assets/iconcircle2.png" class="icon" alt="App Icon">
+        <img src="app://frontend/iconcircle2.png" class="icon" alt="App Icon">
         <div class="topbar-buttons">
             <div class="menu-item-container">
                 <p id="file-menu-btn"><u>F</u>ile</p>
@@ -163,18 +163,46 @@
     <div class="main-content-wrapper">
         <div class="editor-main-area">
             <div id="project-panel" class="side-panel">
-                <div class="panel-header"><h3>Project</h3></div>
-                <ul class="file-list">
-                    <!-- File structure here -->
-                </ul>
+                <div class="explorer-section" id="open-editors-section">
+                    <div class="section-header">
+                        <div class="arrow-icon expanded"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg></div>
+                        <h3>Open Editors</h3>
+                        <div class="panel-actions">
+                            <button title="Close All" id="close-all-tabs-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg></button>
+                        </div>
+                    </div>
+                    <div class="section-content show">
+                        <ul class="file-list open-editors-list"></ul>
+                    </div>
+                </div>
+                <div class="explorer-section" id="project-section">
+                    <div class="section-header">
+                        <div class="arrow-icon expanded"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg></div>
+                        <h3>Project</h3>
+                        <div class="panel-actions">
+                            <button title="New File" id="new-file-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg></button>
+                            <button title="New Folder" id="new-folder-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" /></svg></button>
+                            <button title="Collapse All" id="collapse-all-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" /></svg></button>
+                            <button title="Refresh" id="refresh-explorer-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" /></svg></button>
+                        </div>
+                    </div>
+                    <div class="section-content show project-list-container">
+                        <div class="explorer-search">
+                            <input type="text" id="explorer-search-input" placeholder="Search files...">
+                        </div>
+                        <ul class="file-list project-list"></ul>
+                    </div>
+                </div>
             </div>
             <div class="resizer" id="explorer-resizer"></div>
             <div class="editor-container">
-                <div class="tabs">
-                    <div class="tab active"><span>ServerScript</span><button class="close-tab">×</button></div>
+                <div class="tabs" id="editor-tabs">
+                    <!-- Tabs will be added here dynamically -->
                 </div>
                 <div class="editor-area">
-                    <div class="code-editor"><textarea>print("Hello, world!")</textarea></div>
+                    <div class="code-editor" id="editor-instance">
+                        <textarea id="editor-textarea">print("Hello, world!")</textarea>
+                    </div>
                 </div>
             </div>
         </div>
@@ -200,220 +228,16 @@
     <div class="right"><span>Ln 1, Col 1</span><span>Spaces: 4</span><span>UTF-8</span></div>
 </div>
 
-<script>
-    document.getElementById('min-btn').addEventListener('click', () => window.moonlight.minimize());
-    document.getElementById('max-btn').addEventListener('click', () => window.moonlight.maximize());
-    document.getElementById('close-btn').addEventListener('click', () => window.moonlight.close());
+<!-- Explorer Context Menu -->
+<div id="explorer-context-menu" class="context-menu">
+    <div class="context-menu-item" data-action="new-file">New File</div>
+    <div class="context-menu-item" data-action="new-folder">New Folder</div>
+    <div class="context-menu-divider"></div>
+    <div class="context-menu-item" data-action="rename">Rename</div>
+    <div class="context-menu-item" data-action="delete">Delete</div>
+</div>
 
-    // Menu dropdown logic
-    const menuButtons = document.querySelectorAll('.topbar-buttons p');
-    const dropdowns = document.querySelectorAll('.dropdown-menu');
-
-    menuButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const menu = btn.nextElementSibling;
-            const isShowing = menu.classList.contains('show');
-
-            // Hide all first
-            dropdowns.forEach(d => d.classList.remove('show'));
-            menuButtons.forEach(b => b.classList.remove('active'));
-
-            if (!isShowing) {
-                menu.classList.add('show');
-                btn.classList.add('active');
-            }
-        });
-
-        btn.addEventListener('mouseenter', () => {
-            // If another menu is already open, switch to this one
-            const anyOpen = Array.from(dropdowns).some(d => d.classList.contains('show'));
-            if (anyOpen) {
-                dropdowns.forEach(d => d.classList.remove('show'));
-                menuButtons.forEach(b => b.classList.remove('active'));
-                btn.nextElementSibling.classList.add('show');
-                btn.classList.add('active');
-            }
-        });
-    });
-
-    // Close menus when clicking outside
-    document.addEventListener('click', () => {
-        dropdowns.forEach(d => d.classList.remove('show'));
-        menuButtons.forEach(b => b.classList.remove('active'));
-    });
-
-    // Handle menu item actions
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const action = item.dataset.action;
-            console.log("Menu Action:", action);
-            
-            if (window.moonlight && window.moonlight.menuAction) {
-                window.moonlight.menuAction(action);
-            }
-            
-            dropdowns.forEach(d => d.classList.remove('show'));
-            menuButtons.forEach(b => b.classList.remove('active'));
-        });
-    });
-
-    // Tool window toggling logic
-    const toolButtons = document.querySelectorAll('.tool-window-button');
-    const sidePanel = document.getElementById('project-panel');
-    const resizer = document.getElementById('explorer-resizer');
-    const bottomResizer = document.getElementById('bottom-resizer');
-
-    async function updateBottomResizerVisibility() {
-        const anyBottomVisible = !document.getElementById('problems-panel').classList.contains('is-hidden') || 
-                                 !document.getElementById('output-panel').classList.contains('is-hidden');
-        bottomResizer.style.display = anyBottomVisible ? 'block' : 'none';
-    }
-
-    async function initExplorerState() {
-        if (!window.moonlight || !window.moonlight.getSetting) return;
-        
-        const isCollapsed = await window.moonlight.getSetting('explorer-collapsed', false);
-        const explorerWidth = await window.moonlight.getSetting('explorer-width', 250);
-        const bottomHeight = await window.moonlight.getSetting('bottom-height', 200);
-        const explorerBtn = document.querySelector('.tool-window-button[data-target="#project-panel"]');
-        
-        if (sidePanel) {
-            sidePanel.style.width = explorerWidth + 'px';
-        }
-
-        document.querySelectorAll('.bottom-panel').forEach(p => {
-            p.style.height = bottomHeight + 'px';
-        });
-
-        if (isCollapsed) {
-            sidePanel.classList.add('collapsed');
-            resizer.style.display = 'none';
-            if (explorerBtn) explorerBtn.classList.remove('active');
-        } else {
-            sidePanel.classList.remove('collapsed');
-            resizer.style.display = 'block';
-            if (explorerBtn) explorerBtn.classList.add('active');
-        }
-    }
-
-    // Resizing logic
-    let isResizing = false;
-    let isResizingBottom = false;
-    let startY, startHeight;
-
-    resizer.addEventListener('mousedown', (e) => {
-        isResizing = true;
-        document.body.style.cursor = 'col-resize';
-        resizer.classList.add('resizing');
-    });
-
-    bottomResizer.addEventListener('mousedown', (e) => {
-        isResizingBottom = true;
-        startY = e.clientY;
-        const activePanel = document.querySelector('.bottom-panel:not(.is-hidden)');
-        startHeight = activePanel ? activePanel.offsetHeight : 200;
-        document.body.style.cursor = 'row-resize';
-        bottomResizer.classList.add('resizing');
-    });
-
-    document.addEventListener('mousemove', (e) => {
-        if (isResizing) {
-            let newWidth = e.clientX - sidePanel.getBoundingClientRect().left;
-            
-            // Boundaries (matched with CSS min/max)
-            if (newWidth < 150) newWidth = 150;
-            if (newWidth > 600) newWidth = 600;
-            
-            sidePanel.style.width = newWidth + 'px';
-        }
-
-        if (isResizingBottom) {
-            let deltaY = startY - e.clientY;
-            let newHeight = startHeight + deltaY;
-
-            // Boundaries
-            if (newHeight < 100) newHeight = 100;
-            if (newHeight > 600) newHeight = 600;
-
-            document.querySelectorAll('.bottom-panel').forEach(p => {
-                p.style.height = newHeight + 'px';
-            });
-        }
-    });
-
-    document.addEventListener('mouseup', () => {
-        if (isResizing) {
-            isResizing = false;
-            document.body.style.cursor = 'default';
-            resizer.classList.remove('resizing');
-            
-            if (window.moonlight && window.moonlight.saveSetting) {
-                window.moonlight.saveSetting('explorer-width', parseInt(sidePanel.style.width));
-            }
-        }
-
-        if (isResizingBottom) {
-            isResizingBottom = false;
-            document.body.style.cursor = 'default';
-            bottomResizer.classList.remove('resizing');
-
-            const currentHeight = parseInt(document.querySelector('.bottom-panel').style.height);
-            if (window.moonlight && window.moonlight.saveSetting) {
-                window.moonlight.saveSetting('bottom-height', currentHeight);
-            }
-        }
-    });
-
-    toolButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetId = btn.getAttribute('data-target');
-            const target = document.querySelector(targetId);
-            if (!target) return;
-            
-            if (targetId === '#project-panel') {
-                const isNowCollapsed = !target.classList.contains('collapsed');
-                if (isNowCollapsed) {
-                    target.classList.add('collapsed');
-                    resizer.style.display = 'none';
-                    btn.classList.remove('active');
-                } else {
-                    target.classList.remove('collapsed');
-                    resizer.style.display = 'block';
-                    btn.classList.add('active');
-                }
-                if (window.moonlight && window.moonlight.saveSetting) {
-                    window.moonlight.saveSetting('explorer-collapsed', isNowCollapsed);
-                }
-            } else {
-                // Exclusive toggling for panels in the same position (mainly for bottom panels)
-                const position = btn.getAttribute('data-position');
-                if (position) {
-                    document.querySelectorAll(`.tool-window-button[data-position="${position}"]`).forEach(b => {
-                        if (b !== btn) {
-                            b.classList.remove('active');
-                            const otherTarget = document.querySelector(b.getAttribute('data-target'));
-                            if (otherTarget) otherTarget.classList.add('is-hidden');
-                        }
-                    });
-                }
-
-                const isHidden = target.classList.contains('is-hidden');
-                if (isHidden) {
-                    target.classList.remove('is-hidden');
-                    btn.classList.add('active');
-                } else {
-                    target.classList.add('is-hidden');
-                    btn.classList.remove('active');
-                }
-                updateBottomResizerVisibility();
-            }
-        });
-    });
-
-    updateBottomResizerVisibility();
-    initExplorerState();
-</script>
+<script src="<%= urlFor('frontend/js/editor.js') %>"></script>
+<script src="<%= urlFor('frontend/js/editor-api.js') %>"></script>
 </body>
 </html>

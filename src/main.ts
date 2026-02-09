@@ -17,18 +17,19 @@ const { ipcMain } = electron;
 const dialog = electron.dialog;
 import path = require("path");
 import { promises as fs } from "fs";
-import rendering = require("./rendering");
-import utils = require("./utils");
+import rendering = require("./libraries/rendering");
+import utils = require("./libraries/utils");
 import {spawn} from 'child_process';
-import {UrlRegistery} from "./urlregistery";
-import {windowManager} from "./windowmanager";
-import {getOperatingSystem} from "./utils";
+import {UrlRegistery} from "./libraries/urlregistery";
+import {windowManager} from "./libraries/windowmanager";
+import {getOperatingSystem} from "./libraries/utils";
 import {openeditor} from "./windows/editor";
+import {mkdir} from "node:fs";
+import {openprojectselection} from "./windows/projectselection";
 
 let loadingwindow: electron.BrowserWindow | null = null;
 
 console.log("Starting MoonLight...");
-console.log(__dirname);
 
 (global as any).srcpath = __dirname;
 
@@ -164,7 +165,6 @@ async function checkRobloxStudio() {
 
 // The starting point for Moonlight
 async function main() {
-
     loadingwindow = new electron.BrowserWindow({
         width: 700,
         height: 394,
@@ -186,7 +186,7 @@ async function main() {
     loadingwindow.setMenuBarVisibility(false);
     loadingwindow.focus();
 
-    await loadingwindow.loadFile(path.join(__dirname, "../src/templates", "starting.html"));
+    await loadingwindow.loadFile(path.join(__dirname, "frontend/html", "starting.html"));
 
     loadingwindow.show();
 
@@ -215,33 +215,37 @@ async function main() {
             "Developed by Parafield Studios!"
     });
 
+    try {
+        await fs.mkdir(path.join(electron.app.getPath('userData'), 'MoonlightIDE'));
+    } catch (ignored) {}
+    console.log(path.join(electron.app.getPath('userData'), 'MoonlightIDE'))
 
     await checkRobloxStudio();
 
     (global as any).robloxstudio = robloxstudio_location;
 
-    console.log("Starting Asset Handler");
-
     await rendering.registerAppProtocol(__dirname);
-
-    console.log("Starting URL Handler");
 
     (global as any).platform = utils.getOperatingSystem();
     (global as any).urlregistery = new UrlRegistery();
     electron.protocol.handle("moonlight", (request) => (global as any).urlregistery.request(request));
 
+    // Register login.html
     (global as any).urlregistery.registerUrl("login", async function (request: Request) {
-        return await rendering.renderTemplate(path.join(__dirname, "../src/templates", "login.html"))
+        return await rendering.renderTemplate(path.join(__dirname, "frontend/html", "login.html"))
     });
 
+    // Register projectselection.html
     (global as any).urlregistery.registerUrl("projectselection", async function (request: Request) {
-        return await rendering.renderTemplate(path.join(__dirname, "../src/templates", "projectselection.html"))
+        return await rendering.renderTemplate(path.join(__dirname, "frontend/html", "projectselection.html"))
     });
 
+    // Register editor.html
     (global as any).urlregistery.registerUrl("editor", async function (request: Request) {
-        return await rendering.renderTemplate(path.join(__dirname, "../src/templates", "editor.html"))
+        return await rendering.renderTemplate(path.join(__dirname, "frontend/html", "editor.html"))
     });
 
+    // Register manual file registration
     (global as any).urlregistery.registerUrl("manual", async function (request: Request) {
         const url = new URL(request.url);
         const segments = url.pathname.split('/').filter(Boolean);
@@ -249,154 +253,13 @@ async function main() {
 
         console.log(lastSegment);
 
-        return await rendering.renderTemplate(path.join(__dirname, "../src/templates", lastSegment+".html"))
+        return await rendering.renderTemplate(path.join(__dirname, "frontend/html", lastSegment+".html"))
     });
 
-    // Centralized IPC handlers for window controls
-    ipcMain.on('minimize-window', (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-        if (win) win.minimize();
-    });
+    require("./libraries/ipc-register");
 
-    ipcMain.on('maximize-window', (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-        if (win) {
-            if (win.isMaximized()) win.unmaximize();
-            else win.maximize();
-        }
-    });
-
-    ipcMain.on('close-window', (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-        if (win) win.close();
-    });
-
-    ipcMain.on('open-editor', async () => {
-        await openeditor();
-    });
-
-    ipcMain.on('new-project', async (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-        await dialog.showMessageBox(win!, {
-            title: "MoonLight",
-            type: "info",
-            icon: rendering.getIcon(),
-            message: "New Project functionality is coming soon!"
-        });
-    });
-
-    ipcMain.on('open-project', async (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-        const { canceled, filePaths } = await dialog.showOpenDialog(win!, {
-            properties: ['openFile', 'openDirectory'],
-            filters: [
-                { name: 'Roblox Files', extensions: ['rbxl', 'rbxlx'] },
-                { name: 'All Files', extensions: ['*'] }
-            ]
-        });
-
-        if (!canceled && filePaths.length > 0) {
-            console.log("Opening project:", filePaths[0]);
-            await openeditor();
-        }
-    });
-
-    ipcMain.on('vcs-project', async (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-        await dialog.showMessageBox(win!, {
-            title: "MoonLight",
-            type: "info",
-            icon: rendering.getIcon(),
-            message: "VCS integration is coming soon!"
-        });
-    });
-
-    ipcMain.on('open-settings', async (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-        await dialog.showMessageBox(win!, {
-            title: "MoonLight",
-            type: "info",
-            icon: rendering.getIcon(),
-            message: "Settings menu is coming soon!"
-        });
-    });
-
-    ipcMain.on('open-collab', async (event) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-        await dialog.showMessageBox(win!, {
-            title: "MoonLight",
-            type: "info",
-            icon: rendering.getIcon(),
-            message: "Collaboration features are coming soon!"
-        });
-    });
-
-    ipcMain.on('open-external-link', async (event, url: string) => {
-        await electron.shell.openExternal(url);
-    });
-    
-    ipcMain.on('menu-action', async (event, action: string) => {
-        const win = electron.BrowserWindow.fromWebContents(event.sender);
-        console.log("Menu action received:", action);
-        
-        switch (action) {
-            case 'exit':
-                electron.app.quit();
-                break;
-            case 'about':
-                await dialog.showMessageBox(win!, {
-                    title: "About MoonLight",
-                    type: "info",
-                    icon: rendering.getIcon(),
-                    message: `MoonLight IDE\nVersion: ${electron.app.getVersion()}\n\nDeveloped by Parafield Studios`
-                });
-                break;
-            case 'documentation':
-                await electron.shell.openExternal('https://github.com/ParafieldDevelopment/MoonLight');
-                break;
-            case 'report-issue':
-                await electron.shell.openExternal('https://github.com/ParafieldDevelopment/MoonLight/issues');
-                break;
-            default:
-                await dialog.showMessageBox(win!, {
-                    title: "MoonLight",
-                    type: "info",
-                    icon: rendering.getIcon(),
-                    message: `${action.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} functionality is coming soon!`
-                });
-                break;
-        }
-    });
-
-    ipcMain.on('save-setting', async (event, key: string, value: any) => {
-        const settingsPath = path.join(electron.app.getPath('userData'), 'settings.json');
-        try {
-            let settings: any = {};
-            try {
-                const data = await fs.readFile(settingsPath, 'utf-8');
-                settings = JSON.parse(data);
-            } catch (e) {
-                // Settings file doesn't exist or is invalid, use empty object
-            }
-            settings[key] = value;
-            await fs.writeFile(settingsPath, JSON.stringify(settings, null, 2));
-        } catch (error) {
-            console.error('Failed to save setting:', error);
-        }
-    });
-
-    ipcMain.handle('get-setting', async (event, key: string, defaultValue: any) => {
-        const settingsPath = path.join(electron.app.getPath('userData'), 'settings.json');
-        try {
-            const data = await fs.readFile(settingsPath, 'utf-8');
-            const settings = JSON.parse(data);
-            return settings[key] !== undefined ? settings[key] : defaultValue;
-        } catch (e) {
-            return defaultValue;
-        }
-    });
-
-    await require("./windows/loginpage").openloginpage();
+    // await require("./windows/loginpage").openloginpage();
+    await openprojectselection();
 
     loadingwindow!.hide();
     loadingwindow!.destroy();

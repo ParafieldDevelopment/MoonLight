@@ -1,6 +1,6 @@
 import electron = require('electron');
-import {windowManager} from '../windowmanager';
-import rendering = require('../rendering');
+import {windowManager} from '../libraries/windowmanager';
+import rendering = require('../libraries/rendering');
 import path = require("node:path");
 import {ipcMain} from "electron";
 
@@ -23,7 +23,7 @@ export async function openeditor() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: true,
-            preload: path.join((global as any).srcpath, "../dist/preloads", "editor.js")
+            preload: path.join((global as any).srcpath, "frontend/preloads", "editor.js")
         }
     });
 

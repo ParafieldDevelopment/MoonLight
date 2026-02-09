@@ -1,0 +1,448 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #2b2b2b;
+    color: #dcdcdc;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.ide-body {
+    display: flex;
+    flex-grow: 1;
+}
+
+.tool-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #3c3f41;
+    border-right: 1px solid #2d2d2d;
+    width: 48px; /* Set a fixed width for the tool bars */
+}
+.tool-bar.right {
+    border-left: 1px solid #2d2d2d;
+    border-right: none;
+}
+
+.tool-group-bottom {
+    display: flex;
+    flex-direction: column;
+}
+
+.tool-window-button {
+    background: none;
+    border: none;
+    color: #dcdcdc;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tool-window-button.active, .tool-window-button:hover {
+    background-color: #2b2b2b;
+}
+.tool-window-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+.main-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.editor-main-area {
+    display: flex;
+    flex-grow: 1;
+}
+
+.side-panel {
+    width: 250px;
+    min-width: 150px;
+    max-width: 600px;
+    background-color: #333333;
+    border-right: 1px solid #2d2d2d;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.explorer-section {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #2d2d2d;
+}
+
+.explorer-section:last-child {
+    border-bottom: none;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.section-header {
+    background-color: #3c3f41;
+    cursor: pointer;
+    padding: 2px 5px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: #888;
+    user-select: none;
+}
+
+.section-header h3 {
+    font-size: 11px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.section-header:hover {
+    color: #dfe1e5;
+}
+
+.section-content {
+    display: none;
+}
+
+.section-content.show {
+    display: block;
+}
+
+.project-list-container {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.side-panel.collapsed {
+    width: 0 !important;
+    min-width: 0 !important;
+    border-right: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.resizer {
+    width: 4px;
+    cursor: col-resize;
+    background-color: transparent;
+    transition: background-color 0.2s;
+    z-index: 10;
+    margin-left: -2px;
+    margin-right: -2px;
+}
+
+.resizer:hover, .resizer.resizing {
+    background-color: #007acc;
+}
+
+.resizer-h {
+    height: 4px;
+    cursor: row-resize;
+    background-color: transparent;
+    transition: background-color 0.2s;
+    z-index: 10;
+    margin-top: -2px;
+    margin-bottom: -2px;
+}
+
+.resizer-h:hover, .resizer-h.resizing {
+    background-color: #007acc;
+}
+
+.panel-header {
+    padding: 10px;
+    background-color: #3c3f41;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-actions {
+    display: flex;
+    gap: 2px;
+}
+
+.panel-actions button {
+    background: none;
+    border: none;
+    color: #868a91;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.panel-actions button:hover {
+    background-color: #4e5057;
+    color: #dfe1e5;
+}
+
+.panel-actions button svg {
+    width: 16px;
+    height: 16px;
+}
+
+.explorer-search {
+    padding: 8px 10px;
+}
+
+.explorer-search input {
+    width: 100%;
+    background-color: #3c3f41;
+    border: 1px solid #43454a;
+    border-radius: 3px;
+    color: #dfe1e5;
+    padding: 4px 8px;
+    font-size: 12px;
+    outline: none;
+}
+
+.explorer-search input:focus {
+    border-color: #007acc;
+}
+
+/* Context Menu */
+.context-menu {
+    position: fixed;
+    background-color: #2b2d30;
+    border: 1px solid #43454a;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    min-width: 150px;
+    z-index: 2000;
+    display: none;
+    padding: 4px 0;
+}
+
+.context-menu-item {
+    padding: 6px 12px;
+    color: #dfe1e5;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.context-menu-item:hover {
+    background-color: #4e5057;
+}
+
+.context-menu-divider {
+    height: 1px;
+    background-color: #43454a;
+    margin: 4px 0;
+}
+
+.close-tab-explorer {
+    opacity: 0;
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.file-item:hover .close-tab-explorer {
+    opacity: 1;
+}
+
+.close-tab-explorer:hover {
+    background-color: #4e5057;
+    color: #dfe1e5;
+}
+
+.file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-left: 5px;
+    user-select: none;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    padding: 4px 0; /* Changed from 4px 8px to handle padding-left dynamically */
+    cursor: pointer;
+    font-size: 13px;
+    color: #dfe1e5;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.file-item div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-item:hover {
+    background-color: #4e5057;
+}
+
+.file-item.active {
+    background-color: #4e5057;
+}
+
+.file-item.dragging {
+    opacity: 0.5;
+}
+
+.file-item.drag-over {
+    background-color: #007acc55;
+}
+
+.project-list-container.drag-over {
+    background-color: #ffffff05;
+}
+
+.file-item svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+.explorer-rename-input {
+    background-color: #3c3f41;
+    border: 1px solid #007acc;
+    color: #dfe1e5;
+    font-size: 12px;
+    padding: 1px 4px;
+    width: 100%;
+    outline: none;
+    margin-right: 10px;
+}
+
+.folder-content {
+    display: none;
+}
+
+.folder-content.show {
+    display: block;
+}
+
+.indent {
+    width: 12px;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.arrow-icon {
+    width: 15px !important;
+    height: 15px !important;
+    color: #868a91;
+}
+
+.arrow-icon.expanded {
+    transform: rotate(90deg);
+}
+
+.editor-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.editor-group {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs {
+    display: flex;
+    background-color: #3c3f41;
+    min-height: 35px; /* Ensure tab bar stays visible when empty */
+}
+.tab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-right: 1px solid #2d2d2d;
+}
+.tab.active {
+    background-color: #2b2b2b;
+}
+.close-tab {
+    background: none;
+    border: none;
+    color: #dcdcdc;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.editor-area {
+    flex-grow: 1;
+    background-color: #2b2b2b;
+}
+.code-editor {
+    width: 100%;
+    height: 100%;
+}
+.code-editor textarea {
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    color: #dcdcdc;
+    font-family: "Fira Code", "Courier New", monospace;
+    font-size: 14px;
+    padding: 10px;
+    resize: none;
+}
+
+.bottom-panel {
+    background-color: #333333;
+    border-top: 1px solid #2d2d2d;
+    height: 200px; /* Default height */
+    min-height: 100px;
+    max-height: 600px;
+    overflow: hidden;
+}
+
+.is-hidden {
+    display: none;
+}
+
+.statusbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #3c3f41;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-top: 1px solid #2d2d2d;
+}
+.breadcrumb {
+    color: #888;
+}
+
+/*
+prompt
+
+can you make the the margin on left of sub folders and files bigger? its kinda hard to distinguish between which sub is sub etc
+
+also while you are at it can you make it that each file and folder can store metadata in the testStructure? and can you make the testStructure like structure? its gonna be used for normal use since i will be translating files between the filesystem and the ide
+*/

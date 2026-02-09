@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>MoonLight - Project Selection</title>
-    <link rel="stylesheet" href="<%= urlFor('assets/css/startpage.css') %>">
-    <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
-    <link rel="stylesheet" href="<%= urlFor('assets/css/login.css') %>">
-    <link rel="stylesheet" href="<%= urlFor('assets/css/loadingspinner.css') %>">
-    <link rel="stylesheet" href="<%= urlFor('assets/css/ProjectSelection.css') %>">
-    <link rel="stylesheet" href="<%= urlFor('assets/css/macos.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/startpage.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/topbar.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/login.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/loadingspinner.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/ProjectSelection.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/macos.css') %>">
 </head>
 <body>
 
 <!-- Intro Screen -->
 <div id="intro-screen">
     <div id="starfield"></div>
-    <img id="intro-logo" src="<%= urlFor('assets/transparent.png') %>" alt="MoonLight Logo">
+    <img id="intro-logo" src="<%= urlFor('frontend/transparent.png') %>" alt="MoonLight Logo">
     <div id="intro-sub">Loading Projects...</div>
 </div>
 
 <!-- Topbar -->
 <nav class="topnav">
     <div class="topbar">
-        <img src="app://assets/iconcircle2.png" class="icon" alt="App Icon">
+        <img src="app://frontend/iconcircle2.png" class="icon" alt="App Icon">
         <p>Project Selection</p>
     </div>
     <div class="window-controls">
@@ -50,7 +50,7 @@
 <div class="content">
     <div class="sidebar">
         <div class="jetbrains-logo">
-            <img src="<%= urlFor('assets/iconcircle2.png') %>" alt="JetBrains Logo">
+            <img src="<%= urlFor('frontend/iconcircle2.png') %>" alt="JetBrains Logo">
             <h1>MoonLight</h1>
         </div>
         <ul class="sidebar-nav">
@@ -86,21 +86,21 @@
         <div class="project-list-container">
             <ul class="project-list">
                 <li class="project-item">
-                    <img src="<%= urlFor('assets/iconcircle2.png') %>" alt="Project Icon">
+                    <img src="<%= urlFor('frontend/iconcircle2.png') %>" alt="Project Icon">
                     <div class="project-info">
                         <h3>My Awesome Game</h3>
                         <p>@username</p>
                     </div>
                 </li>
                 <li class="project-item">
-                    <img src="<%= urlFor('assets/iconcircle2.png') %>" alt="Project Icon">
+                    <img src="<%= urlFor('frontend/iconcircle2.png') %>" alt="Project Icon">
                     <div class="project-info">
                         <h3>Studio Testers</h3>
                         <p>@GroupName</p>
                     </div>
                 </li>
                 <li class="project-item">
-                    <img src="<%= urlFor('assets/iconcircle2.png') %>" alt="Project Icon">
+                    <img src="<%= urlFor('frontend/iconcircle2.png') %>" alt="Project Icon">
                     <div class="project-info">
                         <h3>Local Project</h3>
                         <p>C:\Users\username\Documents\Roblox\Projects\local.rbxl</p>
@@ -115,7 +115,7 @@
 <!-- Footer -->
 <footer>
     <div class="account">
-        <img src="<%= urlFor('assets/user.svg') %>" alt="User Icon" style="width: 28px; height: 28px;">
+        <img src="<%= urlFor('frontend/user.svg') %>" alt="User Icon" style="width: 28px; height: 28px;">
         <span>@username &nbsp; | &nbsp; Account: ???</span>
     </div>
     <div class="build-info">

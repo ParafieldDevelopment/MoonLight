@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>MoonLight - StartPage</title>
-    <link rel="stylesheet" href="<%= urlFor('assets/css/startpage.css') %>">
-    <link rel="stylesheet" href="<%= urlFor('assets/css/topbar.css') %>">
-    <link rel="stylesheet" href="<%= urlFor('assets/css/login.css') %>">
-    <link rel="stylesheet" href="<%= urlFor('assets/css/loadingspinner.css') %>">
-    <link rel="stylesheet" href="<%= urlFor('assets/css/macos.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/startpage.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/topbar.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/login.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/loadingspinner.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/macos.css') %>">
     <style>
     </style>
 </head>
 <body>
 <nav class="topnav">
     <div class="topbar">
-        <img src="app://assets/iconcircle.png" class="icon">
+        <img src="app://frontend/iconcircle.png" class="icon">
     </div>
     <% if (global.platform === 'win32') { %>
     <div class="window-controls">
@@ -74,9 +74,9 @@
 </div>
 
 <!-- Sound Effects -->
-<audio id="promptSound" src="<%= urlFor('assets/sounds/prompt.mp3') %>" preload="auto"></audio>
-<audio id="selectSound" src="<%= urlFor('assets/sounds/select.mp3') %>" preload="auto"></audio>
-<audio id="backSound" src="<%= urlFor('assets/sounds/back.mp3') %>" preload="auto"></audio>
+<audio id="promptSound" src="<%= urlFor('frontend/sounds/prompt.mp3') %>" preload="auto"></audio>
+<audio id="selectSound" src="<%= urlFor('frontend/sounds/select.mp3') %>" preload="auto"></audio>
+<audio id="backSound" src="<%= urlFor('frontend/sounds/back.mp3') %>" preload="auto"></audio>
 
 
 <script>

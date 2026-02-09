@@ -57,7 +57,7 @@ async function main() {
     loadingwindow.setMenuBarVisibility(false);
     loadingwindow.focus();
 
-    await loadingwindow.loadFile(path.join(__dirname, "templates", "starting.html"));
+    await loadingwindow.loadFile(path.join(__dirname, "html", "starting.html"));
 
     loadingwindow.show();
 
@@ -227,11 +227,11 @@ async function main() {
     electron.protocol.handle("moonlight", (request) => global.urlregistery.request(request));
 
     global.urlregistery.registerUrl("login", async function (request) {
-        return await rendering.renderTemplate(path.join(__dirname, "templates", "login.html"))
+        return await rendering.renderTemplate(path.join(__dirname, "html", "login.html"))
     });
 
     global.urlregistery.registerUrl("projectselection", async function (request) {
-        return await rendering.renderTemplate(path.join(__dirname, "templates", "projectselection.html"))
+        return await rendering.renderTemplate(path.join(__dirname, "html", "projectselection.html"))
     });
 
     global.urlregistery.registerUrl("manual", async function (request) {
@@ -241,7 +241,7 @@ async function main() {
 
         console.log(lastSegment);
 
-        return await rendering.renderTemplate(path.join(__dirname, "templates", lastSegment+".html"))
+        return await rendering.renderTemplate(path.join(__dirname, "html", lastSegment+".html"))
     });
 
     windowmanager.windowmanagerins = new Windowmanager();
