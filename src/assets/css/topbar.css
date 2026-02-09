@@ -65,6 +65,7 @@ nav.topnav {
 .window-controls {
     display: flex;
     gap: 8px;
+    -webkit-app-region: no-drag;
 }
 
 .window-controls button {
@@ -86,3 +87,7 @@ nav.topnav {
 #min-btn:hover { background: #e6c20033; color: #ffdd55; }
 #max-btn:hover { background: #00993333; color: #33ff77; }
 #close-btn:hover { background: #cc000033; color: #ff5555; }
+
+.sidebar-controls {
+    -webkit-app-region: no-drag;
+}
