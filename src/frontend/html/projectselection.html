@@ -9,20 +9,21 @@
     <link rel="stylesheet" href="<%= urlFor('frontend/css/loadingspinner.css') %>">
     <link rel="stylesheet" href="<%= urlFor('frontend/css/ProjectSelection.css') %>">
     <link rel="stylesheet" href="<%= urlFor('frontend/css/macos.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/animations.css') %>">
 </head>
 <body>
 
 <!-- Intro Screen -->
 <div id="intro-screen">
     <div id="starfield"></div>
-    <img id="intro-logo" src="<%= urlFor('frontend/transparent.png') %>" alt="MoonLight Logo">
-    <div id="intro-sub">Loading Projects...</div>
+    <img id="intro-logo" src="<%= urlFor('frontend/transparent.png') %>" alt="MoonLight Logo" class="bounce-in">
+    <div id="intro-sub" class="fade-in-up">Loading Projects...</div>
 </div>
 
 <!-- Topbar -->
-<nav class="topnav">
+<nav class="topnav slide-in-left">
     <div class="topbar">
-        <img src="app://frontend/iconcircle2.png" class="icon" alt="App Icon">
+        <img src="app://frontend/iconcircle2.png" class="icon pulse" alt="App Icon">
         <p>Project Selection</p>
     </div>
     <div class="window-controls">
@@ -48,25 +49,25 @@
 
 <!-- Main Content -->
 <div class="content">
-    <div class="sidebar">
+    <div class="sidebar slide-in-left">
         <div class="jetbrains-logo">
-            <img src="<%= urlFor('frontend/iconcircle2.png') %>" alt="JetBrains Logo">
-            <h1>MoonLight</h1>
+            <img src="<%= urlFor('frontend/iconcircle2.png') %>" alt="JetBrains Logo" class="float">
+            <h1 class="fade-in-up">MoonLight</h1>
         </div>
         <ul class="sidebar-nav">
-            <li><button class="sidebar-btn active" data-target=".projects-main">Projects</button></li>
-            <li><button class="sidebar-btn" data-target=".customize-main">Customize</button></li>
-            <li><button class="sidebar-btn" data-target=".plugins-main">Plugins</button></li>
-            <li><button class="sidebar-btn" data-target=".learn-main">Learn</button></li>
+            <li><button class="sidebar-btn active fade-in-up" style="animation-delay: 0.1s;" data-target=".projects-main">Projects</button></li>
+            <li><button class="sidebar-btn fade-in-up" style="animation-delay: 0.2s;" data-target=".customize-main">Customize</button></li>
+            <li><button class="sidebar-btn fade-in-up" style="animation-delay: 0.3s;" data-target=".plugins-main">Plugins</button></li>
+            <li><button class="sidebar-btn fade-in-up" style="animation-delay: 0.4s;" data-target=".learn-main">Learn</button></li>
         </ul>
-        <div class="sidebar-controls">
-            <button id="settings-btn">
+        <div class="sidebar-controls fade-in-up" style="animation-delay: 0.5s;">
+            <button id="settings-btn" class="shake">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995s.145.755.438.995l1.003.827c.424.35.534.954.26 1.431l-1.296 2.247a1.125 1.125 0 0 1-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 0 1-.22.128c-.332.183-.582.495-.645.87l-.213 1.28c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.645-.87a6.52 6.52 0 0 1-.22-.127c-.324-.196-.72-.257-1.075-.124l-1.217.456a1.125 1.125 0 0 1-1.37-.49l-1.296-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.437-.995s-.145-.755-.437-.995l-1.004-.827a1.125 1.125 0 0 1-.26-1.431l1.296-2.247a1.125 1.125 0 0 1 1.37-.49l1.217.456c.355.133.75.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.645-.87l.213-1.281z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                 </svg>
             </button>
-            <button id="collab-btn">
+            <button id="collab-btn" class="shake">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
                 </svg>
@@ -74,13 +75,13 @@
         </div>
     </div>
 
-    <div class="projects-main show">
+    <div class="projects-main show fade-in-up">
         <div class="project-controls">
             <input type="text" id="project-search" placeholder="Search projects...">
             <div class="project-buttons">
-                <button id="new-project-btn">New Project</button>
-                <button id="open-project-btn">Open</button>
-                <button id="vcs-project-btn">Get from VCS</button>
+                <button id="new-project-btn" class="pulse">New Project</button>
+                <button id="open-project-btn" class="pulse">Open</button>
+                <button id="vcs-project-btn" class="pulse">Get from VCS</button>
             </div>
         </div>
         <div class="project-list-container">
@@ -89,19 +90,19 @@
         </div>
     </div>
 
-    <div class="customize-main">
+    <div class="customize-main fade-in-up">
         <div class="coming-soon">
             <p>Customize - Coming Soon</p>
         </div>
     </div>
 
-    <div class="plugins-main">
+    <div class="plugins-main fade-in-up">
         <div class="coming-soon">
             <p>Plugins - Coming Soon</p>
         </div>
     </div>
 
-    <div class="learn-main">
+    <div class="learn-main fade-in-up">
         <div class="coming-soon">
             <p>Learn - Coming Soon</p>
         </div>
@@ -110,7 +111,7 @@
 
 
 <!-- Footer -->
-<footer>
+<footer class="fade-in-up" style="animation-delay: 0.6s;">
     <div class="account">
         <img src="<%= urlFor('frontend/user.svg') %>" alt="User Icon" style="width: 28px; height: 28px;">
         <span>@username &nbsp; | &nbsp; Account: ???</span>
@@ -216,13 +217,20 @@
 
         window.moonlight.updateSelectionPage((data) => {
             if (data.length === 0) {
-                document.querySelector('.project-list').innerHTML = '<p>No projects found.</p>';
+                const list = document.querySelector('.project-list');
+                list.style.height = '100%';
+                list.innerHTML = `
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;" class="fade-in-up">
+                        <img src="app://assets/404.png" alt="No projects found" style="width: 128px; height: 128px; opacity: 0.8;" class="float">
+                        <p style="margin-top: 10px; color: #888;">No projects found.</p>
+                    </div>`;
                 return;
             }
 
-            data.forEach(project => {
+            data.forEach((project, index) => {
                 const li = document.createElement("li");
-                li.className = "project-item";
+                li.className = "project-item fade-in-up";
+                li.style.animationDelay = `${index * 0.1}s`;
                 li.dataset.id = project.id;
 
                 const img = document.createElement("img");
@@ -273,7 +281,12 @@
         function showPanel(selector) {
             panels.forEach(p => p.classList.remove('show'));
             const panel = document.querySelector(selector);
-            if (panel) panel.classList.add('show');
+            if (panel) {
+                panel.classList.add('show');
+                panel.classList.remove('fade-in-up');
+                void panel.offsetWidth; // trigger reflow
+                panel.classList.add('fade-in-up');
+            }
         }
 
         sidebarBtns.forEach((btn) => {
