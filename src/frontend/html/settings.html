@@ -2,35 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MoonLight - StartPage</title>
+    <title>MoonLight - Settings</title>
     <link rel="stylesheet" href="<%= urlFor('frontend/css/startpage.css') %>">
     <link rel="stylesheet" href="<%= urlFor('frontend/css/topbar.css') %>">
     <link rel="stylesheet" href="<%= urlFor('frontend/css/loadingspinner.css') %>">
     <link rel="stylesheet" href="<%= urlFor('frontend/css/macos.css') %>">
-    <style>
-    </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            if (!window.moonlight) {
-                console.error("Moonlight API not found!");
-                return;
-            }
-
-            const addClick = (id, fn) => {
-                const el = document.getElementById(id);
-                if (el) el.addEventListener('click', fn);
-            };
-
-            addClick('min-btn', () => window.moonlight.minimize());
-            addClick('max-btn', () => window.moonlight.maximize());
-            addClick('close-btn', () => window.moonlight.close());
-        });
-    </script>
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/settings.css') %>">
+    <link rel="stylesheet" href="<%= urlFor('frontend/css/animations.css') %>">
 </head>
 <body>
-<nav class="topnav">
+
+<!-- Topbar -->
+<nav class="topnav fade-in">
     <div class="topbar">
-        <img src="app://frontend/iconcircle2.png" class="icon" alt="App Icon">
+        <img src="app://frontend/iconcircle2.png" class="icon pulse" alt="App Icon">
         <p>Settings</p>
     </div>
     <div class="window-controls">
@@ -54,8 +39,176 @@
     </div>
 </nav>
 
-<div id="mainbox">
+<!-- Main Content -->
+<div class="settings-container">
+    <!-- Sidebar -->
+    <div class="settings-sidebar slide-in-left">
+        <div class="settings-nav-item active" data-target="#general-section">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995s.145.755.438.995l1.003.827c.424.35.534.954.26 1.431l-1.296 2.247a1.125 1.125 0 0 1-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 0 1-.22.128c-.332.183-.582.495-.645.87l-.213 1.28c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.645-.87a6.52 6.52 0 0 1-.22-.127c-.324-.196-.72-.257-1.075-.124l-1.217.456a1.125 1.125 0 0 1-1.37-.49l-1.296-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.437-.995s-.145-.755-.437-.995l-1.004-.827a1.125 1.125 0 0 1-.26-1.431l1.296-2.247a1.125 1.125 0 0 1 1.37-.49l1.217.456c.355.133.75.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.645-.87l.213-1.281z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            </svg>
+            General
+        </div>
+        <div class="settings-nav-item" data-target="#editor-section">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+            </svg>
+            Editor
+        </div>
+        <div class="settings-nav-item" data-target="#appearance-section">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.077-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+            </svg>
+            Appearance
+        </div>
+        <div class="settings-nav-item" data-target="#keybindings-section">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Keybindings
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="settings-content fade-in-up">
+        <!-- General Section -->
+        <div id="general-section" class="settings-section active">
+            <div class="settings-header">
+                <h2>General Settings</h2>
+            </div>
+            <div class="form-group">
+                <label for="project-path">Default Project Path</label>
+                <input type="text" id="project-path" class="form-control" placeholder="/home/user/MoonLightProjects">
+            </div>
+            <div class="form-group">
+                <label class="checkbox-container">
+                    <input type="checkbox" checked>
+                    <span class="checkmark"></span>
+                    Open last project on startup
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Enable auto-save
+                </label>
+            </div>
+        </div>
+
+        <!-- Editor Section -->
+        <div id="editor-section" class="settings-section">
+            <div class="settings-header">
+                <h2>Editor Settings</h2>
+            </div>
+            <div class="form-group">
+                <label for="font-family">Font Family</label>
+                <select id="font-family" class="form-control">
+                    <option value="Fira Code">Fira Code</option>
+                    <option value="Consolas">Consolas</option>
+                    <option value="Monaco">Monaco</option>
+                    <option value="Courier New">Courier New</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="font-size">Font Size</label>
+                <input type="number" id="font-size" class="form-control" value="14" min="8" max="32">
+            </div>
+            <div class="form-group">
+                <label class="checkbox-container">
+                    <input type="checkbox" checked>
+                    <span class="checkmark"></span>
+                    Show line numbers
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-container">
+                    <input type="checkbox" checked>
+                    <span class="checkmark"></span>
+                    Enable code completion
+                </label>
+            </div>
+        </div>
+
+        <!-- Appearance Section -->
+        <div id="appearance-section" class="settings-section">
+            <div class="settings-header">
+                <h2>Appearance</h2>
+            </div>
+            <div class="form-group">
+                <label for="theme">Theme</label>
+                <select id="theme" class="form-control">
+                    <option value="dark">Dark (Default)</option>
+                    <option value="light">Light</option>
+                    <option value="dracula">Dracula</option>
+                    <option value="monokai">Monokai</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-container">
+                    <input type="checkbox" checked>
+                    <span class="checkmark"></span>
+                    Enable animations
+                </label>
+            </div>
+        </div>
+
+        <!-- Keybindings Section -->
+        <div id="keybindings-section" class="settings-section">
+            <div class="settings-header">
+                <h2>Keybindings</h2>
+            </div>
+            <div class="form-group">
+                <p>Keybinding customization coming soon...</p>
+            </div>
+        </div>
+    </div>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        if (!window.moonlight) {
+            console.error("Moonlight API not found!");
+            return;
+        }
+
+        const addClick = (id, fn) => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('click', fn);
+        };
+
+        // Window Controls
+        addClick('min-btn', () => window.moonlight.minimize());
+        addClick('max-btn', () => window.moonlight.maximize());
+        addClick('close-btn', () => window.moonlight.close());
+
+        // Tab Switching Logic
+        const navItems = document.querySelectorAll('.settings-nav-item');
+        const sections = document.querySelectorAll('.settings-section');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all items
+                navItems.forEach(nav => nav.classList.remove('active'));
+                sections.forEach(sec => sec.classList.remove('active'));
+
+                // Add active class to clicked item
+                item.classList.add('active');
+
+                // Show corresponding section
+                const targetId = item.getAttribute('data-target');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                    // Re-trigger animation
+                    targetSection.style.animation = 'none';
+                    targetSection.offsetHeight; /* trigger reflow */
+                    targetSection.style.animation = 'fadeIn 0.3s ease-in-out';
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

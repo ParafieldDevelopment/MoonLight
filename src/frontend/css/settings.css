@@ -1,0 +1,239 @@
+/* Settings Page CSS */
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #1e1e1e;
+    color: #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Layout */
+.settings-container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Sidebar */
+.settings-sidebar {
+    width: 250px;
+    background-color: #252526;
+    border-right: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+.settings-nav-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    color: #ccc;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    border-left: 3px solid transparent;
+}
+
+.settings-nav-item:hover {
+    background-color: #2a2d2e;
+    color: #fff;
+    padding-left: 25px; /* Slight slide effect on hover */
+}
+
+.settings-nav-item.active {
+    background-color: #37373d;
+    color: #fff;
+    border-left: 3px solid #0078d7;
+}
+
+.settings-nav-item svg {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.settings-nav-item:hover svg,
+.settings-nav-item.active svg {
+    opacity: 1;
+}
+
+/* Content Area */
+.settings-content {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    background-color: #1e1e1e;
+}
+
+/* Scrollbar styling for content */
+.settings-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.settings-content::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+.settings-content::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+.settings-content::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}
+
+.settings-section {
+    display: none;
+    animation: fadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.settings-section.active {
+    display: block;
+}
+
+.settings-header {
+    margin-bottom: 30px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+}
+
+.settings-header h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 25px;
+    max-width: 600px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #ddd;
+    font-size: 14px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    background-color: #2d2d2d;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #0078d7;
+    box-shadow: 0 0 0 2px rgba(0, 120, 215, 0.2);
+    background-color: #333;
+}
+
+/* Checkbox */
+/* Increased specificity to override .form-group label */
+.form-group .checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    padding: 5px 0;
+    margin-bottom: 10px; /* Consistent with other labels */
+}
+
+.checkbox-container input {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    background-color: #2d2d2d;
+    border: 1px solid #555;
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.2s;
+    flex-shrink: 0; /* Prevent squishing */
+    box-sizing: border-box;
+}
+
+.checkbox-container:hover .checkmark {
+    border-color: #777;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #0078d7;
+    border-color: #0078d7;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: transform 0.1s, background-color 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background-color: #0078d7;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0063b1;
+}
+
+.btn-secondary {
+    background-color: #3c3c3c;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #4c4c4c;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
