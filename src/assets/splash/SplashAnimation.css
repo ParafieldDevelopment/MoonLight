@@ -1,0 +1,67 @@
+div.banner-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 45px 60px;
+    border-radius: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+div.banner-logo.scroll-on-active {
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+}
+
+div.banner.scroll-on-active {
+    opacity: 1;
+}
+
+div.banner img.logo-img {
+    height: 20vh;
+    width: auto;
+
+    filter: var(--banner-filter);
+
+    opacity: 0;
+    transform: translateX(-150px) rotate(360deg);
+    transition: 1s ease;
+}
+
+div.banner img.logo-img.scroll-on-active {
+    transform: translateX(0px) rotate(0deg);
+    opacity: 1;
+}
+
+div.banner-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+
+    opacity: 0;
+    height: 40%;
+    max-height: 150px;
+    width: auto;
+
+    transform: translateX(150px);
+    transition: transform 1s ease, opacity 1s ease;
+
+    margin-left: 20px;
+}
+
+div.banner-text h1 {
+    margin: 0;
+    font-weight: 800;
+    font-size: 4rem;
+    color: var(--banner-color);
+}
+
+div.banner-text.scroll-on-active {
+    transform: translateX(0);
+    opacity: 1;
+}

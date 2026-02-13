@@ -1,0 +1,52 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="361.94606" height="345.55145" viewBox="0,0,361.94606,345.55145"><g transform="translate(-59.02697,-7.22427)"><g fill="#000000" stroke="none" stroke-width="0" stroke-miterlimit="10"><path d="M127.80187,309.91103c-25.6223,-31.61431 -30.73147,-71.51198 -23.05214,-100.95367c11.61368,-44.52582 51.83475,-66.59713 51.83475,-66.59713c0,0 -44.2362,65.44919 0.45125,135.24389c45.91646,59.13529 132.83404,43.86019 132.83404,43.86019c0,0 -10.4763,21.49212 -47.30673,29.47032c-27.83985,4.97867 -78.14748,2.45968 -114.76109,-41.02359z"/><path d="M390.1875,283.23632c-29.45206,28.08098 -69.26247,40.14409 -99.22624,34.85673c-50.09707,-6.34247 -76.53264,-48.3612 -76.53264,-48.3612c0,0 71.66776,36.3048 134.60619,-8.56461c57.87369,-52.83976 32.17199,-141.48774 32.17199,-141.48774c0,0 28.69741,18.42116 36.49619,58.9605c8.10714,30.38024 1.9366,76.51529 -27.51544,104.59628z"/><path d="M374.31073,139.31343c-11.72603,61.1175 -52.60181,75.65388 -52.60181,75.65388c0,0 43.2116,-79.91724 -3.18869,-137.10438c-51.66348,-58.92611 -131.19535,-41.49212 -131.19535,-41.49212c0,0 23.14665,-21.98544 54.8212,-27.51579c29.40495,-5.13406 73.12187,0.56902 105.3676,35.78253c32.24572,35.21351 32.68683,64.82465 26.79703,94.67593z"/><path d="M264.06721,89.36342c0,0 -80.55596,-35.0747 -140.07666,15.90266c-51.61687,51.40898 -26.27525,131.8058 -26.27525,131.8058c0,0 -33.61927,-12.80425 -38.54215,-77.53427c-1.58336,-30.38549 9.5391,-65.11778 41.01115,-90.91461c43.41777,-35.58841 92.27855,-30.74296 121.79322,-17.31029c22.62777,10.29837 42.08975,38.05071 42.08975,38.05071z"/></g></g><style xmlns="" id="gxm_accents">
+        :root { 
+            --opera-gx-accent-color: #fa1e4e !important;
+            --opera-gx-background-color: #f4f2f7 !important;
+
+            --opera-gx-accent-color-r: 250 !important;
+            --opera-gx-accent-color-g: 30 !important;
+            --opera-gx-accent-color-b: 78 !important;
+            --opera-gx-accent-color-h: 347 !important;
+            --opera-gx-accent-color-s: 96 !important;
+            --opera-gx-accent-color-l: 55 !important;
+
+            --opera-gx-background-color-r: 244 !important;
+            --opera-gx-background-color-g: 242 !important;
+            --opera-gx-background-color-b: 247 !important;
+            --opera-gx-background-color-h: 264 !important;
+            --opera-gx-background-color-s: 24 !important;
+            --opera-gx-background-color-l: 96 !important;
+
+            --gx-accent-l-8: 347deg 347% 4.4% !important;
+            --gx-accent-l-16: 347deg 347% 8.8% !important;
+            --gx-accent-l-24: 347deg 347% 13.2% !important;
+            --gx-accent-l-30: 347deg 347% 16.5% !important;
+            --gx-accent-l-60: 347deg 347% 33% !important;
+            --gx-accent-l-80: 347deg 347% 44% !important;
+            --gx-accent-l-100: 347deg 347% 55% !important;
+            --gx-accent-l-120: 347deg 347% 66% !important;
+            --gx-accent-l-140: 347deg 347% 77% !important;
+            --gx-accent-l-160: 347deg 347% 88% !important;
+            --gx-no-00: 264deg 24% 0% !important;
+            --gx-no-04: 264deg 24% 4% !important;
+            --gx-no-08: 264deg 24% 8% !important;
+            --gx-no-12: 264deg 24% 12% !important;
+            --gx-no-16: 264deg 24% 16% !important;
+            --gx-no-20: 264deg 24% 20% !important;
+            --gx-no-24: 264deg 24% 24% !important;
+            --gx-no-32: 264deg 24% 32% !important;
+            --gx-no-40: 264deg 24% 40% !important;
+            --gx-no-59: 264deg 24% 59% !important;
+            --gx-no-77: 264deg 24% 77% !important;
+            --gx-no-80: 264deg 24% 80% !important;
+            --gx-no-88: 264deg 24% 88% !important;
+            --gx-no-90: 264deg 24% 90% !important;
+            --gx-no-92: 264deg 24% 92% !important;
+            --gx-no-96: 264deg 24% 96% !important;
+            --gx-no-98: 264deg 24% 98% !important;
+            --gx-no-100: 264deg 24% 100% !important;
+
+            --gx-accent-100-contrast: 0deg 0% 100% !important;
+        }
+    </style></svg>
+<!--rotationCenter:180.973029519155:172.77572537039399-->
