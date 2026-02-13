@@ -1,118 +1,131 @@
-/* Fade In Up */
+/* Fade In Up with a slight bounce */
 @keyframes fadeInUp {
-    from {
+    0% {
         opacity: 0;
-        transform: translate3d(0, 20px, 0);
+        transform: translate3d(0, 40px, 0);
     }
-    to {
+    60% {
+        opacity: 1;
+        transform: translate3d(0, -10px, 0);
+    }
+    100% {
         opacity: 1;
         transform: translate3d(0, 0, 0);
     }
 }
 
 .fade-in-up {
-    animation: fadeInUp 0.5s ease-out forwards;
+    animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-/* Pulse */
+/* Fade In */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Pulse with more scale */
 @keyframes pulse {
     0% {
         transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
     }
     50% {
-        transform: scale(1.05);
+        transform: scale(1.1);
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
     }
     100% {
         transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
     }
 }
 
 .pulse:hover {
-    animation: pulse 1s infinite;
+    animation: pulse 1.5s infinite;
 }
 
-/* Slide In Left */
+/* Slide In Left with overshoot */
 @keyframes slideInLeft {
-    from {
+    0% {
         transform: translate3d(-100%, 0, 0);
         visibility: visible;
+        opacity: 0;
     }
-    to {
+    70% {
+        transform: translate3d(10px, 0, 0);
+        opacity: 1;
+    }
+    100% {
         transform: translate3d(0, 0, 0);
+        opacity: 1;
     }
 }
 
 .slide-in-left {
-    animation: slideInLeft 0.5s ease-out forwards;
+    animation: slideInLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-/* Bounce In */
+/* Bounce In - more dramatic */
 @keyframes bounceIn {
-    from,
-    20%,
-    40%,
-    60%,
-    80%,
-    to {
-        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    }
-
     0% {
         opacity: 0;
         transform: scale3d(0.3, 0.3, 0.3);
     }
-
     20% {
         transform: scale3d(1.1, 1.1, 1.1);
     }
-
     40% {
         transform: scale3d(0.9, 0.9, 0.9);
     }
-
     60% {
         opacity: 1;
         transform: scale3d(1.03, 1.03, 1.03);
     }
-
     80% {
         transform: scale3d(0.97, 0.97, 0.97);
     }
-
-    to {
+    100% {
         opacity: 1;
         transform: scale3d(1, 1, 1);
     }
 }
 
 .bounce-in {
-    animation: bounceIn 0.75s;
+    animation: bounceIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
-/* Float */
-@keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-5px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
-}
+/* Float - smoother and larger range */
+/*@keyframes float {*/
+/*    0% {*/
+/*        transform: translateY(0px);*/
+/*    }*/
+/*    50% {*/
+/*        transform: translateY(-15px);*/
+/*    }*/
+/*    100% {*/
+/*        transform: translateY(0px);*/
+/*    }*/
+/*}*/
 
 .float {
-    animation: float 3s ease-in-out infinite;
+    animation: float 4s ease-in-out infinite;
 }
 
-/* Shake */
+/* Shake - more vigorous */
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-    20%, 40%, 60%, 80% { transform: translateX(5px); }
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px) rotate(-2deg); }
+    20%, 40%, 60%, 80% { transform: translateX(4px) rotate(2deg); }
 }
 
 .shake:hover {
-    animation: shake 0.5s;
+    animation: shake 0.6s;
 }

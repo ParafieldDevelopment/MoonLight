@@ -365,7 +365,7 @@ footer {
 
 .project-buttons button {
     padding: 8px 15px;
-    background-color: #007acc;
+    background-color: #6B5CFFFF;
     color: white;
     border: none;
     border-radius: 5px;
@@ -374,7 +374,7 @@ footer {
 }
 
 .project-buttons button:hover {
-    background-color: #005f9e;
+    background-color: #695093;
 }
 
 .project-list-container {

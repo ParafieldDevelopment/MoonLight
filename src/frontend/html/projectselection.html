@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="<%= urlFor('frontend/css/ProjectSelection.css') %>">
     <link rel="stylesheet" href="<%= urlFor('frontend/css/macos.css') %>">
     <link rel="stylesheet" href="<%= urlFor('frontend/css/animations.css') %>">
+    <style>
+        /* Initially hide elements that will be animated */
+        .topnav, .sidebar, .projects-main, .customize-main, .plugins-main, .learn-main, footer {
+            opacity: 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -21,7 +27,7 @@
 </div>
 
 <!-- Topbar -->
-<nav class="topnav slide-in-left">
+<nav class="topnav">
     <div class="topbar">
         <img src="app://frontend/iconcircle2.png" class="icon pulse" alt="App Icon">
         <p>Project Selection</p>
@@ -49,7 +55,7 @@
 
 <!-- Main Content -->
 <div class="content">
-    <div class="sidebar slide-in-left">
+    <div class="sidebar">
         <div class="jetbrains-logo">
             <img src="<%= urlFor('frontend/iconcircle2.png') %>" alt="JetBrains Logo" class="float">
             <h1 class="fade-in-up">MoonLight</h1>
@@ -75,7 +81,7 @@
         </div>
     </div>
 
-    <div class="projects-main show fade-in-up">
+    <div class="projects-main show">
         <div class="project-controls">
             <input type="text" id="project-search" placeholder="Search projects...">
             <div class="project-buttons">
@@ -90,19 +96,19 @@
         </div>
     </div>
 
-    <div class="customize-main fade-in-up">
+    <div class="customize-main">
         <div class="coming-soon">
             <p>Customize - Coming Soon</p>
         </div>
     </div>
 
-    <div class="plugins-main fade-in-up">
+    <div class="plugins-main">
         <div class="coming-soon">
             <p>Plugins - Coming Soon</p>
         </div>
     </div>
 
-    <div class="learn-main fade-in-up">
+    <div class="learn-main">
         <div class="coming-soon">
             <p>Learn - Coming Soon</p>
         </div>
@@ -111,7 +117,7 @@
 
 
 <!-- Footer -->
-<footer class="fade-in-up" style="animation-delay: 0.6s;">
+<footer>
     <div class="account">
         <img src="<%= urlFor('frontend/user.svg') %>" alt="User Icon" style="width: 28px; height: 28px;">
         <span>@username &nbsp; | &nbsp; Account: ???</span>
@@ -173,6 +179,22 @@
             intro.classList.add("fade-out");
             clearInterval(shootingInterval);
             clearInterval(particleInterval);
+
+            // --- Trigger Main UI Animations ---
+            // Add classes to trigger animations after intro fades out
+            document.querySelector('.topnav').classList.add('fade-in');
+            document.querySelector('.sidebar').classList.add('slide-in-left');
+            document.querySelector('.projects-main').classList.add('fade-in-up');
+            document.querySelector('.customize-main').classList.add('fade-in-up');
+            document.querySelector('.plugins-main').classList.add('fade-in-up');
+            document.querySelector('.learn-main').classList.add('fade-in-up');
+            document.querySelector('footer').classList.add('fade-in-up');
+
+            // Make sure they are visible now (override opacity: 0)
+             document.querySelectorAll('.topnav, .sidebar, .projects-main, .customize-main, .plugins-main, .learn-main, footer').forEach(el => {
+                el.style.opacity = '1';
+            });
+
         }, 3000);
     });
 
